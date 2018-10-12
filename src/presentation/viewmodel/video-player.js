@@ -1,4 +1,4 @@
-export class PlayerViewModel {
+export class VideoPlayerViewModel {
     constructor(movie) {
         this.title = movie.title
         this.videoUrl = movie.video.url

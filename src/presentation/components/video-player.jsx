@@ -1,11 +1,11 @@
 import React from 'react'
-import { PlayerViewModel } from '../viewmodel/player'
+import { VideoPlayerViewModel } from '../viewmodel/video-player'
 import css from '../styles/video-player.scss'
 
 export class VideoPlayerComponent extends React.Component {
     constructor(props) {
         super(props)
-        this.viewModel = new PlayerViewModel(props.data).get()
+        this.viewModel = new VideoPlayerViewModel(props.data).get()
     }
 
     render() {

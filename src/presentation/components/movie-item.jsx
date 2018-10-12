@@ -1,15 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { MovieItemViewModel } from '../viewmodel/movie-item'
 import css from '../styles/movie-item.scss'
 
 export class MovieItemComponent extends React.Component {
     constructor(props) {
         super(props)
         this.ref = React.createRef()
-        this.link = {
-            pathname: `/movie/${this.props.movie.id}`,
-            state: { movie: this.props.movie }
-        }
+        this.viewModel = new MovieItemViewModel(props.movie).get()
     }
 
     componentDidMount() {
@@ -21,8 +19,8 @@ export class MovieItemComponent extends React.Component {
     render() {
         return (
             <li ref={this.ref} className={css.movie}>
-                <Link to={this.link}>
-                    <img src={this.props.movie.image.url} alt={this.props.movie.title} />
+                <Link to={this.viewModel.movieLink}>
+                    <img src={this.viewModel.imageUrl} alt={this.viewModel.title} />
                 </Link>
             </li>
         )
