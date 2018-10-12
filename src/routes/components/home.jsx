@@ -30,7 +30,7 @@ export class HomeRouteComponent extends React.Component {
     }
 
     onChoose() {
-        this.props.history.push(`/movie/${this.state.selectedMovie.id}`, {movie: this.state.selectedMovie})
+        this.props.history.push(this.state.selectedMovie.getLink(), {movie: this.state.selectedMovie})
     }
 
     render() {

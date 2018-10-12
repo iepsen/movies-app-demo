@@ -13,6 +13,10 @@ export class MovieEntity {
         return this
     }
 
+    getLink() {
+        return `/movie/${this.id}`
+    }
+
     getVideo(arr) {
         if (arr.length === 0) return ''
         const video = arr[0]
