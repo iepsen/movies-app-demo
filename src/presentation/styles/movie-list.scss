@@ -1,0 +1,43 @@
+:local(.wrapper) {
+    overflow: hidden;
+    padding: 2%;
+
+    h2 {
+        color: white;
+        margin-bottom: 10px;
+        font-size: 3em;
+    }
+}
+
+:local(.movies) {
+    display: flex;
+    align-self: flex-end;
+    left: -100%;
+    list-style: none;
+    position: relative;
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    @media (min-width: 30em) {
+      left: -50%;
+      transform: translateX(50%);
+    }
+    @media (min-width: 40em) {
+      left: -20%;
+      transform: translateX(20%);
+    }
+}
+
+:local(.reversing) {
+    transform: translateX(-100%);
+    @media (min-width: 30em) {
+        transform: translateX(-50%);
+    }
+    @media (min-width: 40em) {
+      transform: translateX(-20%);
+    }
+}
+
+:local(.defined) {
+  transform: none;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
