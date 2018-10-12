@@ -1,6 +1,6 @@
-import { VideoEntity } from '../domain/video-entity'
+import { MovieEntity } from '../domain/movie-entity'
 
-export class VideosService {
+export class MoviesService {
     constructor() {
         this.serviceUrl = 'https://2qcg0zv57a.execute-api.us-west-2.amazonaws.com/default/fetchVideos'
     }
@@ -9,8 +9,8 @@ export class VideosService {
         return fetch(this.serviceUrl)
             .then(response => response.json())
             .then(response => response.entries)
-            .then(entries => entries.map(entry => 
-                new VideoEntity(entry).get())
+            .then(movies => movies.map(movie => 
+                new MovieEntity(movie).get())
             )
     }
 }
