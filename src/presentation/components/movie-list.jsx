@@ -14,15 +14,9 @@ export class MovieListComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.wrapperRef.current.focus()
-    }
-
-    renderVideoItems() {
-        if (this.props.movies === null) return null
-
-        return this.props.movies.map((movie, index) => 
-            <MovieItemComponent onMount={this.onMount} key={index} index={index} movie={movie} />
-        )
+        if (this.props.hasFocus) {
+            this.wrapperRef.current.focus()
+        }
     }
 
     onKeyDown(event) {
@@ -32,26 +26,24 @@ export class MovieListComponent extends React.Component {
                 break
             case 37:
                 this.onNavigateLeft()
+                this.update()
                 break
             case 39:
                 this.onNavigateRight()
+                this.update()
                 break
             default: break
         }
     }
 
     onNavigateLeft() {
-        // this.ref.current.classList.remove(css.reversing)
         const index = this.currentItemIndex - 1
         this.currentItemIndex = (this.moviesRefMap.has(index)) ? index : this.moviesRefMap.size - 1
-        this.update()
     }
 
     onNavigateRight() {
-        // this.ref.current.classList.add(css.reversing)
         const index = this.currentItemIndex + 1
         this.currentItemIndex = (this.moviesRefMap.has(index)) ? index : 0
-        this.update()
     }
 
     onSelect() {
@@ -89,12 +81,20 @@ export class MovieListComponent extends React.Component {
         return this.moviesRefMap.get(index)
     }
 
+    renderMovies() {
+        if (this.props.movies === null) return null
+
+        return this.props.movies.map((movie, index) => 
+            <MovieItemComponent onMount={this.onMount} key={index} index={index} movie={movie} />
+        )
+    }
+
     render() {
         return (
             <div tabIndex={0} onKeyDown={this.onKeyDown} ref={this.wrapperRef} className={css.wrapper}>
                 <h2>{this.props.title}</h2>
                 <ul ref={this.listRef} className={css.movies}>
-                    {this.renderVideoItems()}
+                    {this.renderMovies()}
                 </ul>
             </div>
         )

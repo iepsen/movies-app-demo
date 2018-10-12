@@ -1,4 +1,97 @@
 :local(.player) {
+    position: relative;
     width: 100%;
     height: 100%;
+    video {
+        position: absolute;
+    }
+}
+
+:local(.controls) {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    progress {
+        position: absolute;
+        width: 80%;
+        height: 6px;
+        margin-left: 8.5%;
+        bottom: 76px;
+    }
+
+    progress[value] {
+        -webkit-appearance: none;
+    }
+
+    progress[value]::-webkit-progress-bar {
+        background-color: #eee;
+    }
+
+    progress[value]::-webkit-progress-value {
+        background-color: red;
+    }
+}
+
+:local(.time) {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    color: white;
+
+    i {
+        font-size: 50px;
+        font-weight: normal;
+        font-style: normal;
+        font-family: 'Open Sans', sans-serif;
+    }
+}
+
+:local(.title) {
+    position: absolute;
+    top: 40px;
+    left: 200px;
+    h1 {
+        color: white;
+        font-size: 50px;
+    }
+}
+
+:local(.back) {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    
+    i {
+        cursor: pointer;
+    }
+
+    i:hover {
+        color: red;
+    }
+
+}
+
+:local(.toggle__play__pause) {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+
+    i {
+        cursor: pointer;
+    }
+    
+    i:hover {
+        color: red;
+    }
+}
+
+:local(.material__icons) {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 100px;
+    color: white;
 }
