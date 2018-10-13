@@ -2,6 +2,7 @@ import React from 'react'
 import { MoviesInteractor } from '../../domain/movies-interactor'
 import { MovieListComponent } from '../../presentation/components/movie-list'
 import { SelectedMovieComponent } from '../../presentation/components/selected-movie'
+import { LoadingComponent } from '../../presentation/components/loading'
 import css from '../styles/home.scss'
 
 export class HomeRouteComponent extends React.Component {
@@ -71,7 +72,9 @@ export class HomeRouteComponent extends React.Component {
 
     render() {
 
-        if (this.state.movies === null) return null
+        if (this.state.featuredMovies === null) {
+            return <LoadingComponent />
+        }
 
         return (
             <div className={css.container}>
