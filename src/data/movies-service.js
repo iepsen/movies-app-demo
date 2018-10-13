@@ -21,4 +21,8 @@ export class MoviesService {
     getStoreProgress(key) {
         return localStorage.getItem(key)
     }
+
+    async getWatchedMovies() {
+        return []
+    }
 }

@@ -12,6 +12,7 @@ export class HomeRouteComponent extends React.Component {
         super(props)
         this.onSelect = this.onSelect.bind(this)
         this.onChoose = this.onChoose.bind(this)
+        this.interactor = new MoviesInteractor()
         this.state = {
             movies: null,
             selectedMovie: null,
@@ -20,10 +21,13 @@ export class HomeRouteComponent extends React.Component {
     }
 
     componentWillMount() {
-        new MoviesInteractor().get()
-            .then(movies => 
-                this.setState({movies:movies})
-            )
+        this.interactor.get()
+            .then(movies => this.setState({movies}), this.getWatchedMovies())
+    }
+
+    getWatchedMovies() {
+        this.interactor.getWatchedMovies()
+            .then(watchedMovies => this.setState({watchedMovies}))
     }
 
     onSelect(movie) {
@@ -40,9 +44,24 @@ export class HomeRouteComponent extends React.Component {
 
         return (
             <div className={css.container}>
-                <SelectedMovieComponent movie={this.state.selectedMovie} />
-                <MovieListComponent hasFocus={true} title={'Featured Movies'} movies={this.state.movies} onSelect={this.onSelect} onChoose={this.onChoose} />
-                <MovieListComponent title={'Watched Movies'} movies={this.state.watchedMovies} onSelect={this.onSelect} onChoose={this.onChoose} />
+                <SelectedMovieComponent 
+                    movie={this.state.selectedMovie} 
+                />
+
+                <MovieListComponent 
+                    hasFocus={true} 
+                    title={'Featured Movies'} 
+                    movies={this.state.movies} 
+                    onSelect={this.onSelect} 
+                    onChoose={this.onChoose} 
+                />
+                
+                <MovieListComponent 
+                    title={'Watched Movies'} 
+                    movies={this.state.watchedMovies} 
+                    onSelect={this.onSelect} 
+                    onChoose={this.onChoose} 
+                />
             </div>
         )
     }
