@@ -28,6 +28,10 @@ export class MovieListComponent extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.onKeyDown)
+    }
+
     onKeyDown(event) {
         switch(event.keyCode) {
         case 13:

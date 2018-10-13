@@ -34,6 +34,10 @@ export class HomeRouteComponent extends React.Component {
         window.addEventListener('keydown', this.onKeyDown)
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.onKeyDown)
+    }
+
     getWatchedMovies(movies) {
         let watchedMovies = movies.filter(movie => movie.progress > 0)
         this.setState({watchedMovies})
