@@ -1,6 +1,6 @@
 import React from 'react'
 import css from '../styles/selected-movie.scss'
-import { SelectedMovieViewModel } from '../viewmodel/selected-movie';
+import { SelectedMovieViewModel } from '../viewmodel/selected-movie'
 
 export class SelectedMovieComponent extends React.Component {
     renderMovie() {
