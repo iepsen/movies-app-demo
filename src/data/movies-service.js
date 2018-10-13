@@ -10,11 +10,11 @@ export class MoviesService {
         return fetch(this.serviceUrl)
             .then(response => response.json())
             .then(response => response.entries)
-            .then(movies => movies.map(movie => new MovieEntity(movie).get()))
-            .then(entities => {
-                this.entities = entities
-                return entities
-            })
+            .then(movies => movies.map(movie => {
+                let entity = new MovieEntity(movie).get()
+                entity.setProgress(this.getStoreProgress(entity.id))
+                return entity
+            }))
     }
 
     setStoreProgress(key, value) {

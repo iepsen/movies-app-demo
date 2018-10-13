@@ -7,10 +7,15 @@ export class MovieEntity {
         this.availableDate = new Date(payload.availableDate)
         this.video = this.getVideo(payload.contents)
         this.image = this.getImage(payload.images)
+        this.progress = 0
     }
 
     get() {
         return this
+    }
+
+    setProgress(progress) {
+        this.progress = progress || 0
     }
 
     getLink() {
