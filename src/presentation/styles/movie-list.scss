@@ -1,17 +1,23 @@
 :local(.wrapper) {
+    height: 75%;
     overflow: hidden;
-    padding: 2%;
+    margin: 0 2% 2% 2%;
+    opacity: 0.5;
 
     h2 {
-        color: white;
+        color: #eeeeee;
         margin-bottom: 10px;
         font-size: 3em;
     }
 }
 
+:local(.wrapper__focused) {
+    opacity: 1;
+}
+
 :local(.movies) {
     display: flex;
-    align-self: flex-end;
+    height: 88%;
     left: -100%;
     list-style: none;
     position: relative;

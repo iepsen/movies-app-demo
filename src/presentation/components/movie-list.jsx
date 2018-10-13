@@ -13,9 +13,17 @@ export class MovieListComponent extends React.Component {
         this.currentItemIndex = 0
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
+        if (this.wrapperRef.current === null) return
+        if (this.props.movies === null) return
+
         if (this.props.hasFocus) {
-            this.wrapperRef.current.focus()
+            window.addEventListener('keydown', this.onKeyDown)
+            this.wrapperRef.current.classList.add(css.wrapper__focused)
+            this.wrapperRef.current.scrollIntoView(true)
+        } else {
+            window.removeEventListener('keydown', this.onKeyDown)
+            this.wrapperRef.current.classList.remove(css.wrapper__focused)
         }
     }
 
@@ -60,7 +68,6 @@ export class MovieListComponent extends React.Component {
 
     onMount(index, ref) {
         this.moviesRefMap.set(index, ref)
-        this.onSelect()
     }
 
     update() {
@@ -82,16 +89,16 @@ export class MovieListComponent extends React.Component {
     }
 
     renderMovies() {
-        if (this.props.movies === null) return null
-
         return this.props.movies.map((movie, index) => 
             <MovieItemComponent onMount={this.onMount} key={index} index={index} movie={movie} />
         )
     }
 
     render() {
+        if (this.props.movies === null) return null
+
         return (
-            <div tabIndex={0} onKeyDown={this.onKeyDown} ref={this.wrapperRef} className={css.wrapper}>
+            <div onKeyDown={this.onKeyDown} ref={this.wrapperRef} className={css.wrapper}>
                 <h2>{this.props.title}</h2>
                 <ul ref={this.listRef} className={css.movies}>
                     {this.renderMovies()}
