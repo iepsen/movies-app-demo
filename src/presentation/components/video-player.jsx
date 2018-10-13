@@ -70,6 +70,8 @@ export class VideoPlayerComponent extends React.Component {
             this.onSeek(this.secondsToSeek * - 1)
             break
         case 27:
+            this.onBack()
+            break
         case 38:
             this.onVirtualFocusRefChange(this.backRef)
             break
