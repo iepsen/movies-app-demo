@@ -49,36 +49,28 @@
     position: absolute;
     top: 30px;
     left: 30px;
-    
-    i {
-        cursor: pointer;
-    }
-
-    i:hover, i:focus {
-        color: red;
-    }
 }
 
 :local(.toggle__play__pause) {
     position: absolute;
     bottom: 30px;
     left: 30px;
-
-    i {
-        cursor: pointer;
-    }
-    
-    i:hover, i:focus {
-        color: red;
-    }
 }
 
 :local(.material__icons) {
     font-family: 'Material Icons';
-    font-weight: normal;
-    font-style: normal;
     font-size: 100px;
     color: white;
+
+    &:hover {
+        color: red;
+        text-shadow: 0 0 80px white;
+    }
+}
+
+:local(.focused) {
+    color: red;
+    text-shadow: 0 0 80px white;
 }
 
 :local(.time) {
