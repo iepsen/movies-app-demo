@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Switch, Route, Router } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Router } from 'react-router-dom'
 import createBrowserHistory from 'history/createBrowserHistory'
 import { HomeRouteComponent, MovieRouteComponent } from './routes'
 import './routes/styles/global.scss'
