@@ -8,27 +8,52 @@ export class HomeRouteComponent extends React.Component {
     
     constructor(props) {
         super(props)
+        this.onKeyDown = this.onKeyDown.bind(this)
         this.onSelect = this.onSelect.bind(this)
         this.onChoose = this.onChoose.bind(this)
+        this.movieListRef = React.createRef()
         this.interactor = new MoviesInteractor()
         this.state = {
-            movies: null,
+            featuredMovies: null,
             selectedMovie: null,
-            watchedMovies: null
+            watchedMovies: null,
+            featuredMoviesHasFocus: true,
+            watchedMoviesHasFocus: false
         }
     }
 
     componentWillMount() {
         this.interactor.get()
-            .then(movies => {
-                this.setState({movies})
-                this.getWatchedMovies(movies)
+            .then(featuredMovies => {
+                this.setState({featuredMovies})
+                this.getWatchedMovies(featuredMovies)
             })
+    }
+
+    componentDidMount() {
+        window.addEventListener('keydown', this.onKeyDown)
     }
 
     getWatchedMovies(movies) {
         let watchedMovies = movies.filter(movie => movie.progress > 0)
         this.setState({watchedMovies})
+    }
+
+    onKeyDown(event) {
+        switch(event.keyCode) {
+        case 40:
+            this.setState({
+                featuredMoviesHasFocus: false,
+                watchedMoviesHasFocus: true
+            })
+            break
+        case 38:
+            this.setState({
+                featuredMoviesHasFocus: true,
+                watchedMoviesHasFocus: false
+            })
+            break
+        }
     }
 
     onSelect(movie) {
@@ -45,24 +70,28 @@ export class HomeRouteComponent extends React.Component {
 
         return (
             <div className={css.container}>
-                <SelectedMovieComponent 
-                    movie={this.state.selectedMovie} 
-                />
 
-                <MovieListComponent 
-                    hasFocus={true} 
-                    title={'Featured Movies'} 
-                    movies={this.state.movies} 
-                    onSelect={this.onSelect} 
-                    onChoose={this.onChoose} 
-                />
-
-                <MovieListComponent 
-                    title={'Watched Movies'} 
-                    movies={this.state.watchedMovies} 
-                    onSelect={this.onSelect} 
-                    onChoose={this.onChoose} 
-                />
+                <div className={css.selected__movie}>
+                    <SelectedMovieComponent 
+                        movie={this.state.selectedMovie} 
+                    />
+                </div>
+                <div ref={this.movieListRef} className={css.movies__list}>
+                    <MovieListComponent
+                        hasFocus={this.state.featuredMoviesHasFocus} 
+                        title={'Featured Movies'} 
+                        movies={this.state.featuredMovies} 
+                        onSelect={this.onSelect} 
+                        onChoose={this.onChoose} 
+                    />
+                    <MovieListComponent 
+                        hasFocus={this.state.watchedMoviesHasFocus}
+                        title={'Watched Movies'} 
+                        movies={this.state.watchedMovies} 
+                        onSelect={this.onSelect} 
+                        onChoose={this.onChoose} 
+                    />
+                </div>
             </div>
         )
     }

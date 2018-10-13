@@ -1,4 +1,13 @@
 :local(.container) {
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
+}
+
+:local(.selected__movie) {
+    height: 40%;
+}
+
+:local(.movies__list) {
+    height: 60%;
+    overflow-y: auto;
 }
