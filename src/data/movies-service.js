@@ -13,4 +13,12 @@ export class MoviesService {
                 new MovieEntity(movie).get())
             )
     }
+
+    setStoreProgress(key, value) {
+        localStorage.setItem(key, value)
+    }
+
+    getStoreProgress(key) {
+        return localStorage.getItem(key)
+    }
 }
