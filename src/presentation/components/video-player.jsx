@@ -38,6 +38,9 @@ export class VideoPlayerComponent extends React.Component {
                     this.onBack()
                 }
                 break
+            case 27:
+                this.onBack()
+                break
             case 38:
                 this.backRef.current.focus()
                 break
