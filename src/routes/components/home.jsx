@@ -4,8 +4,6 @@ import { MovieListComponent } from '../../presentation/components/movie-list'
 import { SelectedMovieComponent } from '../../presentation/components/selected-movie'
 import css from '../styles/home.scss'
 
-import { VideoPlayerComponent } from '../../presentation/components/video-player'
-
 export class HomeRouteComponent extends React.Component {
     
     constructor(props) {
@@ -55,7 +53,7 @@ export class HomeRouteComponent extends React.Component {
                     onSelect={this.onSelect} 
                     onChoose={this.onChoose} 
                 />
-                
+
                 <MovieListComponent 
                     title={'Watched Movies'} 
                     movies={this.state.watchedMovies} 
