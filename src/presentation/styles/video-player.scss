@@ -1,13 +1,4 @@
-:local(.player) {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    video {
-        position: absolute;
-    }
-}
-
-:local(.controls) {
+:local(.info) {
     z-index: 1;
     position: absolute;
     width: 100%;
@@ -20,18 +11,63 @@
         height: 6px;
         margin-left: 8.5%;
         bottom: 76px;
+        transition: all linear .1s;
+
+        &:hover {
+            height: 18px;
+            bottom: 70px;
+        }
     }
 
     progress[value] {
         -webkit-appearance: none;
-    }
 
-    progress[value]::-webkit-progress-bar {
-        background-color: #eee;
-    }
+        &::-webkit-progress-bar {
+            background-color: #eee;
+        }
 
-    progress[value]::-webkit-progress-value {
-        background-color: red;
+        &::-webkit-progress-value {
+            background-color: red;
+        }
+    }
+}
+
+:local(.info_hide) {
+    opacity: 0;
+    transition: opacity linear .4s
+}
+
+:local(.top__info) {
+    position: absolute;
+    width: 100%;
+    height: 15%;
+    top: 0;
+}
+
+:local(.top__info_hide) {
+    top: -15%;
+    transition: top linear .2s;
+}
+
+:local(.bottom__info) {
+    position: absolute;
+    width: 100%;
+    height: 15%;
+    bottom: 0;
+}
+
+:local(.bottom__info_hide) {
+    bottom: -15%;
+    transition: bottom linear .3s;
+}
+
+:local(.player) {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    video {
+        position: absolute;
     }
 }
 
@@ -51,7 +87,7 @@
     left: 30px;
 }
 
-:local(.toggle__play__pause) {
+:local(.toggle__play_pause) {
     position: absolute;
     bottom: 30px;
     left: 30px;
@@ -61,6 +97,7 @@
     font-family: 'Material Icons';
     font-size: 100px;
     color: white;
+    cursor: pointer;
 
     &:hover {
         color: red;
