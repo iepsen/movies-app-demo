@@ -21,6 +21,7 @@ export class MovieListComponent extends React.Component {
             window.addEventListener('keydown', this.onKeyDown)
             this.wrapperRef.current.classList.add(css.wrapper__focused)
             this.wrapperRef.current.scrollIntoView(true)
+            this.onSelect()
         } else {
             window.removeEventListener('keydown', this.onKeyDown)
             this.wrapperRef.current.classList.remove(css.wrapper__focused)

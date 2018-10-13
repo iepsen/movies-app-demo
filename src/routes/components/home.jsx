@@ -57,6 +57,7 @@ export class HomeRouteComponent extends React.Component {
     }
 
     onSelect(movie) {
+        if (this.state.selectedMovie === movie) return
         this.setState({selectedMovie: movie})
     }
 
@@ -77,20 +78,22 @@ export class HomeRouteComponent extends React.Component {
                     />
                 </div>
                 <div ref={this.movieListRef} className={css.movies__list}>
-                    <MovieListComponent
-                        hasFocus={this.state.featuredMoviesHasFocus} 
-                        title={'Featured Movies'} 
-                        movies={this.state.featuredMovies} 
-                        onSelect={this.onSelect} 
-                        onChoose={this.onChoose} 
-                    />
-                    <MovieListComponent 
-                        hasFocus={this.state.watchedMoviesHasFocus}
-                        title={'Watched Movies'} 
-                        movies={this.state.watchedMovies} 
-                        onSelect={this.onSelect} 
-                        onChoose={this.onChoose} 
-                    />
+                    <div>
+                        <MovieListComponent
+                            hasFocus={this.state.featuredMoviesHasFocus} 
+                            title={'Featured Movies'} 
+                            movies={this.state.featuredMovies} 
+                            onSelect={this.onSelect} 
+                            onChoose={this.onChoose} 
+                        />
+                        <MovieListComponent 
+                            hasFocus={this.state.watchedMoviesHasFocus}
+                            title={'Watched Movies'} 
+                            movies={this.state.watchedMovies} 
+                            onSelect={this.onSelect} 
+                            onChoose={this.onChoose} 
+                        />
+                    </div>
                 </div>
             </div>
         )
