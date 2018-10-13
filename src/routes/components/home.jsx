@@ -20,12 +20,15 @@ export class HomeRouteComponent extends React.Component {
 
     componentWillMount() {
         this.interactor.get()
-            .then(movies => this.setState({movies}), this.getWatchedMovies())
+            .then(movies => {
+                this.setState({movies})
+                this.getWatchedMovies(movies)
+            })
     }
 
-    getWatchedMovies() {
-        this.interactor.getWatchedMovies()
-            .then(watchedMovies => this.setState({watchedMovies}))
+    getWatchedMovies(movies) {
+        let watchedMovies = movies.filter(movie => movie.progress > 0)
+        this.setState({watchedMovies})
     }
 
     onSelect(movie) {
