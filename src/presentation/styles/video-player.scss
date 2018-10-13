@@ -35,20 +35,6 @@
     }
 }
 
-:local(.time) {
-    position: absolute;
-    bottom: 50px;
-    right: 50px;
-    color: white;
-
-    i {
-        font-size: 50px;
-        font-weight: normal;
-        font-style: normal;
-        font-family: 'Open Sans', sans-serif;
-    }
-}
-
 :local(.title) {
     position: absolute;
     top: 40px;
@@ -68,10 +54,9 @@
         cursor: pointer;
     }
 
-    i:hover {
+    i:hover, i:focus {
         color: red;
     }
-
 }
 
 :local(.toggle__play__pause) {
@@ -83,7 +68,7 @@
         cursor: pointer;
     }
     
-    i:hover {
+    i:hover, i:focus {
         color: red;
     }
 }
@@ -94,4 +79,18 @@
     font-style: normal;
     font-size: 100px;
     color: white;
+}
+
+:local(.time) {
+    position: absolute;
+    bottom: 55px;
+    right: 30px;
+    color: white;
+
+    i {
+        font-size: 40px;
+        font-weight: normal;
+        font-style: normal;
+        font-family: 'Open Sans', sans-serif;
+    }
 }
