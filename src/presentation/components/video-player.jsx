@@ -8,19 +8,24 @@ export class VideoPlayerComponent extends React.Component {
         this.onTimeUpdate = this.onTimeUpdate.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
         this.onCanPlay = this.onCanPlay.bind(this)
-        this.onProgress = this.onProgress.bind(this)
+        this.onMouseSeekProgress = this.onMouseSeekProgress.bind(this)
         this.onEnded = this.onEnded.bind(this)
+
         this.playerRef = React.createRef()
         this.backRef = React.createRef()
         this.playPauseRef = React.createRef()
         this.progressRef = React.createRef()
+
         this.viewModel = new VideoPlayerViewModel(props.data).get()
         this.duration = 0
         this.state = {
             remainingTime: '00:00:00',
-            watched: 0
+            watched: 0,
+            virtualFocusRef: this.playPauseRef
         }
+    }
 
+    componentDidMount() {
         window.addEventListener('keydown', this.onKeyDown)
     }
 
@@ -30,32 +35,42 @@ export class VideoPlayerComponent extends React.Component {
 
     onKeyDown(event) {
         switch(event.keyCode) {
-            case 13:
-                if (document.activeElement === this.playPauseRef.current) {
-                    this.onPlayPause()
-                }
-                if (document.activeElement === this.backRef.current) {
-                    this.onBack()
-                }
-                break
-            case 27:
-                this.onBack()
-                break
-            case 38:
-                this.backRef.current.focus()
-                break
-            case 40:
-                this.playPauseRef.current.focus()
-                break
+        case 13:
+            if (this.state.virtualFocusRef === this.playPauseRef) this.onPlayPause()
+            if (this.state.virtualFocusRef === this.backRef) this.onBack()
+            break
+        case 27:
+            this.onBack()
+            break
+        case 38:
+            this.onVirtualFocusRefChange(this.backRef)
+            break
+        case 40:
+            this.onVirtualFocusRefChange(this.playPauseRef)
+            break
         }
     }
 
-    onProgress(event) {
+    clearVirtualFocusRefStyle() {
+        this.backRef.current.classList.remove(css.focused)
+        this.playPauseRef.current.classList.remove(css.focused)
+    }
+
+    addVirtualFocusRefStyle(virtualFocusRef) {
+        virtualFocusRef.current.classList.add(css.focused)
+    }
+
+    onVirtualFocusRefChange(virtualFocusRef) {
+        this.clearVirtualFocusRefStyle()
+        this.addVirtualFocusRefStyle(virtualFocusRef)
+        this.setState({virtualFocusRef})
+    }
+
+    onMouseSeekProgress(event) {
         const offsetLeft = event.currentTarget.offsetLeft
         const clientX = event.clientX
         const clientWidth = event.currentTarget.clientWidth
         const percentage = ((clientX - offsetLeft) * 100 / clientWidth)
-
         this.seekTo(percentage)
     }
 
@@ -126,15 +141,15 @@ export class VideoPlayerComponent extends React.Component {
                 <video ref={this.playerRef} onEnded={this.onEnded} onCanPlay={this.onCanPlay} onTimeUpdate={this.onTimeUpdate} autoPlay src={this.viewModel.videoUrl} width={'100%'} height={'100%'} />
                 <div className={css.controls}>
                     <div className={css.back}>
-                        <i tabIndex={0} ref={this.backRef} className={css.material__icons}>arrow_back</i>
+                        <i ref={this.backRef} className={css.material__icons}>arrow_back</i>
                     </div>
                     <div className={css.title}>
                         <h1>{this.viewModel.title}</h1>
                     </div>
                     <div className={css.toggle__play__pause}>
-                        <i tabIndex={0} ref={this.playPauseRef} className={css.material__icons}>play_arrow</i>
+                        <i ref={this.playPauseRef} className={css.material__icons}>play_arrow</i>
                     </div>
-                    <progress onClick={this.onProgress} ref={this.progressRef} value={this.state.watched} max={100}></progress>
+                    <progress onClick={this.onMouseSeekProgress} ref={this.progressRef} value={this.state.watched} max={100}></progress>
                     <div className={css.time}>
                         <i>{this.state.remainingTime}</i>
                     </div>
