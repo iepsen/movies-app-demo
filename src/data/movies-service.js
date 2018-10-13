@@ -3,15 +3,18 @@ import { MovieEntity } from '../domain/movie-entity'
 export class MoviesService {
     constructor() {
         this.serviceUrl = 'https://2qcg0zv57a.execute-api.us-west-2.amazonaws.com/default/fetchVideos'
+        this.entities = []
     }
 
     async get() {
         return fetch(this.serviceUrl)
             .then(response => response.json())
             .then(response => response.entries)
-            .then(movies => movies.map(movie => 
-                new MovieEntity(movie).get())
-            )
+            .then(movies => movies.map(movie => new MovieEntity(movie).get()))
+            .then(entities => {
+                this.entities = entities
+                return entities
+            })
     }
 
     setStoreProgress(key, value) {
@@ -23,6 +26,6 @@ export class MoviesService {
     }
 
     async getWatchedMovies() {
-        return []
+        return this.entities
     }
 }
