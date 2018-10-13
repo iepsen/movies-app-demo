@@ -1,4 +1,4 @@
-import { MoviesService } from "../data/movies-service";
+import { MoviesService } from '../data/movies-service'
 
 export class MovieInteractor {
     constructor() {
