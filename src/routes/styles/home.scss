@@ -1,6 +1,5 @@
 :local(.container) {
     height: 100%;
-    overflow: hidden;
 }
 
 :local(.selected_movie) {
@@ -11,5 +10,4 @@
     display: flex;
     flex-direction: column;
     height: 60%;
-    overflow: hidden;
 }
