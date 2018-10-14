@@ -147,20 +147,20 @@ export class VideoPlayerComponent extends React.Component {
     }
 
     setHideInfoTimer() {
-        clearTimeout(this.hideInfoTimer)
-        this.hideInfoTimer = setTimeout(() => this.hideInfo(), 5000)
+        // clearTimeout(this.hideInfoTimer)
+        // this.hideInfoTimer = setTimeout(() => this.hideInfo(), 5000)
     }
 
     hideInfo() {
-        this.topInfoRef.current.classList.add(css.top__info_hide)
-        this.bottomInfoRef.current.classList.add(css.bottom__info_hide)
-        this.infoRef.current.classList.add(css.info_hide)
+        this.topInfoRef.current.classList.add(css.top_info__hide)
+        this.bottomInfoRef.current.classList.add(css.bottom_info__hide)
+        this.infoRef.current.classList.add(css.info__hide)
     }
 
     showInfo() {
-        this.topInfoRef.current.classList.remove(css.top__info_hide)
-        this.bottomInfoRef.current.classList.remove(css.bottom__info_hide)
-        this.infoRef.current.classList.remove(css.info_hide)
+        this.topInfoRef.current.classList.remove(css.top_info__hide)
+        this.bottomInfoRef.current.classList.remove(css.bottom_info__hide)
+        this.infoRef.current.classList.remove(css.info__hide)
         this.setHideInfoTimer()
     }
 
@@ -206,24 +206,16 @@ export class VideoPlayerComponent extends React.Component {
     render() {
         return (
             <div className={css.player}>
-                <video ref={this.playerRef} onEnded={this.onEnded} onCanPlay={this.onCanPlay} onTimeUpdate={this.onTimeUpdate} autoPlay src={this.viewModel.videoUrl} width={'100%'} height={'100%'} />
+                <video ref={this.playerRef} onEnded={this.onEnded} onCanPlay={this.onCanPlay} onTimeUpdate={this.onTimeUpdate} autoPlay src={this.viewModel.videoUrl} />
                 <div ref={this.infoRef} className={css.info}>
-                    <div ref={this.topInfoRef} className={css.top__info}>
-                        <div onClick={this.onBack} className={css.back}>
-                            <i ref={this.backRef} className={css.material__icons}>arrow_back</i>
-                        </div>
-                        <div className={css.title}>
-                            <h1>{this.viewModel.title}</h1>
-                        </div>
+                    <div ref={this.topInfoRef} className={css.top_info}>
+                        <i onClick={this.onBack} ref={this.backRef} className={css.material_icons}>arrow_back</i>
+                        <h1 className={css.title}>{this.viewModel.title}</h1>
                     </div>
-                    <div ref={this.bottomInfoRef} className={css.bottom__info}>
-                        <div onClick={this.onPlayPause} className={css.toggle__play_pause}>
-                            <i ref={this.playPauseRef} className={css.material__icons}>pause_arrow</i>
-                        </div>
+                    <div ref={this.bottomInfoRef} className={css.bottom_info}>
+                        <i onClick={this.onPlayPause} ref={this.playPauseRef} className={css.material_icons}>pause</i>
                         <progress onClick={this.onMouseSeekProgress} ref={this.progressRef} value={this.state.watched} max={100}></progress>
-                        <div className={css.time}>
-                            <i>{this.state.remainingTime}</i>
-                        </div>
+                        <span>{this.state.remainingTime}</span>
                     </div>
                 </div>
             </div>
