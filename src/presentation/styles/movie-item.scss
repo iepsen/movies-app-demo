@@ -1,13 +1,19 @@
-:local(.movie) {
-    border-radius: 5%;
-    overflow: hidden;
+%selected {
+    transform: scale(1.1)
+}
 
+:local(.movie) {
+    overflow: hidden;
     &:hover {
-        opacity: 1;
+        @extend %selected
     }
 
     img {
         width: 100%;
         object-fit: cover;
     }
+}
+
+:local(.selected__movie) {
+    @extend %selected
 }

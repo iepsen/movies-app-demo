@@ -3,17 +3,19 @@
     height: 70%;
     overflow: hidden;
     padding: 0 2% 2% 2%;
-    opacity: 0.5;
 
     h2 {
-        color: #eeeeee;
+        color: #a4a4a4;
         margin-bottom: 10px;
         font-size: 1.5em;
     }
 }
 
 :local(.wrapper_focused) {
-    opacity: 1;
+    h2 {
+        color: white;
+        font-size: 1.8em;
+    }
 }
 
 :local(.movies) {
