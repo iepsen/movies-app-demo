@@ -7,7 +7,7 @@
     h2 {
         color: #eeeeee;
         margin-bottom: 10px;
-        font-size: 2.1em;
+        font-size: 1.5em;
     }
 }
 
@@ -23,14 +23,6 @@
     position: relative;
     transform: translateX(100%);
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    @media (min-width: 30em) {
-      left: -50%;
-      transform: translateX(50%);
-    }
-    @media (min-width: 40em) {
-      left: -20%;
-      transform: translateX(20%);
-    }
 }
 
 :local(.reversing) {
