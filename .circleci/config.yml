@@ -37,8 +37,8 @@ jobs:
           name: Deploy to S3
           command: aws s3 sync dist s3://movies-app-demo --delete
       - run:
-          name: Read permission
-          command: aws s3api put-object-acl --acl public-read --bucket movies-app-demo --key main.js --key index.html
+          name: Apply read permissions
+          command: aws s3api put-object-acl --acl public-read --bucket movies-app-demo --key main.js && aws s3api put-object-acl --acl public-read --bucket movies-app-demo --key index.html
 
 workflows:
   version: 2
