@@ -62,6 +62,8 @@
     progress, i, span {
         align-self: center;
     }
+
+    span { font-size: 1.8em; }
 }
 
 :local(.bottom_info__hide) {
