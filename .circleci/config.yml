@@ -44,7 +44,7 @@ jobs:
           command: sudo pip install awscli
       - run:
           name: Deploy to S3
-          command: aws s3 sync dist/ s3://movies-app-demo --delete
+          command: aws s3 sync dist s3://movies-app-demo --delete
 
 workflows:
   version: 2
