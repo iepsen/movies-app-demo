@@ -64,6 +64,7 @@ export class HomeRouteComponent extends React.Component {
             this.update()
             break
         }
+        event.preventDefault()
     }
 
     update() {
@@ -111,7 +112,7 @@ export class HomeRouteComponent extends React.Component {
             return <MovieListComponent
                 key={index}
                 index={index}
-                hasFocus={this.state.moviesListFocusIndex === index ? true : false}
+                hasFocus={this.state.moviesListFocusIndex === index}
                 title={movieListItem.title} 
                 movies={movieListItem.movieList} 
                 onMount={this.onMount}
