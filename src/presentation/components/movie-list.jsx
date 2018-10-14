@@ -78,13 +78,13 @@ export class MovieListComponent extends React.Component {
 
     hasFocus() {
         window.addEventListener('keydown', this.onKeyDown)
-        this.wrapperRef.current.classList.add(css.wrapper_focused)
+        this.wrapperRef.current.classList.add(css.wrapper__focused)
         this.onSelect()
     }
 
     lostFocus() {
         window.removeEventListener('keydown', this.onKeyDown)
-        this.wrapperRef.current.classList.remove(css.wrapper_focused)
+        this.wrapperRef.current.classList.remove(css.wrapper__focused)
     }
 
     update() {

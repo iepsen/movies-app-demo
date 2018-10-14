@@ -6,12 +6,12 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-:local(.info_hide) {
+:local(.info__hide) {
     opacity: 0;
     transition: opacity linear .4s
 }
 
-:local(.top_info) {
+:local(.top__info) {
     display: flex;
     position: absolute;
     padding: 3%;
@@ -22,12 +22,12 @@
     h1 { margin-left: 1%; }
 }
 
-:local(.top_info__hide) {
+:local(.top__info_hide) {
     top: -15%;
     transition: top linear .2s;
 }
 
-:local(.bottom_info) {
+:local(.bottom__info) {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -66,7 +66,7 @@
     span { font-size: 1.8em; }
 }
 
-:local(.bottom_info__hide) {
+:local(.bottom__info_hide) {
     bottom: -15%;
     transition: bottom linear .3s;
 }
@@ -83,7 +83,7 @@
     }
 }
 
-:local(.material_icons) {
+:local(.material__icons) {
     font-family: 'Material Icons';
     font-size: 3em;
     color: white;

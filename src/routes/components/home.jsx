@@ -131,10 +131,10 @@ export class HomeRouteComponent extends React.Component {
         return (
             <div className={css.container}>
 
-                <div className={css.selected_movie}>
+                <div className={css.selected__movie}>
                     <SelectedMovieComponent movie={this.state.selectedMovie} />
                 </div>
-                <div ref={this.movieListRef} className={css.movies_list}>
+                <div ref={this.movieListRef} className={css.movies__list}>
                     {this.renderMoviesList()}
                 </div>
             </div>

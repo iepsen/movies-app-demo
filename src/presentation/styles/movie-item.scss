@@ -3,6 +3,7 @@
 }
 
 :local(.movie) {
+    border-radius: 5%;
     overflow: hidden;
     &:hover {
         @extend %selected
