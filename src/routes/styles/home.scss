@@ -3,11 +3,13 @@
     overflow: hidden;
 }
 
-:local(.selected__movie) {
+:local(.selected_movie) {
     height: 40%;
 }
 
-:local(.movies__list) {
+:local(.movies_list) {
+    display: flex;
+    flex-direction: column;
     height: 60%;
-    overflow-y: auto;
+    overflow: hidden;
 }

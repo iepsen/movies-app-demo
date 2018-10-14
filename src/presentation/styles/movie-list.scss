@@ -1,7 +1,8 @@
 :local(.wrapper) {
-    height: 75%;
+    flex: 0 0 70%;
+    height: 70%;
     overflow: hidden;
-    margin: 0 2% 2% 2%;
+    padding: 0 2% 2% 2%;
     opacity: 0.5;
 
     h2 {
@@ -11,31 +12,14 @@
     }
 }
 
-:local(.wrapper__focused) {
+:local(.wrapper_focused) {
     opacity: 1;
 }
 
 :local(.movies) {
-    display: flex;
-    height: 88%;
-    left: -100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10em, 0));
+    grid-column-gap: 0.8em;
+    height: 84%;
     list-style: none;
-    position: relative;
-    transform: translateX(100%);
-    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-:local(.reversing) {
-    transform: translateX(-100%);
-    @media (min-width: 30em) {
-        transform: translateX(-50%);
-    }
-    @media (min-width: 40em) {
-      transform: translateX(-20%);
-    }
-}
-
-:local(.defined) {
-  transform: none;
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
