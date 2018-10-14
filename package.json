@@ -44,7 +44,8 @@
   "scripts": {
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --open --mode development",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
-    "test": "./node_modules/jest/bin/jest.js --env=jsdom --testURL=http://localhost:8080"
+    "test": "./node_modules/jest/bin/jest.js --env=jsdom --testURL=http://localhost:8080",
+    "build": "./node_modules/webpack/bin/webpack.js --mode=production"
   },
   "jest": {
     "verbose": true,
