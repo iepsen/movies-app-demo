@@ -11,6 +11,9 @@ export class SelectedMovieComponent extends React.Component {
         return (
             <React.Fragment>
                 <h1>{this.viewModel.title}</h1>
+                <span>{this.viewModel.year}</span>
+                <span className={css.rating}>{this.viewModel.rating}</span>
+                <span className={css.categories}>{this.viewModel.categories}</span>
                 <p>{this.viewModel.description}</p>
             </React.Fragment>
         )

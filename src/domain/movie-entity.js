@@ -7,6 +7,8 @@ export class MovieEntity {
         this.availableDate = new Date(payload.availableDate)
         this.video = this.getVideo(payload.contents)
         this.image = this.getImage(payload.images)
+        this.rating = this.getParentalRatings(payload.parentalRatings)
+        this.categories = this.getCategories(payload.categories)
         this.progress = 0
     }
 
@@ -20,6 +22,17 @@ export class MovieEntity {
 
     getLink() {
         return `/movie/${this.id}`
+    }
+
+    getParentalRatings(arr) {
+        if (arr.length === 0) return null
+        const parentalRatings = arr[0]
+        return parentalRatings.rating.replace('_', '-')
+    }
+
+    getCategories(arr) {
+        if (arr.length === 0) return null
+        return arr.map(category => category.title)
     }
 
     getVideo(arr) {
