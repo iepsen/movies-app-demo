@@ -13,23 +13,21 @@ export class MovieListComponent extends React.Component {
         this.currentItemIndex = 0
     }
 
+    componentDidMount() {
+        if (this.props.onMount) {
+            this.props.onMount(this.props.index, this.wrapperRef)
+        }
+        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
+    }
+
     componentDidUpdate() {
         if (this.wrapperRef.current === null) return
         if (this.props.movies === null) return
-
-        if (this.props.hasFocus) {
-            window.addEventListener('keydown', this.onKeyDown)
-            this.wrapperRef.current.classList.add(css.wrapper__focused)
-            this.wrapperRef.current.scrollIntoView(true)
-            this.onSelect()
-        } else {
-            window.removeEventListener('keydown', this.onKeyDown)
-            this.wrapperRef.current.classList.remove(css.wrapper__focused)
-        }
+        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
     }
 
     componentWillUnmount() {
-        window.removeEventListener('keydown', this.onKeyDown)
+        this.lostFocus()
     }
 
     onKeyDown(event) {
@@ -73,6 +71,17 @@ export class MovieListComponent extends React.Component {
 
     onMount(index, ref) {
         this.moviesRefMap.set(index, ref)
+    }
+
+    hasFocus() {
+        window.addEventListener('keydown', this.onKeyDown)
+        this.wrapperRef.current.classList.add(css.wrapper_focused)
+        this.onSelect()
+    }
+
+    lostFocus() {
+        window.removeEventListener('keydown', this.onKeyDown)
+        this.wrapperRef.current.classList.remove(css.wrapper_focused)
     }
 
     update() {
