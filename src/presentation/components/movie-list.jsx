@@ -11,6 +11,9 @@ export class MovieListComponent extends React.Component {
         this.onKeyDown = this.onKeyDown.bind(this)
         this.onMount = this.onMount.bind(this)
         this.currentItemIndex = 0
+        this.state = {
+            movieFocusIndex: 0
+        }
     }
 
     componentDidMount() {
@@ -96,6 +99,10 @@ export class MovieListComponent extends React.Component {
             value.current.style = `order: ${order}`
         }
         this.onSelect()
+        this.setState({
+            movieFocusIndex: this.currentItemIndex
+        })
+
     }
 
     getRefItem(index) {
@@ -104,7 +111,13 @@ export class MovieListComponent extends React.Component {
 
     renderMovies() {
         return this.props.movies.map((movie, index) => 
-            <MovieItemComponent onMount={this.onMount} key={index} index={index} movie={movie} />
+            <MovieItemComponent 
+                onMount={this.onMount} 
+                key={index} 
+                index={index}
+                movie={movie}
+                hasFocus={this.props.hasFocus && this.state.movieFocusIndex === index}
+            />
         )
     }
 
