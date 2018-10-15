@@ -54,11 +54,11 @@
     position: absolute;
     border-radius: 50%;
     background-image: radial-gradient(rgba(0, 0, 0, 0.6), transparent);
-    transition: all 200ms ease;
     margin: 0.1%;
     width: 5em;
     height: 5em;
     top: 8em;
+    transition: left 200ms ease, right 200ms ease;
 
     &:hover {
         i { color: red; text-shadow: 0 0 80px white; }

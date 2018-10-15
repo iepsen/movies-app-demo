@@ -15,6 +15,8 @@ export class MovieListComponent extends React.Component {
         this.onMouseEnter = this.onMouseEnter.bind(this)
         this.onClickArrowLeft = this.onClickArrowLeft.bind(this)
         this.onClickArrowRight = this.onClickArrowRight.bind(this)
+        this.onMouseEnterArrows = this.onMouseEnterArrows.bind(this)
+        this.onMouseLeaveArrows = this.onMouseLeaveArrows.bind(this)
 
         this.onMouseMove = this.onMouseMove.bind(this)
 
@@ -28,6 +30,7 @@ export class MovieListComponent extends React.Component {
 
         this.movieListRefMap = new Map()
         this.hideArrowsTimer = null
+        this.isPointerOverArrows = false
         this.state = {
             focusedMovieIndex: 0
         }
@@ -82,15 +85,24 @@ export class MovieListComponent extends React.Component {
         this.showArrows()
     }
 
+    onMouseEnterArrows() {
+        this.isPointerOverArrows = true
+    }
+
+    onMouseLeaveArrows() {
+        this.isPointerOverArrows = false
+    }
+
     setHideArrowsTimer() {
         clearTimeout(this.hideArrowsTimer)
-        this.hideArrowsTimer = setTimeout(() => this.hideArrows(), 2000)
+        this.hideArrowsTimer = setTimeout(() => this.hideArrows(), 3000)
     }
 
     showArrows() {
         this.arrowLeftRef.current.classList.remove(css.arrow__left_hide)
         this.arrowRightRef.current.classList.remove(css.arrow__right_hide)
-        this.setHideArrowsTimer()
+        this.isPointerOverArrows ? 
+            clearTimeout(this.hideArrowsTimer) : this.setHideArrowsTimer()
     }
 
     hideArrows() {
@@ -107,7 +119,7 @@ export class MovieListComponent extends React.Component {
     navigateRight() {
         const nextIndex = this.getMovieIndex()  + 1
         this.setMovieIndex(this.movieListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listRef.current, css.slide__left, this.setFocus)        
+        animateList(this.listRef.current, css.slide__left, this.setFocus)
     }
 
     onFocus() {
@@ -139,6 +151,7 @@ export class MovieListComponent extends React.Component {
 
     setFocus() {
         orderListMap(this.movieListRefMap, this.getMovieIndex())
+        this.onFocus()
     }
 
     getMovieIndex() {
@@ -184,11 +197,11 @@ export class MovieListComponent extends React.Component {
                 <ul ref={this.listRef} className={css.movies}>
                     {this.renderMovies()}
                 </ul>
-                <div ref={this.arrowLeftRef} className={`${css.arrow} ${css.arrow__left} ${css.arrow__left_hide}`}>
-                    <i onClick={this.onClickArrowLeft} className={css.material__icons}>chevron_left</i>
+                <div onClick={this.onClickArrowLeft} onMouseEnter={this.onMouseEnterArrows} onMouseLeave={this.onMouseLeaveArrows} ref={this.arrowLeftRef} className={`${css.arrow} ${css.arrow__left} ${css.arrow__left_hide}`}>
+                    <i className={css.material__icons}>chevron_left</i>
                 </div>
-                <div ref={this.arrowRightRef} className={`${css.arrow} ${css.arrow__right} ${css.arrow__right_hide}`}>
-                    <i onClick={this.onClickArrowRight} className={css.material__icons}>chevron_right</i>
+                <div onClick={this.onClickArrowRight} onMouseEnter={this.onMouseEnterArrows} onMouseLeave={this.onMouseLeaveArrows} ref={this.arrowRightRef} className={`${css.arrow} ${css.arrow__right} ${css.arrow__right_hide}`}>
+                    <i className={css.material__icons}>chevron_right</i>
                 </div>
             </div>
         )
