@@ -1,28 +1,13 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
-import { configure, mount, shallow } from 'enzyme'
+import { configure, mount } from 'enzyme'
 import { expect } from 'chai'
 import sinon from 'sinon'
 import Adapter from 'enzyme-adapter-react-16'
 import { MovieItemComponent } from '../movie-item'
+import movieMock from '../__mocks__/movie'
 
 configure({ adapter: new Adapter() })
-
-const movie = {
-    id: '10-things-i-hate-about-you',
-    title: '10 Things I Hate About You',
-    description: 'A new kid must find a guy to date the meanest girl in school, the older sister of the girl he has a crush on, who cannot date until her older sister does.',
-    image: {
-        url: 'https://picsum.photos/200/500?t=1'
-    },
-    movie: {
-        pathname: '/movie/10-things-i-hate-about-you',
-        state: {
-            movie: {}
-        }
-    },
-    getLink: jest.fn(() => '/movie/10-things-i-hate-about-you')
-}
 
 describe('<MovieItemComponent />', () => {
     it('calls componentDidMount', () => {
@@ -33,7 +18,7 @@ describe('<MovieItemComponent />', () => {
                     onMount={jest.fn()} 
                     key={0} 
                     index={0}
-                    movie={movie}
+                    movie={movieMock}
                     hasFocus={false}
                 />
             </MemoryRouter>
@@ -49,13 +34,30 @@ describe('<MovieItemComponent />', () => {
                     onMount={jest.fn()} 
                     key={0} 
                     index={0}
-                    movie={movie}
+                    movie={movieMock}
                     hasFocus={false}
                 />
             </MemoryRouter>
         )
-        expect(wrapper.find('li a img').filterWhere((item) => 
-            item.prop('src') === movie.image.url
+        expect(wrapper.find('img').filterWhere((item) => 
+            item.prop('src') === movieMock.image.url
+        )).to.have.lengthOf(1)
+    })
+
+    it('has a link to movie', () => {
+        const wrapper = mount(
+            <MemoryRouter>
+                <MovieItemComponent 
+                    onMount={jest.fn()} 
+                    key={0} 
+                    index={0}
+                    movie={movieMock}
+                    hasFocus={false}
+                />
+            </MemoryRouter>
+        )
+        expect(wrapper.find('a').filterWhere((item) =>
+            item.prop('href') === movieMock.getLink()
         )).to.have.lengthOf(1)
     })
 })
