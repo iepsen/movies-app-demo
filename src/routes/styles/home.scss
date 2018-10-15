@@ -1,5 +1,6 @@
 :local(.container) {
     height: 100%;
+    overflow: hidden;
 }
 
 :local(.selected__movie) {
@@ -8,6 +9,7 @@
 
 :local(.movies__list) {
     display: flex;
+    overflow: hidden;
     flex-direction: column;
     height: 60%;
 }
