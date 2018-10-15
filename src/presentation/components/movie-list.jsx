@@ -14,6 +14,8 @@ export class MovieListComponent extends React.Component {
         this.onMount = this.onMount.bind(this)
 
         this.wrapperRef = React.createRef()
+        this.listRef = React.createRef()
+
         this.movieListRefMap = new Map()
         this.focusedMovieIndex = 0
 
@@ -67,13 +69,21 @@ export class MovieListComponent extends React.Component {
     navigateLeft() {
         const index = this.focusedMovieIndex - 1
         this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : this.movieListRefMap.size - 1
-        this.setFocus()
+        this.listRef.current.classList.add(css.slide__right)
+        this.listRef.current.addEventListener('animationend', () => {
+            this.listRef.current.classList.remove(css.slide__right)
+            this.setFocus()
+        })
     }
 
     navigateRight() {
         const index = this.focusedMovieIndex + 1
         this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : 0
-        this.setFocus()
+        this.listRef.current.classList.add(css.slide__left)
+        this.listRef.current.addEventListener('animationend', () => {
+            this.listRef.current.classList.remove(css.slide__left)
+            this.setFocus()
+        })
     }
 
     onFocus() {
@@ -143,7 +153,7 @@ export class MovieListComponent extends React.Component {
         return (
             <div onKeyDown={this.onKeyDown} ref={this.wrapperRef} className={css.wrapper}>
                 <h2>{this.props.title}</h2>
-                <ul className={css.movies}>
+                <ul ref={this.listRef} className={css.movies}>
                     {this.renderMovies()}
                 </ul>
             </div>

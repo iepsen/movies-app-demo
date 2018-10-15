@@ -1,4 +1,5 @@
 :local(.wrapper) {
+    position: relative;
     flex: 0 0 70%;
     height: 70%;
     overflow: hidden;
@@ -19,9 +20,29 @@
 }
 
 :local(.movies) {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10em, 0));
     grid-column-gap: 0.8em;
     height: 84%;
-    list-style: none;
+    left: 0;
+}
+
+:local(.slide__left) {
+    animation: slide__left 150ms forwards;
+}
+
+@keyframes slide__left {
+    0% { left: 0; }
+    100% { left: -14%; }
+}
+
+:local(.slide__right) {
+    left: -15%;
+    animation: slide__right 150ms forwards;
+}
+
+@keyframes slide__right {
+    0% { left: 0; }
+    100% { left: 14%; }
 }
