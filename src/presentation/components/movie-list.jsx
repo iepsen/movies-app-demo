@@ -13,20 +13,28 @@ export class MovieListComponent extends React.Component {
         this.onKeyLeft = this.onKeyLeft.bind(this)
         this.onKeyRight = this.onKeyRight.bind(this)
         this.onMouseEnter = this.onMouseEnter.bind(this)
-        this.setFocus = this.setFocus.bind(this)
+        this.onClickArrowLeft = this.onClickArrowLeft.bind(this)
+        this.onClickArrowRight = this.onClickArrowRight.bind(this)
 
+        this.onMouseMove = this.onMouseMove.bind(this)
+
+        this.setFocus = this.setFocus.bind(this)
         this.onMount = this.onMount.bind(this)
 
         this.wrapperRef = React.createRef()
         this.listRef = React.createRef()
+        this.arrowLeftRef = React.createRef()
+        this.arrowRightRef = React.createRef()
 
         this.movieListRefMap = new Map()
+        this.hideArrowsTimer = null
         this.state = {
             focusedMovieIndex: 0
         }
     }
 
     componentDidMount() {
+        window.addEventListener('mousemove', this.onMouseMove)
         this.props.hasFocus ? this.hasFocus() : this.lostFocus()
         if (this.props.onMount) {
             this.props.onMount(this.props.index, this.wrapperRef)
@@ -41,6 +49,7 @@ export class MovieListComponent extends React.Component {
     }
 
     componentWillUnmount() {
+        window.removeEventListener('mousemove', this.onMouseMove)
         this.lostFocus()
     }
 
@@ -59,6 +68,34 @@ export class MovieListComponent extends React.Component {
     onMouseEnter(index) {
         this.setMovieIndex(index)
         this.onFocus()
+    }
+
+    onClickArrowLeft() {
+        this.navigateLeft()
+    }
+
+    onClickArrowRight() {
+        this.navigateRight()
+    }
+
+    onMouseMove() {
+        this.showArrows()
+    }
+
+    setHideArrowsTimer() {
+        clearTimeout(this.hideArrowsTimer)
+        this.hideArrowsTimer = setTimeout(() => this.hideArrows(), 2000)
+    }
+
+    showArrows() {
+        this.arrowLeftRef.current.classList.remove(css.arrow__left_hide)
+        this.arrowRightRef.current.classList.remove(css.arrow__right_hide)
+        this.setHideArrowsTimer()
+    }
+
+    hideArrows() {
+        this.arrowLeftRef.current.classList.add(css.arrow__left_hide)
+        this.arrowRightRef.current.classList.add(css.arrow__right_hide)
     }
 
     navigateLeft() {
@@ -147,6 +184,12 @@ export class MovieListComponent extends React.Component {
                 <ul ref={this.listRef} className={css.movies}>
                     {this.renderMovies()}
                 </ul>
+                <div ref={this.arrowLeftRef} className={`${css.arrow} ${css.arrow__left} ${css.arrow__left_hide}`}>
+                    <i onClick={this.onClickArrowLeft} className={css.material__icons}>chevron_left</i>
+                </div>
+                <div ref={this.arrowRightRef} className={`${css.arrow} ${css.arrow__right} ${css.arrow__right_hide}`}>
+                    <i onClick={this.onClickArrowRight} className={css.material__icons}>chevron_right</i>
+                </div>
             </div>
         )
     }
