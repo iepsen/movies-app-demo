@@ -1,7 +1,7 @@
 # Movies App Demo
 [![CircleCI](https://circleci.com/gh/iepsen/movies-app-demo.svg?style=svg)](https://circleci.com/gh/iepsen/movies-app-demo)
 
-This repository contains the source code for http://movies-app-demo.s3-website-us-west-2.amazonaws.com/.
+This repository contains the source code for http://movies-app-demo.s3-website-us-west-2.amazonaws.com.
 
 ## Resolutions
 Resolutions above 1024 should work. Also optimized for HD and Full HD TV resolutions.
@@ -26,6 +26,6 @@ Resolutions above 1024 should work. Also optimized for HD and Full HD TV resolut
 > Only presentation layer components are covered. More tests could be added soon.
 
 ## Hosting
-This project flow the [CircleCI](https://circleci.com/product/#how-it-works) pipeline to test, build and, if tests are successful, deploy it on Amazon AWS.
+This project flows the [CircleCI](https://circleci.com/product/#how-it-works) pipeline to test, build and deploy it on Amazon AWS if all tests pass.
 
 She the [configuration file](https://github.com/iepsen/movies-app-demo/blob/master/.circleci/config.yml) for more details.
