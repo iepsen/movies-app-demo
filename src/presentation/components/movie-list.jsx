@@ -68,14 +68,14 @@ export class MovieListComponent extends React.Component {
     }
 
     navigateRight() {
-        const nextIndex = this.state.focusedMovieIndex  + 1
+        const nextIndex = this.getMovieIndex()  + 1
         this.setMovieIndex(this.movieListRefMap.has(nextIndex) ? nextIndex : 0)
         animateList(this.listRef.current, css.slide__left, this.setFocus)        
     }
 
     onFocus() {
         if (this.props.onFocus) {
-            this.props.onFocus(this.props.movies[this.state.focusedMovieIndex])
+            this.props.onFocus(this.props.movies[this.getMovieIndex()])
         }
     }
 
@@ -101,7 +101,7 @@ export class MovieListComponent extends React.Component {
     }
 
     setFocus() {
-        orderListMap(this.movieListRefMap, this.state.focusedMovieIndex)
+        orderListMap(this.movieListRefMap, this.getMovieIndex())
     }
 
     getMovieIndex() {
