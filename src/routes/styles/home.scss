@@ -11,27 +11,26 @@
 }
 
 :local(.movies__list) {
-    position: relative;
     display: flex;
     flex-direction: column;
     height: 60%;
 }
 
-:local(.slide__up) {
-    animation: slide__up 150ms forwards;
-}
-
-@keyframes slide__up {
-    0% { top: 0; }
-    100% { top: -40%; }
-}
-
 :local(.slide__down) {
-    top: -40%;
     animation: slide__down 150ms forwards;
 }
 
 @keyframes slide__down {
-    0% { top: 0; }
-    100% { top: 40%; }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-40%); }
+}
+
+:local(.slide__up) {
+    transform: translateY(-40%);
+    animation: slide__up 150ms forwards;
+}
+
+@keyframes slide__up {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(40%) }
 }

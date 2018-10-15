@@ -20,7 +20,6 @@
 }
 
 :local(.movies) {
-    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10em, 0));
     grid-column-gap: 0.8em;
@@ -33,16 +32,16 @@
 }
 
 @keyframes slide__left {
-    0% { left: 0; }
-    100% { left: -14%; }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-14%); }
 }
 
 :local(.slide__right) {
-    left: -14%;
+    transform: translateX(-14%);
     animation: slide__right 150ms forwards;
 }
 
 @keyframes slide__right {
-    0% { left: 0; }
-    100% { left: 14%; }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(14%); }
 }
