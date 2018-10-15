@@ -1,6 +1,7 @@
 import React from 'react'
 import { MovieItemComponent } from './movie-item'
 import { deviceManager } from '../../manager/device-manager'
+import orderListMap from '../../helpers/order-list-map'
 import css from '../styles/movie-list.scss'
 
 export class MovieListComponent extends React.Component {
@@ -10,6 +11,7 @@ export class MovieListComponent extends React.Component {
         this.onKeyOk = this.onKeyOk.bind(this)
         this.onKeyLeft = this.onKeyLeft.bind(this)
         this.onKeyRight = this.onKeyRight.bind(this)
+        this.onMouseEnter = this.onMouseEnter.bind(this)
 
         this.onMount = this.onMount.bind(this)
 
@@ -17,10 +19,8 @@ export class MovieListComponent extends React.Component {
         this.listRef = React.createRef()
 
         this.movieListRefMap = new Map()
-        this.focusedMovieIndex = 0
-
         this.state = {
-            focusedMovieIndex: this.focusedMovieIndex
+            focusedMovieIndex: 0
         }
     }
 
@@ -42,18 +42,6 @@ export class MovieListComponent extends React.Component {
         this.lostFocus()
     }
 
-    subscribe() {
-        deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
-        deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
-        deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
-    }
-
-    unsubscribe() {
-        deviceManager.unsubscribe(deviceManager.KEY_OK)
-        deviceManager.unsubscribe(deviceManager.KEY_LEFT)
-        deviceManager.unsubscribe(deviceManager.KEY_RIGHT)
-    }
-
     onKeyOk() {
         this.onSelect()
     }
@@ -66,9 +54,18 @@ export class MovieListComponent extends React.Component {
         this.navigateRight()
     }
 
+    onMouseEnter(index) {
+        this.setState({
+            focusedMovieIndex: index
+        })
+        this.onFocus()
+    }
+
     navigateLeft() {
-        const index = this.focusedMovieIndex - 1
-        this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : this.movieListRefMap.size - 1
+        const index = this.state.focusedMovieIndex - 1
+        this.setState({
+            focusedMovieIndex: (this.movieListRefMap.has(index)) ? index : this.movieListRefMap.size - 1
+        })
         this.listRef.current.classList.add(css.slide__right)
         this.listRef.current.addEventListener('animationend', () => {
             this.listRef.current.classList.remove(css.slide__right)
@@ -77,8 +74,10 @@ export class MovieListComponent extends React.Component {
     }
 
     navigateRight() {
-        const index = this.focusedMovieIndex + 1
-        this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : 0
+        const index = this.state.focusedMovieIndex  + 1
+        this.setState({
+            focusedMovieIndex: (this.movieListRefMap.has(index)) ? index : 0
+        })
         this.listRef.current.classList.add(css.slide__left)
         this.listRef.current.addEventListener('animationend', () => {
             this.listRef.current.classList.remove(css.slide__left)
@@ -88,7 +87,7 @@ export class MovieListComponent extends React.Component {
 
     onFocus() {
         if (this.props.onFocus) {
-            this.props.onFocus(this.props.movies[this.focusedMovieIndex])
+            this.props.onFocus(this.props.movies[this.state.focusedMovieIndex])
         }
     }
 
@@ -114,31 +113,27 @@ export class MovieListComponent extends React.Component {
     }
 
     setFocus() {
-        let order
-        for (const [key, value] of this.movieListRefMap.entries()) {
-            order = key + (this.movieListRefMap.size - this.focusedMovieIndex)
-            if (this.focusedMovieIndex > key) {
-                order += 1
-            } else {
-                order = (order - this.movieListRefMap.size) + 1
-            }
-            value.current.style = `order: ${order}`
-        }
-
-        this.setState({
-            focusedMovieIndex: this.focusedMovieIndex
-        })
-        this.onFocus()
+        orderListMap(this.movieListRefMap, this.state.focusedMovieIndex)
     }
 
-    getRefItem(index) {
-        return this.movieListRefMap.get(index)
+    subscribe() {
+        deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
+        deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
+        deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
     }
+
+    unsubscribe() {
+        deviceManager.unsubscribe(deviceManager.KEY_OK)
+        deviceManager.unsubscribe(deviceManager.KEY_LEFT)
+        deviceManager.unsubscribe(deviceManager.KEY_RIGHT)
+    }
+
 
     renderMovies() {
         return this.props.movies.map((movie, index) => 
             <MovieItemComponent 
                 onMount={this.onMount} 
+                onMouseEnter={this.onMouseEnter}
                 key={index} 
                 index={index}
                 movie={movie}

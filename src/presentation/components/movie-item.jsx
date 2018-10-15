@@ -8,6 +8,7 @@ export class MovieItemComponent extends React.Component {
         super(props)
         this.ref = React.createRef()
         this.viewModel = new MovieItemViewModel(props.movie).get()
+        this.onMouseEnter = this.onMouseEnter.bind(this)
     }
 
     componentDidMount() {
@@ -25,6 +26,12 @@ export class MovieItemComponent extends React.Component {
         this.lostFocus()
     }
 
+    onMouseEnter() {
+        if (this.props.onMouseEnter) {
+            this.props.onMouseEnter(this.props.index)
+        }
+    }
+
     hasFocus() {
         this.ref.current.classList.add(css.selected__movie)
     }
@@ -35,7 +42,7 @@ export class MovieItemComponent extends React.Component {
 
     render() {
         return (
-            <li ref={this.ref} className={css.movie}>
+            <li onMouseEnter={this.onMouseEnter} ref={this.ref} className={css.movie}>
                 <Link to={this.viewModel.movieLink}>
                     <img src={this.viewModel.imageUrl} alt={this.viewModel.title} />
                 </Link>

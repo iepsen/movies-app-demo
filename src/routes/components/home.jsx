@@ -4,6 +4,7 @@ import { MovieListComponent } from '../../presentation/components/movie-list'
 import { SelectedMovieComponent } from '../../presentation/components/selected-movie'
 import { LoadingComponent } from '../../presentation/components/loading'
 import { deviceManager } from '../../manager/device-manager'
+import orderListMap from '../../helpers/order-list-map'
 import css from '../styles/home.scss'
 
 export class HomeRouteComponent extends React.Component {
@@ -17,7 +18,6 @@ export class HomeRouteComponent extends React.Component {
         this.onMount = this.onMount.bind(this)
         this.listsRef = React.createRef()
         this.moviesListRefMap = new Map()
-        this.focusedListIndex = 0
         this.interactor = new MoviesInteractor()
         
         this.state = {
@@ -54,8 +54,10 @@ export class HomeRouteComponent extends React.Component {
     }
 
     navigateUp() {
-        const index = this.focusedListIndex - 1
-        this.focusedListIndex = (this.moviesListRefMap.has(index)) ? index : this.moviesListRefMap.size - 1
+        const index = this.state.focusedListIndex - 1
+        this.setState({
+            focusedListIndex: this.moviesListRefMap.has(index) ? index : this.moviesListRefMap.size - 1
+        })
         this.listsRef.current.classList.add(css.slide__up)
         this.listsRef.current.addEventListener('animationend', () => {
             this.listsRef.current.classList.remove(css.slide__up)
@@ -64,8 +66,10 @@ export class HomeRouteComponent extends React.Component {
     }
 
     navigateDown() {
-        const index = this.focusedListIndex + 1
-        this.focusedListIndex = (this.moviesListRefMap.has(index)) ? index : 0
+        const index = this.state.focusedListIndex + 1
+        this.setState({
+            focusedListIndex: this.moviesListRefMap.has(index) ? index : 0
+        })
         this.listsRef.current.classList.add(css.slide__down)
         this.listsRef.current.addEventListener('animationend', () => {
             this.listsRef.current.classList.remove(css.slide__down)
@@ -87,20 +91,7 @@ export class HomeRouteComponent extends React.Component {
     }
 
     setFocus() {
-        let order
-        for (const [key, value] of this.moviesListRefMap.entries()) {
-            order = key + (this.moviesListRefMap.size - this.focusedListIndex)
-            if (this.focusedListIndex > key) {
-                order += 1
-            } else {
-                order = (order - this.moviesListRefMap.size) + 1
-            }
-            value.current.style = `order: ${order}`
-        }
-
-        this.setState({
-            focusedListIndex: this.focusedListIndex
-        })
+        orderListMap(this.moviesListRefMap, this.state.focusedListIndex)
     }
 
     pushStateMovieList(title, movieList) {
@@ -116,7 +107,7 @@ export class HomeRouteComponent extends React.Component {
     }
 
     getFocusedListRef() {
-        return this.moviesListRefMap.get(this.focusedListIndex )
+        return this.moviesListRefMap.get(this.state.focusedListIndex )
     }
 
     renderLists() {
