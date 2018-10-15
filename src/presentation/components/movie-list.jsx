@@ -37,7 +37,7 @@ export class MovieListComponent extends React.Component {
     onKeyDown(event) {
         switch(event.keyCode) {
         case 13:
-            this.onChoose()
+            this.onSelect()
             break
         case 37:
             this.onNavigateLeft()
