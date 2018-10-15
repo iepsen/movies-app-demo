@@ -1,11 +1,16 @@
 import React from 'react'
 import { MovieItemComponent } from './movie-item'
+import { deviceManager } from '../../manager/device-manager'
 import css from '../styles/movie-list.scss'
 
 export class MovieListComponent extends React.Component {
     constructor(props) {
         super(props)
-        this.onKeyDown = this.onKeyDown.bind(this)
+
+        this.onKeyOk = this.onKeyOk.bind(this)
+        this.onKeyLeft = this.onKeyLeft.bind(this)
+        this.onKeyRight = this.onKeyRight.bind(this)
+
         this.onMount = this.onMount.bind(this)
 
         this.wrapperRef = React.createRef()
@@ -18,15 +23,16 @@ export class MovieListComponent extends React.Component {
     }
 
     componentDidMount() {
+        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
         if (this.props.onMount) {
             this.props.onMount(this.props.index, this.wrapperRef)
         }
-        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         if (this.wrapperRef.current === null) return
         if (this.props.movies === null) return
+        if (this.props.hasFocus === prevProps.hasFocus) return
         this.props.hasFocus ? this.hasFocus() : this.lostFocus()
     }
 
@@ -34,28 +40,37 @@ export class MovieListComponent extends React.Component {
         this.lostFocus()
     }
 
-    onKeyDown(event) {
-        switch(event.keyCode) {
-        case 13:
-            this.onSelect()
-            break
-        case 37:
-            this.onNavigateLeft()
-            break
-        case 39:
-            this.onNavigateRight()
-            break
-        default: break
-        }
+    subscribe() {
+        deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
+        deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
+        deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
     }
 
-    onNavigateLeft() {
+    unsubscribe() {
+        deviceManager.unsubscribe(deviceManager.KEY_OK)
+        deviceManager.unsubscribe(deviceManager.KEY_LEFT)
+        deviceManager.unsubscribe(deviceManager.KEY_RIGHT)
+    }
+
+    onKeyOk() {
+        this.onSelect()
+    }
+
+    onKeyLeft() {
+        this.navigateLeft()
+    }
+
+    onKeyRight() {
+        this.navigateRight()
+    }
+
+    navigateLeft() {
         const index = this.focusedMovieIndex - 1
         this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : this.movieListRefMap.size - 1
         this.setFocus()
     }
 
-    onNavigateRight() {
+    navigateRight() {
         const index = this.focusedMovieIndex + 1
         this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : 0
         this.setFocus()
@@ -78,14 +93,14 @@ export class MovieListComponent extends React.Component {
     }
 
     hasFocus() {
-        window.addEventListener('keydown', this.onKeyDown)
         this.wrapperRef.current.classList.add(css.wrapper__focused)
+        setTimeout(() => this.subscribe(), 0)
         this.onFocus()
     }
 
     lostFocus() {
-        window.removeEventListener('keydown', this.onKeyDown)
         this.wrapperRef.current.classList.remove(css.wrapper__focused)
+        this.unsubscribe()
     }
 
     setFocus() {

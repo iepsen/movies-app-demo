@@ -3,17 +3,19 @@ import { MoviesInteractor } from '../../domain/movies-interactor'
 import { MovieListComponent } from '../../presentation/components/movie-list'
 import { SelectedMovieComponent } from '../../presentation/components/selected-movie'
 import { LoadingComponent } from '../../presentation/components/loading'
+import { deviceManager } from '../../manager/device-manager'
 import css from '../styles/home.scss'
 
 export class HomeRouteComponent extends React.Component {
     
     constructor(props) {
         super(props)
+        this.onKeyUp = this.onKeyUp.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
         this.onSelect = this.onSelect.bind(this)
         this.onFocus = this.onFocus.bind(this)
         this.onMount = this.onMount.bind(this)
-        this.movieListRef = React.createRef()
+        this.listsRef = React.createRef()
         this.moviesListRefMap = new Map()
         this.focusedListIndex = 0
         this.interactor = new MoviesInteractor()
@@ -34,36 +36,33 @@ export class HomeRouteComponent extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('keydown', this.onKeyDown)
+        deviceManager.subscribe(deviceManager.KEY_UP, this.onKeyUp)
+        deviceManager.subscribe(deviceManager.KEY_DOWN, this.onKeyDown)
     }
 
     componentWillUnmount() {
-        window.removeEventListener('keydown', this.onKeyDown)
+        deviceManager.unsubscribe(deviceManager.KEY_UP)
+        deviceManager.unsubscribe(deviceManager.KEY_DOWN)
     }
 
-    onKeyDown(event) {
-        switch(event.keyCode) {
-        case 38:
-            this.onNavigateUp()
-            this.setFocus()
-            break
-
-        case 40:
-            this.onNavigateDown()
-            this.setFocus()
-            break
-        }
-        event.preventDefault()
+    onKeyUp() {
+        this.navigateUp()
     }
 
-    onNavigateUp() {
+    onKeyDown() {
+        this.navigateDown()
+    }
+
+    navigateUp() {
         const index = this.focusedListIndex - 1
         this.focusedListIndex = (this.moviesListRefMap.has(index)) ? index : this.moviesListRefMap.size - 1
+        this.setFocus()
     }
 
-    onNavigateDown() {
+    navigateDown() {
         const index = this.focusedListIndex + 1
         this.focusedListIndex = (this.moviesListRefMap.has(index)) ? index : 0
+        this.setFocus()
     }
 
     onFocus(movie) {
@@ -133,7 +132,7 @@ export class HomeRouteComponent extends React.Component {
                 <div className={css.selected__movie}>
                     <SelectedMovieComponent movie={this.state.focusedMovie} />
                 </div>
-                <div ref={this.movieListRef} className={css.movies__list}>
+                <div ref={this.listsRef} className={css.movies__list}>
                     {this.renderLists()}
                 </div>
             </div>

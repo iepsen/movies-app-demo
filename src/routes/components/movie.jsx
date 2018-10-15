@@ -11,7 +11,11 @@ export class MovieRouteComponent extends React.Component {
         this.interactor = new MovieInteractor()
     }
 
-    onBack() {
+    onBack(watched) {
+        if (watched) {
+            this.interactor.setStoredProgress(this.movie.id, 0)
+        }
+
         this.props.history.goBack()
     }
 
