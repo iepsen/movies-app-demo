@@ -2,6 +2,7 @@ import React from 'react'
 import { MovieItemComponent } from './movie-item'
 import { deviceManager } from '../../manager/device-manager'
 import orderListMap from '../../helpers/order-list-map'
+import animateList from '../../helpers/animate-list'
 import css from '../styles/movie-list.scss'
 
 export class MovieListComponent extends React.Component {
@@ -12,6 +13,7 @@ export class MovieListComponent extends React.Component {
         this.onKeyLeft = this.onKeyLeft.bind(this)
         this.onKeyRight = this.onKeyRight.bind(this)
         this.onMouseEnter = this.onMouseEnter.bind(this)
+        this.setFocus = this.setFocus.bind(this)
 
         this.onMount = this.onMount.bind(this)
 
@@ -55,34 +57,20 @@ export class MovieListComponent extends React.Component {
     }
 
     onMouseEnter(index) {
-        this.setState({
-            focusedMovieIndex: index
-        })
+        this.setMovieIndex(index)
         this.onFocus()
     }
 
     navigateLeft() {
-        const index = this.state.focusedMovieIndex - 1
-        this.setState({
-            focusedMovieIndex: (this.movieListRefMap.has(index)) ? index : this.movieListRefMap.size - 1
-        })
-        this.listRef.current.classList.add(css.slide__right)
-        this.listRef.current.addEventListener('animationend', () => {
-            this.listRef.current.classList.remove(css.slide__right)
-            this.setFocus()
-        })
+        const nextIndex = this.getMovieIndex() - 1
+        this.setMovieIndex((this.movieListRefMap.has(nextIndex)) ? nextIndex : this.movieListRefMap.size - 1)
+        animateList(this.listRef.current, css.slide__right, this.setFocus)
     }
 
     navigateRight() {
-        const index = this.state.focusedMovieIndex  + 1
-        this.setState({
-            focusedMovieIndex: (this.movieListRefMap.has(index)) ? index : 0
-        })
-        this.listRef.current.classList.add(css.slide__left)
-        this.listRef.current.addEventListener('animationend', () => {
-            this.listRef.current.classList.remove(css.slide__left)
-            this.setFocus()
-        })
+        const nextIndex = this.state.focusedMovieIndex  + 1
+        this.setMovieIndex(this.movieListRefMap.has(nextIndex) ? nextIndex : 0)
+        animateList(this.listRef.current, css.slide__left, this.setFocus)        
     }
 
     onFocus() {
@@ -114,6 +102,14 @@ export class MovieListComponent extends React.Component {
 
     setFocus() {
         orderListMap(this.movieListRefMap, this.state.focusedMovieIndex)
+    }
+
+    getMovieIndex() {
+        return this.state.focusedMovieIndex
+    }
+
+    setMovieIndex(focusedMovieIndex) {
+        this.setState({focusedMovieIndex})
     }
 
     subscribe() {

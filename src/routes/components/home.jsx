@@ -5,6 +5,7 @@ import { SelectedMovieComponent } from '../../presentation/components/selected-m
 import { LoadingComponent } from '../../presentation/components/loading'
 import { deviceManager } from '../../manager/device-manager'
 import orderListMap from '../../helpers/order-list-map'
+import animateList from '../../helpers/animate-list'
 import css from '../styles/home.scss'
 
 export class HomeRouteComponent extends React.Component {
@@ -16,6 +17,7 @@ export class HomeRouteComponent extends React.Component {
         this.onSelect = this.onSelect.bind(this)
         this.onFocus = this.onFocus.bind(this)
         this.onMount = this.onMount.bind(this)
+        this.setFocus = this.setFocus.bind(this)
         this.listsRef = React.createRef()
         this.moviesListRefMap = new Map()
         this.interactor = new MoviesInteractor()
@@ -54,27 +56,15 @@ export class HomeRouteComponent extends React.Component {
     }
 
     navigateUp() {
-        const index = this.state.focusedListIndex - 1
-        this.setState({
-            focusedListIndex: this.moviesListRefMap.has(index) ? index : this.moviesListRefMap.size - 1
-        })
-        this.listsRef.current.classList.add(css.slide__up)
-        this.listsRef.current.addEventListener('animationend', () => {
-            this.listsRef.current.classList.remove(css.slide__up)
-            this.setFocus()
-        })
+        const nextIndex = this.getListIndex() - 1
+        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
+        animateList(this.listsRef.current, css.slide__up, this.setFocus)
     }
 
     navigateDown() {
-        const index = this.state.focusedListIndex + 1
-        this.setState({
-            focusedListIndex: this.moviesListRefMap.has(index) ? index : 0
-        })
-        this.listsRef.current.classList.add(css.slide__down)
-        this.listsRef.current.addEventListener('animationend', () => {
-            this.listsRef.current.classList.remove(css.slide__down)
-            this.setFocus()
-        })
+        const nextIndex = this.getListIndex() + 1
+        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
+        animateList(this.listsRef.current, css.slide__down, this.setFocus)
     }
 
     onFocus(movie) {
@@ -94,6 +84,14 @@ export class HomeRouteComponent extends React.Component {
         orderListMap(this.moviesListRefMap, this.state.focusedListIndex)
     }
 
+    getListIndex() {
+        return this.state.focusedListIndex
+    }
+
+    setListIndex(focusedListIndex) {
+        this.setState({focusedListIndex})
+    }
+
     pushStateMovieList(title, movieList) {
         let lists = this.state.lists
         lists.push({title, movieList})
@@ -107,7 +105,7 @@ export class HomeRouteComponent extends React.Component {
     }
 
     getFocusedListRef() {
-        return this.moviesListRefMap.get(this.state.focusedListIndex )
+        return this.moviesListRefMap.get(this.getListIndex())
     }
 
     renderLists() {
@@ -115,7 +113,7 @@ export class HomeRouteComponent extends React.Component {
             <MovieListComponent
                 key={index}
                 index={index}
-                hasFocus={this.state.focusedListIndex === index}
+                hasFocus={this.getListIndex() === index}
                 title={list.title} 
                 movies={list.movieList} 
                 onMount={this.onMount}
