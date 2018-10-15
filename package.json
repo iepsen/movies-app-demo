@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/iepsen/videos-app-demo.git",
+  "homepage": "http://movies-app-demo.s3-website-us-west-2.amazonaws.com/",
   "author": "Marcelo Iepsen <iepsen@gmail.com>",
   "license": "MIT",
   "devDependencies": {
