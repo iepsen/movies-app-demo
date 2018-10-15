@@ -109,8 +109,8 @@ export class HomeRouteComponent extends React.Component {
     }
 
     renderLists() {
-        return this.state.lists.map((list, index) => {
-            return <MovieListComponent
+        return this.state.lists.map((list, index) =>
+            <MovieListComponent
                 key={index}
                 index={index}
                 hasFocus={this.state.focusedListIndex === index}
@@ -120,7 +120,7 @@ export class HomeRouteComponent extends React.Component {
                 onSelect={this.onSelect} 
                 onFocus={this.onFocus} 
             />
-        })
+        )
     }
 
     render() {
