@@ -8,8 +8,4 @@ export class MoviesInteractor {
     get() {
         return this.service.get()
     }
-
-    getWatchedMovies() {
-        return this.service.getWatchedMovies()
-    }
 }

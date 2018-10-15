@@ -3,7 +3,6 @@ import { MovieEntity } from '../domain/movie-entity'
 export class MoviesService {
     constructor() {
         this.serviceUrl = 'https://2qcg0zv57a.execute-api.us-west-2.amazonaws.com/default/fetchVideos'
-        this.entities = []
     }
 
     async get() {
@@ -23,9 +22,5 @@ export class MoviesService {
 
     getStoredProgress(key) {
         return localStorage.getItem(key)
-    }
-
-    async getWatchedMovies() {
-        return this.entities
     }
 }
