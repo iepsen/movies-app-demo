@@ -10,6 +10,7 @@ export class VideoPlayerComponent extends React.Component {
         this.onTimeUpdate = this.onTimeUpdate.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
         this.onMouseMove = this.onMouseMove.bind(this)
+        this.onLoadedMetadata = this.onLoadedMetadata.bind(this)
         this.onCanPlay = this.onCanPlay.bind(this)
         this.onMouseSeekProgress = this.onMouseSeekProgress.bind(this)
         this.onEnded = this.onEnded.bind(this)
@@ -99,15 +100,17 @@ export class VideoPlayerComponent extends React.Component {
     }
 
     onPlayPause() {
-        let icon = ''
-        if (this.playerRef.current.paused) {
-            this.playerRef.current.play()
-            icon = 'pause'
-        } else {
-            this.playerRef.current.pause()
-            icon = 'play_arrow'
-        }
-        this.playPauseRef.current.textContent = icon
+        this.playerRef.current.paused ? this.play() : this.pause()
+    }
+
+    play() {
+        this.playerRef.current.play()
+        this.playPauseRef.current.textContent = 'pause'
+    }
+
+    pause() {
+        this.playerRef.current.pause()
+        this.playPauseRef.current.textContent = 'play_arrow'
     }
 
     onSeek(seconds) {
@@ -130,8 +133,13 @@ export class VideoPlayerComponent extends React.Component {
         this.setState({
             remainingTime: this.getRemainingTime(0)
         })
-
         this.playPauseRef.current.focus()
+    }
+
+    onLoadedMetadata() {
+        if (this.viewModel.progress > 0) {
+            this.seekToPercentage(this.viewModel.progress)
+        }
     }
 
     onTimeUpdate() {
@@ -206,7 +214,7 @@ export class VideoPlayerComponent extends React.Component {
     render() {
         return (
             <div className={css.player}>
-                <video ref={this.playerRef} onEnded={this.onEnded} onCanPlay={this.onCanPlay} onTimeUpdate={this.onTimeUpdate} autoPlay src={this.viewModel.videoUrl} />
+                <video autoPlay ref={this.playerRef} onLoadedMetadata={this.onLoadedMetadata} onEnded={this.onEnded} onCanPlay={this.onCanPlay} onTimeUpdate={this.onTimeUpdate} src={this.viewModel.videoUrl} />
                 <div ref={this.infoRef} className={css.info}>
                     <div ref={this.topInfoRef} className={css.top__info}>
                         <i onClick={this.onBack} ref={this.backRef} className={css.material__icons}>arrow_back</i>
