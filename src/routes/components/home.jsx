@@ -56,13 +56,21 @@ export class HomeRouteComponent extends React.Component {
     navigateUp() {
         const index = this.focusedListIndex - 1
         this.focusedListIndex = (this.moviesListRefMap.has(index)) ? index : this.moviesListRefMap.size - 1
-        this.setFocus()
+        this.listsRef.current.classList.add(css.slide__up)
+        this.listsRef.current.addEventListener('animationend', () => {
+            this.listsRef.current.classList.remove(css.slide__up)
+            this.setFocus()
+        })
     }
 
     navigateDown() {
         const index = this.focusedListIndex + 1
         this.focusedListIndex = (this.moviesListRefMap.has(index)) ? index : 0
-        this.setFocus()
+        this.listsRef.current.classList.add(css.slide__down)
+        this.listsRef.current.addEventListener('animationend', () => {
+            this.listsRef.current.classList.remove(css.slide__down)
+            this.setFocus()
+        })
     }
 
     onFocus(movie) {
@@ -105,6 +113,10 @@ export class HomeRouteComponent extends React.Component {
         let watchedMovies = movies.filter(movie => movie.progress > 0)
         if (watchedMovies.length === 0) return
         this.pushStateMovieList('Watched Movies', watchedMovies)
+    }
+
+    getFocusedListRef() {
+        return this.moviesListRefMap.get(this.focusedListIndex )
     }
 
     renderLists() {
