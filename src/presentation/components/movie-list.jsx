@@ -5,14 +5,15 @@ import css from '../styles/movie-list.scss'
 export class MovieListComponent extends React.Component {
     constructor(props) {
         super(props)
-        this.listRef = React.createRef()
-        this.wrapperRef = React.createRef()
-        this.moviesRefMap = new Map()
         this.onKeyDown = this.onKeyDown.bind(this)
         this.onMount = this.onMount.bind(this)
-        this.currentItemIndex = 0
+
+        this.wrapperRef = React.createRef()
+        this.movieListRefMap = new Map()
+        this.focusedMovieIndex = 0
+
         this.state = {
-            movieFocusIndex: 0
+            focusedMovieIndex: this.focusedMovieIndex
         }
     }
 
@@ -40,46 +41,46 @@ export class MovieListComponent extends React.Component {
             break
         case 37:
             this.onNavigateLeft()
-            this.update()
             break
         case 39:
             this.onNavigateRight()
-            this.update()
             break
         default: break
         }
     }
 
     onNavigateLeft() {
-        const index = this.currentItemIndex - 1
-        this.currentItemIndex = (this.moviesRefMap.has(index)) ? index : this.moviesRefMap.size - 1
+        const index = this.focusedMovieIndex - 1
+        this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : this.movieListRefMap.size - 1
+        this.setFocus()
     }
 
     onNavigateRight() {
-        const index = this.currentItemIndex + 1
-        this.currentItemIndex = (this.moviesRefMap.has(index)) ? index : 0
+        const index = this.focusedMovieIndex + 1
+        this.focusedMovieIndex = (this.movieListRefMap.has(index)) ? index : 0
+        this.setFocus()
+    }
+
+    onFocus() {
+        if (this.props.onFocus) {
+            this.props.onFocus(this.props.movies[this.focusedMovieIndex])
+        }
     }
 
     onSelect() {
         if (this.props.onSelect) {
-            this.props.onSelect(this.props.movies[this.currentItemIndex])
-        }
-    }
-
-    onChoose() {
-        if (this.props.onChoose) {
-            this.props.onChoose()
+            this.props.onSelect()
         }
     }
 
     onMount(index, ref) {
-        this.moviesRefMap.set(index, ref)
+        this.movieListRefMap.set(index, ref)
     }
 
     hasFocus() {
         window.addEventListener('keydown', this.onKeyDown)
         this.wrapperRef.current.classList.add(css.wrapper__focused)
-        this.onSelect()
+        this.onFocus()
     }
 
     lostFocus() {
@@ -87,26 +88,26 @@ export class MovieListComponent extends React.Component {
         this.wrapperRef.current.classList.remove(css.wrapper__focused)
     }
 
-    update() {
+    setFocus() {
         let order
-        for (const [key, value] of this.moviesRefMap.entries()) {
-            order = key + (this.moviesRefMap.size - this.currentItemIndex)
-            if (this.currentItemIndex > key) {
+        for (const [key, value] of this.movieListRefMap.entries()) {
+            order = key + (this.movieListRefMap.size - this.focusedMovieIndex)
+            if (this.focusedMovieIndex > key) {
                 order += 1
             } else {
-                order = (order - this.moviesRefMap.size) + 1
+                order = (order - this.movieListRefMap.size) + 1
             }
             value.current.style = `order: ${order}`
         }
-        this.onSelect()
-        this.setState({
-            movieFocusIndex: this.currentItemIndex
-        })
 
+        this.setState({
+            focusedMovieIndex: this.focusedMovieIndex
+        })
+        this.onFocus()
     }
 
     getRefItem(index) {
-        return this.moviesRefMap.get(index)
+        return this.movieListRefMap.get(index)
     }
 
     renderMovies() {
@@ -116,7 +117,7 @@ export class MovieListComponent extends React.Component {
                 key={index} 
                 index={index}
                 movie={movie}
-                hasFocus={this.props.hasFocus && this.state.movieFocusIndex === index}
+                hasFocus={this.props.hasFocus && this.state.focusedMovieIndex === index}
             />
         )
     }
@@ -127,7 +128,7 @@ export class MovieListComponent extends React.Component {
         return (
             <div onKeyDown={this.onKeyDown} ref={this.wrapperRef} className={css.wrapper}>
                 <h2>{this.props.title}</h2>
-                <ul ref={this.listRef} className={css.movies}>
+                <ul className={css.movies}>
                     {this.renderMovies()}
                 </ul>
             </div>

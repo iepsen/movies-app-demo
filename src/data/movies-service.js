@@ -12,16 +12,16 @@ export class MoviesService {
             .then(response => response.entries)
             .then(movies => movies.map(movie => {
                 let entity = new MovieEntity(movie).get()
-                entity.setProgress(this.getStoreProgress(entity.id))
+                entity.setProgress(this.getStoredProgress(entity.id))
                 return entity
             }))
     }
 
-    setStoreProgress(key, value) {
+    setStoredProgress(key, value) {
         localStorage.setItem(key, value)
     }
 
-    getStoreProgress(key) {
+    getStoredProgress(key) {
         return localStorage.getItem(key)
     }
 

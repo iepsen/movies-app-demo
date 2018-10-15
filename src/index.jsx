@@ -10,6 +10,7 @@ class Application extends React.Component {
         super(props)
         this.history = createBrowserHistory()
     }
+
     render() {
         return (
             <BrowserRouter>

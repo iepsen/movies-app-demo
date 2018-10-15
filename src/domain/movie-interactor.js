@@ -4,11 +4,12 @@ export class MovieInteractor {
     constructor() {
         this.service = new MoviesService()
     }
+    
     get() {
         return this.service.get()
     }
 
-    setStoreProgress(id, seconds) {
-        this.service.setStoreProgress(id, seconds)
+    setStoredProgress(id, seconds) {
+        this.service.setStoredProgress(id, seconds)
     }
 }

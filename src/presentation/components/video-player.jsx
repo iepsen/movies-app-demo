@@ -5,6 +5,7 @@ import css from '../styles/video-player.scss'
 export class VideoPlayerComponent extends React.Component {
     constructor(props) {
         super(props)
+        this.viewModel = new VideoPlayerViewModel(props.data).get()
 
         this.onTimeUpdate = this.onTimeUpdate.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
@@ -27,7 +28,6 @@ export class VideoPlayerComponent extends React.Component {
         this.onSeekTimer = null
         this.secondsToSeek = 15
 
-        this.viewModel = new VideoPlayerViewModel(props.data).get()
         this.state = {
             remainingTime: '00:00:00',
             watched: 0,

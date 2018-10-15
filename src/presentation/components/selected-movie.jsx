@@ -5,7 +5,6 @@ import { SelectedMovieViewModel } from '../viewmodel/selected-movie'
 export class SelectedMovieComponent extends React.Component {
     renderMovie() {
         if (this.props.movie === null) return null
-        
         this.viewModel = new SelectedMovieViewModel(this.props.movie).get()
 
         return (
@@ -18,6 +17,7 @@ export class SelectedMovieComponent extends React.Component {
             </React.Fragment>
         )
     }
+    
     render() {
         return (
             <div className={css.movie}>

@@ -33,7 +33,6 @@ export class MovieItemComponent extends React.Component {
         this.ref.current.classList.remove(css.selected__movie)
     }
 
-
     render() {
         return (
             <li ref={this.ref} className={css.movie}>

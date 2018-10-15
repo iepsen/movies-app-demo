@@ -16,7 +16,7 @@ export class MovieRouteComponent extends React.Component {
     }
 
     onTimeUpdate(watched) {
-        this.interactor.setStoreProgress(this.movie.id, watched)
+        this.interactor.setStoredProgress(this.movie.id, watched)
     }
 
     render() {
