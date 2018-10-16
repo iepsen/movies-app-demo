@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: domain/movie-entity.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: domain/movie-entity.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @module domain */
+
+/**
+ * Movie Entity
+ */
+export class MovieEntity {
+    /**
+     * 
+     * @param {object} payload - The payload movie
+     */
+    constructor(payload) {
+        this.id = payload.id
+        this.title = payload.title
+        this.description = payload.description
+        this.publishedDate = new Date(payload.publishedDate)
+        this.availableDate = new Date(payload.availableDate)
+        this.video = this.getVideo(payload.contents)
+        this.image = this.getImage(payload.images)
+        this.rating = this.getParentalRatings(payload.parentalRatings)
+        this.categories = this.getCategories(payload.categories)
+        this.progress = 0
+    }
+
+    /**
+     * Get the instance class
+     * @returns {MovieEntity} The MovieEntity instance.
+     */
+    get() {
+        return this
+    }
+
+    /**
+     * Set the movie progress
+     * @param {string} progress - Set the movie progress.
+     */
+    setProgress(progress) {
+        this.progress = progress || '0'
+    }
+
+    /**
+     * Get the movie link
+     * @returns {string} The movie link.
+     */
+    getLink() {
+        return `/movie/${this.id}`
+    }
+
+    /**
+     * Get the movie rating
+     * @param {Array} arr - The rating information.
+     * @returns {string} The formatted rating.
+     */
+    getParentalRatings(arr) {
+        if (arr.length === 0) return null
+        const parentalRatings = arr[0]
+        return parentalRatings.rating.replace('_', '-')
+    }
+
+    /**
+     * Get the movie categories
+     * @param {Array} arr - The categories information.
+     * @returns {Array} The categories array.
+     */
+    getCategories(arr) {
+        if (arr.length === 0) return null
+        return arr.map(category => category.title)
+    }
+
+    /**
+     * Get the movie source information
+     * @param {Array} arr - The source information.
+     * @returns {Object} The movie source object
+     * with url and duration.
+     */
+    getVideo(arr) {
+        if (arr.length === 0) return ''
+        const video = arr[0]
+        return {
+            url: video.url,
+            duration: video.duration
+        }
+    }
+
+    /**
+     * Get the movie image cover
+     * It will fallback to a placeholder image if
+     * it not available
+     * @param {Array} arr - The image information.
+     * @returns {string} The movie cover url.
+     */
+    getImage(arr) {
+        if (arr.length === 0) return null
+        const image = arr[0]
+        return image.url ? image.url : 'https://placeimg.com/200/500/nature'
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-animateList.html">animateList</a></li><li><a href="module-data.html">data</a></li><li><a href="module-domain.html">domain</a></li><li><a href="module-helpers.html">helpers</a></li><li><a href="module-manager.html">manager</a></li><li><a href="module-orderListMap.html">orderListMap</a></li><li><a href="module-presentation_components.html">presentation/components</a></li><li><a href="module-presentation_routes.html">presentation/routes</a></li><li><a href="module-presentation_viewmodel.html">presentation/viewmodel</a></li></ul><h3>Classes</h3><ul><li><a href="module-data.MoviesService.html">MoviesService</a></li><li><a href="module-domain.MovieEntity.html">MovieEntity</a></li><li><a href="module-domain.MovieInteractor.html">MovieInteractor</a></li><li><a href="module-domain.MoviesInteractor.html">MoviesInteractor</a></li><li><a href="module-manager-DeviceManager.html">DeviceManager</a></li><li><a href="module-presentation_components.MovieItemComponent.html">MovieItemComponent</a></li><li><a href="module-presentation_components.MovieListComponent.html">MovieListComponent</a></li><li><a href="module-presentation_components.SelectedMovieComponent.html">SelectedMovieComponent</a></li><li><a href="module-presentation_components.VideoPlayerComponent.html">VideoPlayerComponent</a></li><li><a href="module-presentation_routes.HomeRouteComponent.html">HomeRouteComponent</a></li><li><a href="module-presentation_routes.MovieRouteComponent.html">MovieRouteComponent</a></li><li><a href="module-presentation_viewmodel.MovieItemViewModel.html">MovieItemViewModel</a></li><li><a href="module-presentation_viewmodel.SelectedMovieViewModel.html">SelectedMovieViewModel</a></li><li><a href="module-presentation_viewmodel.VideoPlayerViewModel.html">VideoPlayerViewModel</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 16 2018 00:10:36 GMT-0300 (Brasilia Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
