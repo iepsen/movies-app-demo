@@ -14,6 +14,7 @@ export class SelectedMovieViewModel {
         this.year = movie.publishedDate.getFullYear()
         this.rating = movie.rating
         this.categories = movie.categories.join(', ')
+        this.duration = movie.video.duration
     }
 
     /**

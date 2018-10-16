@@ -20,6 +20,7 @@ export class SelectedMovieComponent extends React.Component {
                 <span>{this.viewModel.year}</span>
                 <span className={css.rating}>{this.viewModel.rating}</span>
                 <span className={css.categories}>{this.viewModel.categories}</span>
+                <time>{this.viewModel.duration}</time>
                 <p>{this.viewModel.description}</p>
             </React.Fragment>
         )
