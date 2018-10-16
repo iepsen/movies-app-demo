@@ -77,8 +77,27 @@ export class MovieEntity {
         const video = arr[0]
         return {
             url: video.url,
-            duration: video.duration
+            duration: this.formatDuration(video.duration)
         }
+    }
+
+    /**
+     * Converts to a human readable duration time
+     * @param {number} duration - The duration in milliseconds
+     * @returns {string} The formatted duration
+     */
+    formatDuration(duration) {
+        const date = new Date(duration)
+        let formattedDuration = ''
+        if (date.getUTCHours() > 0) {
+            formattedDuration = `${date.getUTCHours()}h`
+        }
+
+        if (date.getUTCMinutes() > 0) {
+            formattedDuration += ` ${date.getUTCMinutes()}m`
+        }
+
+        return formattedDuration
     }
 
     /**
