@@ -5,6 +5,8 @@ This repository contains the source code for http://movies-app-demo.s3-website-u
 
 It uses [React](https://reactjs.org/) with [webpack](https://webpack.js.org/) to build a Single Page Application.
 
+![demo](https://user-images.githubusercontent.com/228328/47033749-ff40f680-d14b-11e8-8a17-6b452b8b7df4.gif)
+
 ## Resolutions
 Resolutions above 1024 should work. Also optimized for HD and Full HD TV resolutions.
 
