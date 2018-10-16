@@ -71,59 +71,101 @@ export class VideoPlayerComponent extends React.Component {
         clearTimeout(this.hideInfoTimer)
     }
 
+    /**
+     * Dispatch on any pressed key
+     */
     onKeyAny() {
         this.showInfo()
     }
 
+    /**
+     * Dispatch on user press back key
+     * @param {string} watched - Seconds watched
+     */
     onKeyBack(watched) {
         if (this.props.onBack) {
             this.props.onBack(watched)
         }
     }
 
+    /**
+     * Dispatch on user press ok key
+     */
     onKeyOk() {
         if (this.state.virtualFocusRef === this.playPauseRef) this.togglePlayPause()
         if (this.state.virtualFocusRef === this.backRef) this.onKeyBack()
     }
 
+    /**
+     * Dispatch on user press space key
+     */
     onKeySpace() {
         this.togglePlayPause()
     }
 
+    /**
+     * Dispatch on user press exit key
+     */
     onKeyExit() {
         if (this.props.onBack) {
             this.props.onBack()
         }
     }
 
+    /**
+     * Dispatch on user press left key
+     */
     onKeyLeft() {
         this.seek(this.secondsToSeek * - 1)
     }
 
+    /**
+     * Dispatch on user press up key
+     */
     onKeyUp() {
         this.setVirtualFocusRefChange(this.backRef)
     }
 
+    /**
+     * Dispatch on user press right key
+     */
     onKeyRight() {
         this.seek(this.secondsToSeek)
     }
     
+    /**
+     * Dispatch on user press down key
+     */
     onKeyDown() {
         this.setVirtualFocusRefChange(this.playPauseRef)
     }
 
+    /**
+     * Dispatch on user moves the mouse
+     */
     onMouseMove() {
         this.showInfo()
     }
 
+    /**
+     * Dispatch on user click on the back button
+     */
     onClickBack() {
         this.onKeyBack()
     }
 
+    /**
+     * Dispatch on user click on the play/pause button
+     */
     onClickPlayPause() {
         this.togglePlayPause()
     }
 
+    /**
+     * Dispatch on user click on the progress bar
+     * and seek to a position
+     * @param {MouseEvent} event - The MouseEvent
+     */
     onClickProgress(event) {
         const offsetLeft = event.currentTarget.offsetLeft
         const clientX = event.clientX
@@ -132,23 +174,36 @@ export class VideoPlayerComponent extends React.Component {
         this.seekToPercentage(percentage)
     }
 
+    /**
+     * Dispatch on playback ends
+     */
     onEnded() {
         this.onKeyBack(true)
     }
 
+    /**
+     * Dispatch on the onCanPlay video event is fired and put
+     * focus on the play/pause button.
+     */
     onCanPlay() {
-        this.setState({
-            remainingTime: this.getRemainingTime(0)
-        })
+        this.setState({remainingTime: this.getRemainingTime(0)})
         this.playPauseRef.current.focus()
     }
 
+    /**
+     * Dispatch on the onLoadedMetadata video event is fired
+     * and seek to a position if user has watched history.
+     */
     onLoadedMetadata() {
         if (this.viewModel.progress > 0) {
             this.seekToPercentage(this.viewModel.progress)
         }
     }
 
+    /**
+     * Dispatch on the onTimeUpdate video event is fired
+     * and pass to the parent component the time watched.
+     */
     onTimeUpdate() {
         const elapsedTime = Math.ceil(this.getCurrentTime())
         this.setState({
@@ -161,6 +216,9 @@ export class VideoPlayerComponent extends React.Component {
         }
     }
 
+    /**
+     * Subscribe the keys to navigate on the VideoPlayerComponent
+     */
     subscribe() {
         deviceManager.subscribe(deviceManager.KEY_ANY, this.onKeyAny)
         deviceManager.subscribe(deviceManager.KEY_BACK, this.onKeyBack)
@@ -173,6 +231,9 @@ export class VideoPlayerComponent extends React.Component {
         deviceManager.subscribe(deviceManager.KEY_EXIT, this.onKeyExit)
     }
 
+    /**
+     * Unsubscribe the keys on the VideoPlayerComponent
+     */
     unsubscribe() {
         deviceManager.unsubscribe(deviceManager.KEY_ANY)
         deviceManager.unsubscribe(deviceManager.KEY_BACK)
@@ -185,32 +246,52 @@ export class VideoPlayerComponent extends React.Component {
         deviceManager.unsubscribe(deviceManager.KEY_EXIT)
     }
     
+    /**
+     * Set the reference to focus
+     * @param {React.Ref} virtualFocusRef - The Reference to focus
+     */
     setVirtualFocusRefChange(virtualFocusRef) {
         this.clearVirtualFocusRefStyle()
         this.addVirtualFocusRefStyle(virtualFocusRef)
         this.setState({virtualFocusRef})
     }
 
+    /**
+     * Clear the focused reference
+     */
     clearVirtualFocusRefStyle() {
         this.backRef.current.classList.remove(css.focused)
         this.playPauseRef.current.classList.remove(css.focused)
     }
 
+    /**
+     * Add a css style to a reference
+     * @param {React.Ref} virtualFocusRef - The Reference to focus
+     */
     addVirtualFocusRefStyle(virtualFocusRef) {
         virtualFocusRef.current.classList.add(css.focused)
     }
 
+    /**
+     * Restart the info timer
+     */
     setHideInfoTimer() {
         clearTimeout(this.hideInfoTimer)
         this.hideInfoTimer = setTimeout(() => this.hideInfo(), 5000)
     }
 
+    /**
+     * Hide the info layer
+     */
     hideInfo() {
         this.topInfoRef.current.classList.add(css.top__info_hide)
         this.bottomInfoRef.current.classList.add(css.bottom_info__hide)
         this.infoRef.current.classList.add(css.info__hide)
     }
 
+    /**
+     * Show the info layer
+     */
     showInfo() {
         this.topInfoRef.current.classList.remove(css.top__info_hide)
         this.bottomInfoRef.current.classList.remove(css.bottom__info_hide)
@@ -218,50 +299,89 @@ export class VideoPlayerComponent extends React.Component {
         this.setHideInfoTimer()
     }
 
+    /**
+     * Get the playback duration
+     */
     getDuration() {
         return this.playerRef.current.duration || 0
     }
 
+    /**
+     * Get the playback current time
+     */
     getCurrentTime() {
         return this.playerRef.current.currentTime
     }
 
+    /**
+     * Set the current time
+     * @param {number} seconds - Seconds to set current time
+     */
     setCurrentTime(seconds) {
         this.playerRef.current.currentTime = seconds
     }
 
+    /**
+     * Get the elapsed seconds 
+     * @param {number} elapsedTime - Seconds elapsed
+     */
     getProgress(elapsedTime) {
         return elapsedTime * 100 / this.getDuration()
     }
 
+    /**
+     * Get the time remaining
+     * @param {number} elapsedTime - Seconds elapsed
+     */
     getRemainingTime(elapsedTime) {
         return new Date((this.getDuration() - elapsedTime) * 1000).toISOString().substr(11, 8)
     }
 
+    /**
+     * Seek to a position based on seconds
+     * @param {number} seconds - Seconds to seek
+     */
     seekToSeconds(seconds) {
         this.setCurrentTime(seconds)
     }
 
+    /**
+     * Seek to a position based on percentage
+     * @param {number} percentage - Percentage to seek
+     */
     seekToPercentage(percentage) {
         const duration = this.getDuration()
         const seconds = duration * percentage / 100
         this.seekToSeconds(seconds)
     }
 
+    /**
+     * Toggle the play/pause
+     */
     togglePlayPause() {
         this.playerRef.current.paused ? this.play() : this.pause()
     }
 
+    /**
+     * Call the play video method
+     */
     play() {
         this.playerRef.current.play()
         this.playPauseRef.current.textContent = 'pause'
     }
 
+    /**
+     * Call the pause video method
+     */
     pause() {
         this.playerRef.current.pause()
         this.playPauseRef.current.textContent = 'play_arrow'
     }
 
+    /**
+     * Seek to a position
+     * @param {number} seconds - Seconds to increment
+     */
     seek(seconds) {
         const currentTime = this.getCurrentTime()
         this.seekToSeconds(currentTime + seconds)
