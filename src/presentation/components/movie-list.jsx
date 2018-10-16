@@ -17,14 +17,14 @@ export class MovieListComponent extends React.Component {
         this.onKeyOk = this.onKeyOk.bind(this)
         this.onKeyLeft = this.onKeyLeft.bind(this)
         this.onKeyRight = this.onKeyRight.bind(this)
-        this.onMouseEnterMovieItem = this.onMouseEnterMovieItem.bind(this)
         this.onClickArrowLeft = this.onClickArrowLeft.bind(this)
         this.onClickArrowRight = this.onClickArrowRight.bind(this)
+        this.onMouseEnterMovieItem = this.onMouseEnterMovieItem.bind(this)
         this.onMouseEnterArrows = this.onMouseEnterArrows.bind(this)
         this.onMouseLeaveArrows = this.onMouseLeaveArrows.bind(this)
         this.onMouseMove = this.onMouseMove.bind(this)
-        this.setMovieItemFocus = this.setMovieItemFocus.bind(this)
         this.onMovieItemMount = this.onMovieItemMount.bind(this)
+        this.setMovieItemFocus = this.setMovieItemFocus.bind(this)
 
         this.wrapperRef = React.createRef()
         this.listRef = React.createRef()
@@ -178,7 +178,8 @@ export class MovieListComponent extends React.Component {
      */
     onFocus() {
         if (this.props.onFocus) {
-            this.props.onFocus(this.props.movies[this.getMovieIndex()])
+            setTimeout(() => 
+                this.props.onFocus(this.props.movies[this.getMovieIndex()]), 200)
         }
     }
 
