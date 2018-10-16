@@ -1,6 +1,10 @@
+/** @module presentation/components */
 import React from 'react'
 import css from '../styles/loading.scss'
 
+/**
+ * LoadingComponent
+ */
 export const LoadingComponent = () => (
     <div className={css.loading}>
         <svg className={css.circular} viewBox="25 25 50 50" >

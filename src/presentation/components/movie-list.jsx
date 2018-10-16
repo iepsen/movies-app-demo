@@ -1,3 +1,4 @@
+/** @module presentation/components */
 import React from 'react'
 import { MovieItemComponent } from './movie-item'
 import { deviceManager } from '../../manager/device-manager'
@@ -6,22 +7,24 @@ import animateList from '../../helpers/animate-list'
 import css from '../styles/movie-list.scss'
 
 export class MovieListComponent extends React.Component {
+    /**
+     * Initialize the MovieListComponent 
+     * @param {React.Props} props - The component props
+     */
     constructor(props) {
         super(props)
 
         this.onKeyOk = this.onKeyOk.bind(this)
         this.onKeyLeft = this.onKeyLeft.bind(this)
         this.onKeyRight = this.onKeyRight.bind(this)
-        this.onMouseEnter = this.onMouseEnter.bind(this)
+        this.onMouseEnterMovieItem = this.onMouseEnterMovieItem.bind(this)
         this.onClickArrowLeft = this.onClickArrowLeft.bind(this)
         this.onClickArrowRight = this.onClickArrowRight.bind(this)
         this.onMouseEnterArrows = this.onMouseEnterArrows.bind(this)
         this.onMouseLeaveArrows = this.onMouseLeaveArrows.bind(this)
-
         this.onMouseMove = this.onMouseMove.bind(this)
-
-        this.setFocus = this.setFocus.bind(this)
-        this.onMount = this.onMount.bind(this)
+        this.setMovieItemFocus = this.setMovieItemFocus.bind(this)
+        this.onMovieItemMount = this.onMovieItemMount.bind(this)
 
         this.wrapperRef = React.createRef()
         this.listRef = React.createRef()
@@ -38,7 +41,7 @@ export class MovieListComponent extends React.Component {
 
     componentDidMount() {
         window.addEventListener('mousemove', this.onMouseMove)
-        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
+        this.props.hasFocus ? this.addFocus() : this.removeFocus()
         if (this.props.onMount) {
             this.props.onMount(this.props.index, this.wrapperRef)
         }
@@ -48,56 +51,94 @@ export class MovieListComponent extends React.Component {
         if (this.wrapperRef.current === null) return
         if (this.props.movies === null) return
         if (this.props.hasFocus === prevProps.hasFocus) return
-        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
+        this.props.hasFocus ? this.addFocus() : this.removeFocus()
     }
 
     componentWillUnmount() {
         window.removeEventListener('mousemove', this.onMouseMove)
-        this.lostFocus()
+        clearTimeout(this.hideArrowsTimer)
+        this.removeFocus()
     }
 
+    /**
+     * Dispatch on user press ok key
+     */
     onKeyOk() {
         this.onSelect()
     }
 
+    /**
+     * Dispatch on user press left key
+     */
     onKeyLeft() {
         this.navigateLeft()
     }
 
+    /**
+     * Dispatch on user press right key
+     */
     onKeyRight() {
         this.navigateRight()
     }
 
-    onMouseEnter(index) {
-        this.setMovieIndex(index)
-        this.onFocus()
-    }
-
+    /**
+     * Dispatch on user click on the left arrow
+     */
     onClickArrowLeft() {
         this.navigateLeft()
     }
 
+    /**
+     * Dispatch on user click on the right arrow
+     */
     onClickArrowRight() {
         this.navigateRight()
     }
 
+    /**
+     * Dispatch on user moves the mouse over the
+     * MovieItemComponent
+     * @param {number} index 
+     */
+    onMouseEnterMovieItem(index) {
+        this.setMovieIndex(index)
+        this.onFocus()
+    }
+
+    /**
+     * Dispatch on user moves the mouse
+     */
     onMouseMove() {
         this.showArrows()
     }
 
+    /**
+     * Dispatch on user enter the mouse over
+     * the arrows
+     */
     onMouseEnterArrows() {
         this.isPointerOverArrows = true
     }
 
+    /**
+     * Dispatch on user leave the mouse over
+     * the arrows
+     */    
     onMouseLeaveArrows() {
         this.isPointerOverArrows = false
     }
 
+    /**
+     * Set the timer to hide arrows
+     */
     setHideArrowsTimer() {
         clearTimeout(this.hideArrowsTimer)
         this.hideArrowsTimer = setTimeout(() => this.hideArrows(), 3000)
     }
 
+    /**
+     * Show mouse arrows
+     */
     showArrows() {
         this.arrowLeftRef.current.classList.remove(css.arrow__left_hide)
         this.arrowRightRef.current.classList.remove(css.arrow__right_hide)
@@ -105,69 +146,115 @@ export class MovieListComponent extends React.Component {
             clearTimeout(this.hideArrowsTimer) : this.setHideArrowsTimer()
     }
 
+    /**
+     * Hide mouse arrows
+     */
     hideArrows() {
         this.arrowLeftRef.current.classList.add(css.arrow__left_hide)
         this.arrowRightRef.current.classList.add(css.arrow__right_hide)
     }
 
+    /**
+     * Discover the previous MovieItemComponent and navigate to it
+     */
     navigateLeft() {
         const nextIndex = this.getMovieIndex() - 1
         this.setMovieIndex((this.movieListRefMap.has(nextIndex)) ? nextIndex : this.movieListRefMap.size - 1)
-        animateList(this.listRef.current, css.slide__right, this.setFocus)
+        animateList(this.listRef.current, css.slide__right, this.setMovieItemFocus)
     }
 
+    /**
+     * Discover the next MovieItemComponent and navigate to it
+     */
     navigateRight() {
-        const nextIndex = this.getMovieIndex()  + 1
+        const nextIndex = this.getMovieIndex() + 1
         this.setMovieIndex(this.movieListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listRef.current, css.slide__left, this.setFocus)
+        animateList(this.listRef.current, css.slide__left, this.setMovieItemFocus)
     }
 
+    /**
+     * Dispatch onSelect when user navigate over the
+     * MovieItemComponent component
+     */
     onFocus() {
         if (this.props.onFocus) {
             this.props.onFocus(this.props.movies[this.getMovieIndex()])
         }
     }
 
+    /**
+     * Dispatch onSelect when user trigger the OK key
+     */
     onSelect() {
         if (this.props.onSelect) {
             this.props.onSelect()
         }
     }
 
-    onMount(index, ref) {
+    /**
+     * Set the MovieItemComponent on the Map References
+     * when mounted
+     * @param {number} index - The MovieItemComponent index
+     * @param {React.Ref} ref - The MovieItemComponent Reference
+     */
+    onMovieItemMount(index, ref) {
         this.movieListRefMap.set(index, ref)
     }
 
-    hasFocus() {
+    /**
+     * Set focus on the current MovieListComponent
+     */
+    addFocus() {
         this.wrapperRef.current.classList.add(css.wrapper__focused)
         setTimeout(() => this.subscribe(), 0)
         this.onFocus()
     }
 
-    lostFocus() {
+    /**
+     * Remove the focused style class
+     */
+    removeFocus() {
         this.wrapperRef.current.classList.remove(css.wrapper__focused)
         this.unsubscribe()
     }
 
-    setFocus() {
+    /**
+     * Set focus on the current MovieItemComponent
+     */
+    setMovieItemFocus() {
         orderListMap(this.movieListRefMap, this.getMovieIndex())
         this.onFocus()
     }
 
+    /**
+     * Get the focusedMovieIndex state var
+     * @returns {number} The focusedMovieIndex state var
+     */
     getMovieIndex() {
         return this.state.focusedMovieIndex
     }
 
+    /**
+     * Set the focusedMovieIndex state var
+     * @param {number} focusedMovieIndex - The index of focused
+     * Movie.
+     */
     setMovieIndex(focusedMovieIndex) {
         this.setState({focusedMovieIndex})
     }
 
+    /**
+     * Subscribe the keys to navigate on the MovieListComponent
+     */
     subscribe() {
         deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
         deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
         deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
     }
 
+    /**
+     * Unsubscribe the keys on the MovieListComponent
+     */
     unsubscribe() {
         deviceManager.unsubscribe(deviceManager.KEY_OK)
         deviceManager.unsubscribe(deviceManager.KEY_LEFT)
@@ -178,8 +265,8 @@ export class MovieListComponent extends React.Component {
     renderMovies() {
         return this.props.movies.map((movie, index) => 
             <MovieItemComponent 
-                onMount={this.onMount} 
-                onMouseEnter={this.onMouseEnter}
+                onMount={this.onMovieItemMount} 
+                onMouseEnter={this.onMouseEnterMovieItem}
                 key={index} 
                 index={index}
                 movie={movie}

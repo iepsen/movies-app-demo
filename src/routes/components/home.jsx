@@ -1,3 +1,4 @@
+/** @module presentation/routes */
 import React from 'react'
 import { MoviesInteractor } from '../../domain/movies-interactor'
 import { MovieListComponent } from '../../presentation/components/movie-list'
@@ -8,16 +9,23 @@ import orderListMap from '../../helpers/order-list-map'
 import animateList from '../../helpers/animate-list'
 import css from '../styles/home.scss'
 
+/**
+ * HomeRouteComponent
+ */
 export class HomeRouteComponent extends React.Component {
     
+    /**
+     * Initialize the HomeRouteComponent 
+     * @param {React.Props} props - The component props
+     */
     constructor(props) {
         super(props)
         this.onKeyUp = this.onKeyUp.bind(this)
         this.onKeyDown = this.onKeyDown.bind(this)
         this.onSelect = this.onSelect.bind(this)
         this.onFocus = this.onFocus.bind(this)
-        this.onMount = this.onMount.bind(this)
         this.setFocus = this.setFocus.bind(this)
+        this.onMountMovieList = this.onMountMovieList.bind(this)
         this.listsRef = React.createRef()
         this.moviesListRefMap = new Map()
         this.interactor = new MoviesInteractor()
@@ -47,67 +55,110 @@ export class HomeRouteComponent extends React.Component {
         deviceManager.unsubscribe(deviceManager.KEY_DOWN)
     }
 
+    /**
+     * Dispatch on user press up key
+     */
     onKeyUp() {
         this.navigateUp()
     }
 
+    /**
+     * Dispatch on user press down key
+     */
     onKeyDown() {
         this.navigateDown()
     }
 
+    /**
+     * Discover the previous MovieListComponent and navigate to it
+     */
     navigateUp() {
         const nextIndex = this.getListIndex() - 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
         animateList(this.listsRef.current, css.slide__up, this.setFocus)
     }
 
+    /**
+     * Discover the next MovieListComponent and navigate to it
+     */
     navigateDown() {
         const nextIndex = this.getListIndex() + 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
         animateList(this.listsRef.current, css.slide__down, this.setFocus)
     }
 
+    /**
+     * Called when a movie has focus
+     * @param {MovieEntity} movie - The focused movie
+     */
     onFocus(movie) {
         if (this.state.focusedMovie === movie) return
         this.setState({focusedMovie: movie})
     }
 
+    /**
+     * Called when a movie is selected
+     */
     onSelect() {
         this.props.history.push(this.state.focusedMovie.getLink(), {movie: this.state.focusedMovie})
     }
 
-    onMount(index, ref) {
+    /**
+     * Set the MovieListComponent on the Map References
+     * when mounted
+     * @param {number} index - The MovieListComponent index
+     * @param {React.Ref} ref - The MovieListComponent Reference
+     */
+    onMountMovieList(index, ref) {
         this.moviesListRefMap.set(index, ref)
     }
 
+    /**
+     * Set focus on a MovieListComponent
+     */
     setFocus() {
         orderListMap(this.moviesListRefMap, this.state.focusedListIndex)
     }
 
+    /**
+     * Get the index of selected MovieListComponent
+     */
     getListIndex() {
         return this.state.focusedListIndex
     }
 
+    /**
+     * Set the current MovieListComponent selected to the state
+     * @param {number} focusedListIndex - Index of focused list
+     */
     setListIndex(focusedListIndex) {
         this.setState({focusedListIndex})
     }
 
+    /**
+     * Push the MovieListComponent to the state
+     * @param {string} title - The MovieListComponent title.
+     * @param {Array} movieList - The MovieListComponent items.
+     */
     pushStateMovieList(title, movieList) {
         let lists = this.state.lists
         lists.push({title, movieList})
         this.setState({lists})
     }
 
+    /**
+     * The MovieEntity array to search for watched movies
+     * @param {Array} movies - MovieEntity array.
+     */
     getWatchedMovies(movies) {
         let watchedMovies = movies.filter(movie => movie.progress > 0)
         if (watchedMovies.length === 0) return
         this.pushStateMovieList('Watched Movies', watchedMovies)
     }
 
-    getFocusedListRef() {
-        return this.moviesListRefMap.get(this.getListIndex())
-    }
-
+    /**
+     * Render the MovieListComponent array
+     */
     renderLists() {
         return this.state.lists.map((list, index) =>
             <MovieListComponent
@@ -116,7 +167,7 @@ export class HomeRouteComponent extends React.Component {
                 hasFocus={this.getListIndex() === index}
                 title={list.title} 
                 movies={list.movieList} 
-                onMount={this.onMount}
+                onMount={this.onMountMovieList}
                 onSelect={this.onSelect} 
                 onFocus={this.onFocus} 
             />

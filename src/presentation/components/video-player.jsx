@@ -1,9 +1,17 @@
+/** @module presentation/components */
 import React from 'react'
 import { VideoPlayerViewModel } from '../viewmodel/video-player'
 import { deviceManager } from '../../manager/device-manager'
 import css from '../styles/video-player.scss'
 
+/**
+ * VideoPlayerComponent
+ */
 export class VideoPlayerComponent extends React.Component {
+    /**
+     * Initialize the VideoPlayerComponent
+     * @param {React.Props} props - The component props
+     */
     constructor(props) {
         super(props)
         this.viewModel = new VideoPlayerViewModel(props.data).get()
@@ -51,32 +59,14 @@ export class VideoPlayerComponent extends React.Component {
     }
 
     componentDidMount() {
-        deviceManager.subscribe(deviceManager.KEY_ANY, this.onKeyAny)
-        deviceManager.subscribe(deviceManager.KEY_BACK, this.onKeyBack)
-        deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
-        deviceManager.subscribe(deviceManager.KEY_SPACE, this.onKeySpace)
-        deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
-        deviceManager.subscribe(deviceManager.KEY_UP, this.onKeyUp)
-        deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
-        deviceManager.subscribe(deviceManager.KEY_DOWN, this.onKeyDown)
-        deviceManager.subscribe(deviceManager.KEY_EXIT, this.onKeyExit)
-
+        this.subscribe()
         window.addEventListener('mousemove', this.onMouseMove)
         this.setVirtualFocusRefChange(this.state.virtualFocusRef)
         this.setHideInfoTimer()
     }
 
     componentWillUnmount() {
-        deviceManager.unsubscribe(deviceManager.KEY_ANY)
-        deviceManager.unsubscribe(deviceManager.KEY_BACK)
-        deviceManager.unsubscribe(deviceManager.KEY_OK)
-        deviceManager.unsubscribe(deviceManager.KEY_SPACE)
-        deviceManager.unsubscribe(deviceManager.KEY_LEFT)
-        deviceManager.unsubscribe(deviceManager.KEY_UP)
-        deviceManager.unsubscribe(deviceManager.KEY_RIGHT)
-        deviceManager.unsubscribe(deviceManager.KEY_DOWN)
-        deviceManager.unsubscribe(deviceManager.KEY_EXIT)
-
+        this.unsubscribe()
         window.removeEventListener('mousemove', this.onMouseMove)
         clearTimeout(this.hideInfoTimer)
     }
@@ -171,6 +161,30 @@ export class VideoPlayerComponent extends React.Component {
         }
     }
 
+    subscribe() {
+        deviceManager.subscribe(deviceManager.KEY_ANY, this.onKeyAny)
+        deviceManager.subscribe(deviceManager.KEY_BACK, this.onKeyBack)
+        deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
+        deviceManager.subscribe(deviceManager.KEY_SPACE, this.onKeySpace)
+        deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
+        deviceManager.subscribe(deviceManager.KEY_UP, this.onKeyUp)
+        deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
+        deviceManager.subscribe(deviceManager.KEY_DOWN, this.onKeyDown)
+        deviceManager.subscribe(deviceManager.KEY_EXIT, this.onKeyExit)
+    }
+
+    unsubscribe() {
+        deviceManager.unsubscribe(deviceManager.KEY_ANY)
+        deviceManager.unsubscribe(deviceManager.KEY_BACK)
+        deviceManager.unsubscribe(deviceManager.KEY_OK)
+        deviceManager.unsubscribe(deviceManager.KEY_SPACE)
+        deviceManager.unsubscribe(deviceManager.KEY_LEFT)
+        deviceManager.unsubscribe(deviceManager.KEY_UP)
+        deviceManager.unsubscribe(deviceManager.KEY_RIGHT)
+        deviceManager.unsubscribe(deviceManager.KEY_DOWN)
+        deviceManager.unsubscribe(deviceManager.KEY_EXIT)
+    }
+    
     setVirtualFocusRefChange(virtualFocusRef) {
         this.clearVirtualFocusRefStyle()
         this.addVirtualFocusRefStyle(virtualFocusRef)

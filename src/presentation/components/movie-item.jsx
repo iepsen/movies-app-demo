@@ -1,9 +1,17 @@
+/** @module presentation/components */
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { MovieItemViewModel } from '../viewmodel/movie-item'
 import css from '../styles/movie-item.scss'
 
+/**
+ * MovieItemComponent
+ */
 export class MovieItemComponent extends React.Component {
+    /**
+     * Initialize the MovieItemComponent
+     * @param {React.Props} props - The component props
+     */
     constructor(props) {
         super(props)
         this.ref = React.createRef()
@@ -26,16 +34,25 @@ export class MovieItemComponent extends React.Component {
         this.lostFocus()
     }
 
+    /**
+     * Trigger the onMouseEnter event passed via props
+     */
     onMouseEnter() {
         if (this.props.onMouseEnter) {
             this.props.onMouseEnter(this.props.index)
         }
     }
 
+    /**
+     * Add selected style class
+     */
     hasFocus() {
         this.ref.current.classList.add(css.selected__movie)
     }
 
+    /**
+     * Remove selected style class
+     */
     lostFocus() {
         this.ref.current.classList.remove(css.selected__movie)
     }
