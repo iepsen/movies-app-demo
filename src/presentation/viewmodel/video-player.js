@@ -4,9 +4,7 @@
 export class VideoPlayerViewModel {
     /**
      * Initilize the VideoPlayerViewModel with a movie object
-     * @constructor
      * @param {MovieEntity} movie - A movie entity object.
-     * @memberof module:VideoPlayerViewModel#
      */
     constructor(movie) {
         this.title = movie.title
@@ -16,7 +14,6 @@ export class VideoPlayerViewModel {
     }
 
     /**
-     * @summary
      * Get the VideoPlayerViewModel instance
      * @returns {VideoPlayerViewModel} The VideoPlayerViewModel instance.
      */
