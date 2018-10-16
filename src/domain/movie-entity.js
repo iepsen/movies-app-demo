@@ -1,3 +1,5 @@
+/** @module domain */
+
 /**
  * Movie Entity
  */
@@ -19,13 +21,17 @@ export class MovieEntity {
         this.progress = 0
     }
 
+    /**
+     * Get the instance class
+     * @returns {MovieEntity} The MovieEntity instance.
+     */
     get() {
         return this
     }
 
     /**
      * Set the movie progress
-     * @param {string} progress - Set the movie progress
+     * @param {string} progress - Set the movie progress.
      */
     setProgress(progress) {
         this.progress = progress || '0'
@@ -33,7 +39,7 @@ export class MovieEntity {
 
     /**
      * Get the movie link
-     * @returns {string} - The movie link
+     * @returns {string} The movie link.
      */
     getLink() {
         return `/movie/${this.id}`
@@ -41,8 +47,8 @@ export class MovieEntity {
 
     /**
      * Get the movie rating
-     * @param {Array} arr - The rating information
-     * @returns {string} - The formatted rating
+     * @param {Array} arr - The rating information.
+     * @returns {string} The formatted rating.
      */
     getParentalRatings(arr) {
         if (arr.length === 0) return null
@@ -52,8 +58,8 @@ export class MovieEntity {
 
     /**
      * Get the movie categories
-     * @param {Array} arr - The categories information
-     * @returns {Array} - The categories array
+     * @param {Array} arr - The categories information.
+     * @returns {Array} The categories array.
      */
     getCategories(arr) {
         if (arr.length === 0) return null
@@ -62,9 +68,9 @@ export class MovieEntity {
 
     /**
      * Get the movie source information
-     * @param {Array} arr - The source information
-     * @returns {Object} - The movie source object 
-     * with url and duration
+     * @param {Array} arr - The source information.
+     * @returns {Object} The movie source object
+     * with url and duration.
      */
     getVideo(arr) {
         if (arr.length === 0) return ''
@@ -75,12 +81,12 @@ export class MovieEntity {
         }
     }
 
-    /***
+    /**
      * Get the movie image cover
      * It will fallback to a placeholder image if
      * it not available
-     * @param {Array} arr - The image information
-     * @returns {string} The movie cover url
+     * @param {Array} arr - The image information.
+     * @returns {string} The movie cover url.
      */
     getImage(arr) {
         if (arr.length === 0) return null

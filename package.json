@@ -28,6 +28,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.6.0",
     "jest-css-modules": "^1.1.0",
+    "jsdoc": "^3.5.5",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "sinon": "^7.0.0",
@@ -46,7 +47,8 @@
     "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --open --mode development",
     "eslint": "./node_modules/eslint/bin/eslint.js src",
     "test": "./node_modules/jest/bin/jest.js --env=jsdom --testURL=http://localhost:8080",
-    "build": "./node_modules/webpack/bin/webpack.js --mode=production"
+    "build": "./node_modules/webpack/bin/webpack.js --mode=production",
+    "docs": "./node_modules/.bin/jsdoc -d ./docs/ -R ./README.md -r ./src/"
   },
   "jest": {
     "verbose": true,

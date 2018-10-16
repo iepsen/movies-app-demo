@@ -1,4 +1,11 @@
+/** @module manager */
+/**
+ * Device Manager
+ */
 class DeviceManager {
+    /**
+     * Initialize the Device Manager singleton
+     */
     constructor() {
         if (!DeviceManager.instance) {
             DeviceManager.instance = this
@@ -10,14 +17,24 @@ class DeviceManager {
         return DeviceManager.instance
     }
 
+    /**
+     * Add the key down listener
+     */
     addEventListener() {
         window.addEventListener('keydown', this.onKeyDown)
     }
 
+    /**
+     * Remove the key down listener
+     */
     removeEventListener() {
         window.removeEventListener('keydown', this.onKeyDown)
     }
 
+    /**
+     * Fire an keyboard event
+     * @param {KeyboardEvent} event - The Keyboard Event key.
+     */
     onKeyDown(event) {
         this.keyAnyCallback()
         switch(event.keyCode) {
@@ -56,6 +73,12 @@ class DeviceManager {
         }
     }
 
+    /**
+     * Subscribe a callback for a key event
+     * @param {number} key - The key code.
+     * @param {Function} callback - The callback function
+     * to execute when the key is fired.
+     */
     subscribe(key, callback) {
         switch(key) {
         case this.KEY_ANY:
@@ -88,6 +111,10 @@ class DeviceManager {
         }
     }
 
+    /**
+     * Unsubscribe a callback for a key event
+     * @param {number} key - The key code event.
+     */
     unsubscribe(key) {
         switch(key) {
         case this.KEY_ANY:
@@ -120,6 +147,9 @@ class DeviceManager {
         }
     }
 
+    /**
+     * Initialize the callbacks with a null function
+     */
     setDefaultProperties() {
         this.keyAnyCallback = () => null
         this.keyExitCallback = () => null
@@ -133,6 +163,9 @@ class DeviceManager {
         this.keyDownCallback = () => null
     }
 
+    /**
+     * Map all keys used to navigate on the application
+     */
     mapKeys() {
         this.KEY_ANY = -1
         this.KEY_EXIT = 8
