@@ -23,15 +23,15 @@ export class MovieItemComponent extends React.Component {
         if (this.props.onMount) {
             this.props.onMount(this.props.index, this.ref)
         }
-        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
+        this.props.hasFocus ? this.setFocus() : this.removeFocus()
     }
 
     componentDidUpdate() {
-        this.props.hasFocus ? this.hasFocus() : this.lostFocus()
+        this.props.hasFocus ? this.setFocus() : this.removeFocus()
     }
 
     componentWillUnmount() {
-        this.lostFocus()
+        this.removeFocus()
     }
 
     /**
@@ -44,17 +44,17 @@ export class MovieItemComponent extends React.Component {
     }
 
     /**
-     * Add selected style class
+     * Add focused style class
      */
-    hasFocus() {
-        this.ref.current.classList.add(css.selected__movie)
+    setFocus() {
+        this.ref.current.classList.add(css.focused)
     }
 
     /**
-     * Remove selected style class
+     * Remove focused style class
      */
-    lostFocus() {
-        this.ref.current.classList.remove(css.selected__movie)
+    removeFocus() {
+        this.ref.current.classList.remove(css.focused)
     }
 
     render() {
