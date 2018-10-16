@@ -44,7 +44,7 @@ export class MovieItemComponent extends React.Component {
     }
 
     /**
-     * Add focused style class
+     * Set focused style class
      */
     setFocus() {
         this.ref.current.classList.add(css.focused)
