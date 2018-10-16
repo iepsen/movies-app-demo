@@ -40,7 +40,7 @@ describe('<MovieItemComponent />', () => {
             </MemoryRouter>
         )
         expect(wrapper.find('img').filterWhere((item) => 
-            item.prop('src') === movieMock.image.url
+            item.prop('src') === movieMock.image
         )).to.have.lengthOf(1)
     })
 

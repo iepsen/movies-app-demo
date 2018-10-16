@@ -2,9 +2,7 @@ export default {
     id: '10-things-i-hate-about-you',
     title: '10 Things I Hate About You',
     description: 'A new kid must find a guy to date the meanest girl in school, the older sister of the girl he has a crush on, who cannot date until her older sister does.',
-    image: {
-        url: 'https://picsum.photos/200/500?t=1'
-    },
+    image: 'https://picsum.photos/200/500?t=1',
     movie: {
         pathname: '/movie/10-things-i-hate-about-you',
         state: {

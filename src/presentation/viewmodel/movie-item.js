@@ -1,7 +1,7 @@
 export class MovieItemViewModel {
     constructor(movie) {
         this.title = movie.title
-        this.imageUrl = movie.image.url
+        this.imageUrl = movie.image
         this.movieLink = this.getLink(movie)
     }
 
