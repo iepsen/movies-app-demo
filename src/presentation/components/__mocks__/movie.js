@@ -10,7 +10,8 @@ export default {
         }
     },
     video: {
-        url: 'http://d2bqeap5aduv6p.cloudfront.net/project_coderush_640x360_521kbs_56min.mp4'
+        url: 'http://d2bqeap5aduv6p.cloudfront.net/project_coderush_640x360_521kbs_56min.mp4',
+        duration: '2h 30m'
     },
     categories: [
         { 'title': 'Comedy', 'description': 'Comedy movies', 'id': 'movies-comedy' },

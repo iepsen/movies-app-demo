@@ -67,4 +67,14 @@ describe('<SelectedMovieComponent />', () => {
         )
         expect(wrapper.find('span').at(2).render().text()).equal(movieMock.categories.join(', '))
     })
+
+    it('renders movie duration', () => {
+        const wrapper = mount(
+            <MemoryRouter>
+                <SelectedMovieComponent movie={movieMock} />
+            </MemoryRouter>
+        )
+        expect(wrapper.find('time').render().text()).to.equal(movieMock.video.duration)
+    })
+    
 })
