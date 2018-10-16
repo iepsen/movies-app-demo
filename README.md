@@ -12,7 +12,7 @@ Resolutions above 1024 should work. Also optimized for HD and Full HD TV resolut
 ### Prerequisites
 1. Git
 1. Node: versions v6.14.4, v8.12.0, v9.11.2, v10.12.0 are tested and running as expected. Any versions for v9.x and v10.x should work
-1. Yarn: https://yarnpkg.com/lang/en/docs/install/#mac-stable
+1. Yarn: https://yarnpkg.com/lang/en/docs/install/
 
 ### Instalation
 1. `git clone https://github.com/iepsen/movies-app-demo.git`
