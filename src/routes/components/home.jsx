@@ -75,7 +75,7 @@ export class HomeRouteComponent extends React.Component {
     navigateUp() {
         const nextIndex = this.getListIndex() - 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
-        animateList(this.listsRef.current, css.slide__up, this.setFocus)
+        animateList(this.listsRef.current, -1, css.slide__up, this.setFocus)
     }
 
     /**
@@ -84,7 +84,7 @@ export class HomeRouteComponent extends React.Component {
     navigateDown() {
         const nextIndex = this.getListIndex() + 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listsRef.current, css.slide__down, this.setFocus)
+        animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
     }
 
     /**
