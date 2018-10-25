@@ -41,7 +41,7 @@ export class MovieListComponent extends React.Component {
 
     componentDidMount() {
         window.addEventListener('mousemove', this.onMouseMove)
-        this.props.hasFocus ? this.addFocus() : this.removeFocus()
+        this.props.hasFocus ? this.setFocus() : this.removeFocus()
         if (this.props.onMount) {
             this.props.onMount(this.props.index, this.wrapperRef)
         }
@@ -51,7 +51,7 @@ export class MovieListComponent extends React.Component {
         if (this.wrapperRef.current === null) return
         if (this.props.movies === null) return
         if (this.props.hasFocus === prevProps.hasFocus) return
-        this.props.hasFocus ? this.addFocus() : this.removeFocus()
+        this.props.hasFocus ? this.setFocus() : this.removeFocus()
     }
 
     componentWillUnmount() {
@@ -173,7 +173,7 @@ export class MovieListComponent extends React.Component {
     }
 
     /**
-     * Dispatch onSelect when user navigate over the
+     * Dispatch onFocus when user navigate over the
      * MovieItemComponent component
      */
     onFocus() {
@@ -203,10 +203,10 @@ export class MovieListComponent extends React.Component {
     }
 
     /**
-     * Set focus on the current MovieListComponent
+     * Set focused style class
      */
-    addFocus() {
-        this.wrapperRef.current.classList.add(css.wrapper__focused)
+    setFocus() {
+        this.wrapperRef.current.classList.add(css.focused)
         setTimeout(() => this.subscribe(), 0)
         this.onFocus()
     }
@@ -215,7 +215,7 @@ export class MovieListComponent extends React.Component {
      * Remove the focused style class
      */
     removeFocus() {
-        this.wrapperRef.current.classList.remove(css.wrapper__focused)
+        this.wrapperRef.current.classList.remove(css.focused)
         this.unsubscribe()
     }
 

@@ -70,6 +70,60 @@ export class HomeRouteComponent extends React.Component {
     }
 
     /**
+     * Set the MovieListComponent on the Map References
+     * when mounted
+     * @param {number} index - The MovieListComponent index
+     * @param {React.Ref} ref - The MovieListComponent Reference
+     */
+    navigateUp() {
+        const nextIndex = this.getListIndex() - 1
+        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
+        animateList(this.listsRef.current, -1, css.slide__up, this.setFocus)
+    }
+
+    /**
+     * Called when a movie is selected
+     */
+    navigateDown() {
+        const nextIndex = this.getListIndex() + 1
+        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
+        animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
+    }
+
+    /**
+     * Called when a movie is selected
+     */
+    onSelect() {
+        this.props.history.push(this.state.focusedMovie.getLink(), {movie: this.state.focusedMovie})
+    }
+
+    /**
+     * Called when a movie has focus
+     * @param {MovieEntity} movie - The focused movie
+     */
+    onFocus(movie) {
+        if (this.state.focusedMovie === movie) return
+        this.setState({focusedMovie: movie})
+    }
+
+    /**
+     * Set focus on a reordered MovieListComponent
+     */
+    setFocus() {
+        orderListMap(this.moviesListRefMap, this.state.focusedListIndex)
+    }
+
+    /**
+     * Set the MovieListComponent on the Map References
+     * when mounted
+     * @param {number} index - The MovieListComponent index
+     * @param {React.Ref} ref - The MovieListComponent Reference
+     */
+    onMountMovieList(index, ref) {
+        this.moviesListRefMap.set(index, ref)
+    }
+
+    /**
      * Discover the previous MovieListComponent and navigate to it
      */
     navigateUp() {
@@ -85,39 +139,6 @@ export class HomeRouteComponent extends React.Component {
         const nextIndex = this.getListIndex() + 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
         animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
-    }
-
-    /**
-     * Called when a movie has focus
-     * @param {MovieEntity} movie - The focused movie
-     */
-    onFocus(movie) {
-        if (this.state.focusedMovie === movie) return
-        this.setState({focusedMovie: movie})
-    }
-
-    /**
-     * Called when a movie is selected
-     */
-    onSelect() {
-        this.props.history.push(this.state.focusedMovie.getLink(), {movie: this.state.focusedMovie})
-    }
-
-    /**
-     * Set the MovieListComponent on the Map References
-     * when mounted
-     * @param {number} index - The MovieListComponent index
-     * @param {React.Ref} ref - The MovieListComponent Reference
-     */
-    onMountMovieList(index, ref) {
-        this.moviesListRefMap.set(index, ref)
-    }
-
-    /**
-     * Set focus on a MovieListComponent
-     */
-    setFocus() {
-        orderListMap(this.moviesListRefMap, this.state.focusedListIndex)
     }
 
     /**

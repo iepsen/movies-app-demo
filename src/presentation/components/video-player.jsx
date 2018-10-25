@@ -54,14 +54,14 @@ export class VideoPlayerComponent extends React.Component {
         this.state = {
             remainingTime: '00:00:00',
             watched: 0,
-            virtualFocusRef: this.playPauseRef
+            focusRef: this.playPauseRef
         }
     }
 
     componentDidMount() {
         this.subscribe()
         window.addEventListener('mousemove', this.onMouseMove)
-        this.setVirtualFocusRefChange(this.state.virtualFocusRef)
+        this.setFocus(this.state.focusRef)
         this.setHideInfoTimer()
     }
 
@@ -92,8 +92,8 @@ export class VideoPlayerComponent extends React.Component {
      * Dispatch on user press ok key
      */
     onKeyOk() {
-        if (this.state.virtualFocusRef === this.playPauseRef) this.togglePlayPause()
-        if (this.state.virtualFocusRef === this.backRef) this.onKeyBack()
+        if (this.state.focusRef === this.playPauseRef) this.togglePlayPause()
+        if (this.state.focusRef === this.backRef) this.onKeyBack()
     }
 
     /**
@@ -123,7 +123,7 @@ export class VideoPlayerComponent extends React.Component {
      * Dispatch on user press up key
      */
     onKeyUp() {
-        this.setVirtualFocusRefChange(this.backRef)
+        this.setFocus(this.backRef)
     }
 
     /**
@@ -137,7 +137,7 @@ export class VideoPlayerComponent extends React.Component {
      * Dispatch on user press down key
      */
     onKeyDown() {
-        this.setVirtualFocusRefChange(this.playPauseRef)
+        this.setFocus(this.playPauseRef)
     }
 
     /**
@@ -248,28 +248,28 @@ export class VideoPlayerComponent extends React.Component {
     
     /**
      * Set the reference to focus
-     * @param {React.Ref} virtualFocusRef - The Reference to focus
+     * @param {React.Ref} focusRef - The Reference to focus
      */
-    setVirtualFocusRefChange(virtualFocusRef) {
-        this.clearVirtualFocusRefStyle()
-        this.addVirtualFocusRefStyle(virtualFocusRef)
-        this.setState({virtualFocusRef})
+    setFocus(focusRef) {
+        this.clearFocus()
+        this.addFocus(focusRef)
+        this.setState({focusRef})
     }
 
     /**
-     * Clear the focused reference
+     * Clear the focused style reference
      */
-    clearVirtualFocusRefStyle() {
+    clearFocus() {
         this.backRef.current.classList.remove(css.focused)
         this.playPauseRef.current.classList.remove(css.focused)
     }
 
     /**
      * Add a css style to a reference
-     * @param {React.Ref} virtualFocusRef - The Reference to focus
+     * @param {React.Ref} focusRef - The Reference to focus
      */
-    addVirtualFocusRefStyle(virtualFocusRef) {
-        virtualFocusRef.current.classList.add(css.focused)
+    addFocus(focusRef) {
+        focusRef.current.classList.add(css.focused)
     }
 
     /**
