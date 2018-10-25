@@ -160,7 +160,7 @@ export class MovieListComponent extends React.Component {
     navigateLeft() {
         const nextIndex = this.getMovieIndex() - 1
         this.setMovieIndex((this.movieListRefMap.has(nextIndex)) ? nextIndex : this.movieListRefMap.size - 1)
-        animateList(this.listRef.current, css.slide__right, this.setMovieItemFocus)
+        animateList(this.listRef.current, -1, css.slide__right, this.setMovieItemFocus)
     }
 
     /**
@@ -169,7 +169,7 @@ export class MovieListComponent extends React.Component {
     navigateRight() {
         const nextIndex = this.getMovieIndex() + 1
         this.setMovieIndex(this.movieListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listRef.current, css.slide__left, this.setMovieItemFocus)
+        animateList(this.listRef.current, 1, css.slide__left, this.setMovieItemFocus)
     }
 
     /**

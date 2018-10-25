@@ -37,13 +37,12 @@
 }
 
 :local(.slide__right) {
-    transform: translateX(-14%);
     animation: slide__right 150ms forwards;
 }
 
 @keyframes slide__right {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(14%); }
+    0% { transform: translateX(-14%); }
+    100% { transform: translateX(0); }
 }
 
 :local(.arrow) {

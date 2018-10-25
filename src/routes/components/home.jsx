@@ -26,7 +26,7 @@ export class HomeRouteComponent extends React.Component {
         this.onFocus = this.onFocus.bind(this)
         this.setFocus = this.setFocus.bind(this)
         this.onMountMovieList = this.onMountMovieList.bind(this)
-        this.moviesListRef = React.createRef()
+        this.listsRef = React.createRef()
         this.moviesListRefMap = new Map()
         this.interactor = new MoviesInteractor()
         
@@ -75,8 +75,19 @@ export class HomeRouteComponent extends React.Component {
      * @param {number} index - The MovieListComponent index
      * @param {React.Ref} ref - The MovieListComponent Reference
      */
-    onMountMovieList(index, ref) {
-        this.moviesListRefMap.set(index, ref)
+    navigateUp() {
+        const nextIndex = this.getListIndex() - 1
+        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
+        animateList(this.listsRef.current, -1, css.slide__up, this.setFocus)
+    }
+
+    /**
+     * Called when a movie is selected
+     */
+    navigateDown() {
+        const nextIndex = this.getListIndex() + 1
+        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
+        animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
     }
 
     /**
@@ -103,12 +114,22 @@ export class HomeRouteComponent extends React.Component {
     }
 
     /**
+     * Set the MovieListComponent on the Map References
+     * when mounted
+     * @param {number} index - The MovieListComponent index
+     * @param {React.Ref} ref - The MovieListComponent Reference
+     */
+    onMountMovieList(index, ref) {
+        this.moviesListRefMap.set(index, ref)
+    }
+
+    /**
      * Discover the previous MovieListComponent and navigate to it
      */
     navigateUp() {
         const nextIndex = this.getListIndex() - 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
-        animateList(this.moviesListRef.current, css.slide__up, this.setFocus)
+        animateList(this.listsRef.current, -1, css.slide__up, this.setFocus)
     }
 
     /**
@@ -117,7 +138,7 @@ export class HomeRouteComponent extends React.Component {
     navigateDown() {
         const nextIndex = this.getListIndex() + 1
         this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.moviesListRef.current, css.slide__down, this.setFocus)
+        animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
     }
 
     /**
@@ -184,7 +205,7 @@ export class HomeRouteComponent extends React.Component {
                 <div className={css.selected__movie}>
                     <SelectedMovieComponent movie={this.state.focusedMovie} />
                 </div>
-                <div ref={this.moviesListRef} className={css.movies__list}>
+                <div ref={this.listsRef} className={css.movies__list}>
                     {this.renderLists()}
                 </div>
             </div>
