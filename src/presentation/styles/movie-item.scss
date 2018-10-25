@@ -23,6 +23,6 @@
     }
 }
 
-:local(.selected__movie) {
+:local(.focused) {
     @extend %selected;
 }

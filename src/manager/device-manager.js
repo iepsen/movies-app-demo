@@ -32,7 +32,7 @@ class DeviceManager {
     }
 
     /**
-     * Fire an keyboard event
+     * Dispatch an keyboard event
      * @param {KeyboardEvent} event - The Keyboard Event key.
      */
     onKeyDown(event) {
@@ -77,7 +77,7 @@ class DeviceManager {
      * Subscribe a callback for a key event
      * @param {number} key - The key code.
      * @param {Function} callback - The callback function
-     * to execute when the key is fired.
+     * to be executed on the event dispatch.
      */
     subscribe(key, callback) {
         switch(key) {
