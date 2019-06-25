@@ -139,7 +139,7 @@ class DeviceManager {
             this.keyUpCallback = () => null
             break
         case this.KEY_RIGHT:
-            this.keyLeftCallback = () => null
+            this.keyRightCallback = () => null
             break
         case this.KEY_DOWN:
             this.keyDownCallback = () => null
