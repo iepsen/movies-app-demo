@@ -1,8 +1,8 @@
 {
-  "name": "videos-app-demo",
+  "name": "movies-app-demo",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/iepsen/videos-app-demo.git",
+  "repository": "https://github.com/iepsen/movies-app-demo.git",
   "homepage": "http://movies-app-demo.s3-website-us-west-2.amazonaws.com/",
   "author": "Marcelo Iepsen <iepsen@gmail.com>",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "@babel/runtime": "^7.5.5",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
+    "aws-sdk": "^2.512.0",
     "babel-core": "^7.0.0-bridge",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
@@ -48,7 +49,8 @@
     "eslint": "./node_modules/eslint/bin/eslint.js src",
     "test": "./node_modules/jest/bin/jest.js --env=jsdom --testURL=http://localhost:8080",
     "build": "./node_modules/webpack/bin/webpack.js --mode=production",
-    "docs": "./node_modules/.bin/jsdoc -d ./docs/ -R ./README.md -r ./src/"
+    "docs": "./node_modules/.bin/jsdoc -d ./docs/ -R ./README.md -r ./src/",
+    "deploy": "node ./deploy.js"
   },
   "jest": {
     "verbose": true,
