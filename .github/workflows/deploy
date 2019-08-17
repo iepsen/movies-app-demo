@@ -1,0 +1,7 @@
+workflow "Deploy S3" {
+  on = "push"
+  resolves = ["Publish"]
+}
+action "Deploy S3" {
+  uses = "justinharringa/actions-s3_website@v1.0"
+}
