@@ -4,24 +4,18 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Adding node 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
     - name: Setting up dependencies
       run: npm install
-    - name: build
-      run: Running build
-    - name: Running tests
+    - name: Bulding release
+      run: npm run build
+    - name: Performing tests
       run: npm test
     - name: Deploying build
       env:
