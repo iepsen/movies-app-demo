@@ -1,5 +1,6 @@
 # Movies App Demo
 [![CircleCI](https://circleci.com/gh/iepsen/movies-app-demo.svg?style=svg)](https://circleci.com/gh/iepsen/movies-app-demo)
+[![Actions Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/iepsen/movies-app-demo)](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/results/{owner}/{repo})
 
 This repository contains the source code for http://movies-app-demo.s3-website-us-west-2.amazonaws.com.
 
