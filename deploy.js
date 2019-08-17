@@ -16,9 +16,7 @@ const upload = () => {
             Key: file,
             Body: JSON.stringify(content)
         }
-        s3.upload(params, options, (err, data) => {
-            console.log(err, data)
-        })
+        s3.upload(params, options, err => !err)
     })
 }
 upload()
