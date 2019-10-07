@@ -1,5 +1,5 @@
 # Movies App Demo
-[![Actions Status](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/badge/iepsen/movies-app-demo)](https://wdp9fww0r9.execute-api.us-west-2.amazonaws.com/production/results/{owner}/{repo})
+[![Actions Status](https://github.com/iepsen/movies-app-demo/workflows/ci/badge.svg)](https://github.com/iepsen/movies-app-demo/actions)
 
 This repository contains the source code for http://movies-app-demo.s3-website-us-west-2.amazonaws.com.
 
