@@ -14,19 +14,18 @@ Resolutions above 1024 should work. Also optimized for HD and Full HD TV resolut
 ### Prerequisites
 1. Git
 1. Node: versions v6.14.4, v8.12.0, v9.11.2, v10.12.0, 11.10.1, v12.4.0 are tested and running as expected. Any versions for v9.x, v10.x, v11.x and v12.x should work
-1. Yarn: https://yarnpkg.com/lang/en/docs/install/
 
 ### Instalation
 1. `git clone https://github.com/iepsen/movies-app-demo.git`
 1. cd `movies-app-demo`
-1. `yarn`
+1. `npm install`
 
 ### Running
-1. `yarn start` 
->`yarn start` uses `webpack-dev-server` with default configuration and will load on port 8080.
+1. `npm start` 
+>`npm start` uses `webpack-dev-server` with default configuration and will load on port 8080.
 
 ### Tests
-1. `yarn test`
+1. `npm test`
 > Only presentation layer components are covered. More tests could be added soon.
 
 ## Hosting
