@@ -1,5 +1,6 @@
 /** @module presentation/routes */
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { MoviesInteractor } from '../../domain/movies-interactor'
 import { MovieListComponent } from '../../presentation/components/movie-list'
 import { SelectedMovieComponent } from '../../presentation/components/selected-movie'
@@ -12,62 +13,14 @@ import css from '../styles/home.scss'
 /**
  * HomeRouteComponent
  */
-export class HomeRouteComponent extends React.Component {
-    
-    /**
-     * Initialize the HomeRouteComponent 
-     * @param {React.Props} props - The component props
-     */
-    constructor(props) {
-        super(props)
-        this.onKeyUp = this.onKeyUp.bind(this)
-        this.onKeyDown = this.onKeyDown.bind(this)
-        this.onSelect = this.onSelect.bind(this)
-        this.onFocus = this.onFocus.bind(this)
-        this.setFocus = this.setFocus.bind(this)
-        this.onMountMovieList = this.onMountMovieList.bind(this)
-        this.listsRef = React.createRef()
-        this.moviesListRefMap = new Map()
-        this.interactor = new MoviesInteractor()
-        
-        this.state = {
-            focusedMovie: null,
-            focusedListIndex: 0,
-            lists: []
-        }
-    }
-
-    componentWillMount() {
-        this.interactor.get()
-            .then(featuredMovies => {
-                this.pushStateMovieList('Featured Movies', featuredMovies)
-                this.getWatchedMovies(featuredMovies)
-            })
-    }
-
-    componentDidMount() {
-        deviceManager.subscribe(deviceManager.KEY_UP, this.onKeyUp)
-        deviceManager.subscribe(deviceManager.KEY_DOWN, this.onKeyDown)
-    }
-
-    componentWillUnmount() {
-        deviceManager.unsubscribe(deviceManager.KEY_UP)
-        deviceManager.unsubscribe(deviceManager.KEY_DOWN)
-    }
-
-    /**
-     * Dispatch on user press up key
-     */
-    onKeyUp() {
-        this.navigateUp()
-    }
-
-    /**
-     * Dispatch on user press down key
-     */
-    onKeyDown() {
-        this.navigateDown()
-    }
+const HomeRouteComponent = () => {
+    const history = useHistory()
+    const [lists, setLists] = useState([])
+    const [currentListIndex, setCurrentListIndex] = useState(0)
+    const [currentMovie, setCurrentMovie] = useState(null)
+    const listsRef = useRef()
+    const moviesListRefMap = new Map()
+    const interactor = new MoviesInteractor()
 
     /**
      * Set the MovieListComponent on the Map References
@@ -75,85 +28,50 @@ export class HomeRouteComponent extends React.Component {
      * @param {number} index - The MovieListComponent index
      * @param {React.Ref} ref - The MovieListComponent Reference
      */
-    navigateUp() {
-        const nextIndex = this.getListIndex() - 1
-        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
-        animateList(this.listsRef.current, -1, css.slide__up, this.setFocus)
+    const onMountMovieList = (index, ref) => {
+        moviesListRefMap.set(index, ref)
     }
 
     /**
      * Called when a movie is selected
      */
-    navigateDown() {
-        const nextIndex = this.getListIndex() + 1
-        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
-    }
-
-    /**
-     * Called when a movie is selected
-     */
-    onSelect() {
-        this.props.history.push(this.state.focusedMovie.getLink(), {movie: this.state.focusedMovie})
+    const onSelect = () => {
+        history.push(currentMovie.getLink(), {movie: currentMovie})
     }
 
     /**
      * Called when a movie has focus
      * @param {MovieEntity} movie - The focused movie
      */
-    onFocus(movie) {
-        if (this.state.focusedMovie === movie) return
-        this.setState({focusedMovie: movie})
+    const onFocus = movie => {
+        if (currentMovie === movie) return
+        setCurrentMovie(movie)
     }
+
 
     /**
      * Set focus on a reordered MovieListComponent
      */
-    setFocus() {
-        orderListMap(this.moviesListRefMap, this.state.focusedListIndex)
+    const setFocus = () => {
+        orderListMap(moviesListRefMap, currentListIndex)
     }
 
     /**
-     * Set the MovieListComponent on the Map References
-     * when mounted
-     * @param {number} index - The MovieListComponent index
-     * @param {React.Ref} ref - The MovieListComponent Reference
+     * Navigate up over lists
      */
-    onMountMovieList(index, ref) {
-        this.moviesListRefMap.set(index, ref)
+    const onKeyUp = () => {
+        const nextIndex = currentListIndex - 1
+        setCurrentListIndex(moviesListRefMap.has(nextIndex) ? nextIndex : moviesListRefMap.size - 1)
+        animateList(listsRef.current, -1, css.slide__up, setFocus)
     }
 
     /**
-     * Discover the previous MovieListComponent and navigate to it
+     * Navigate down over lists
      */
-    navigateUp() {
-        const nextIndex = this.getListIndex() - 1
-        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : this.moviesListRefMap.size - 1)
-        animateList(this.listsRef.current, -1, css.slide__up, this.setFocus)
-    }
-
-    /**
-     * Discover the next MovieListComponent and navigate to it
-     */
-    navigateDown() {
-        const nextIndex = this.getListIndex() + 1
-        this.setListIndex(this.moviesListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listsRef.current, 1, css.slide__down, this.setFocus)
-    }
-
-    /**
-     * Get the index of selected MovieListComponent
-     */
-    getListIndex() {
-        return this.state.focusedListIndex
-    }
-
-    /**
-     * Set the current MovieListComponent selected to the state
-     * @param {number} focusedListIndex - Index of focused list
-     */
-    setListIndex(focusedListIndex) {
-        this.setState({focusedListIndex})
+    const onKeyDown = () => {
+        const nextIndex = currentListIndex + 1
+        setCurrentListIndex(moviesListRefMap.has(nextIndex) ? nextIndex : 0)
+        animateList(listsRef.current, 1, css.slide__down, setFocus)
     }
 
     /**
@@ -161,54 +79,66 @@ export class HomeRouteComponent extends React.Component {
      * @param {string} title - The MovieListComponent title.
      * @param {Array} movieList - The MovieListComponent items.
      */
-    pushStateMovieList(title, movieList) {
-        let lists = this.state.lists
-        lists.push({title, movieList})
-        this.setState({lists})
+    const pushStateMovieList = (title, movieList) => {
+        setLists(prevLists => [...prevLists, {title, movieList}])
     }
 
     /**
      * The MovieEntity array to search for watched movies
      * @param {Array} movies - MovieEntity array.
      */
-    getWatchedMovies(movies) {
+    const getWatchedMovies = (movies) => {
         let watchedMovies = movies.filter(movie => movie.progress > 0)
         if (watchedMovies.length === 0) return
-        this.pushStateMovieList('Watched Movies', watchedMovies)
+        pushStateMovieList('Watched Movies', watchedMovies)
     }
 
     /**
      * Render the MovieListComponent array
      */
-    renderLists() {
-        return this.state.lists.map((list, index) =>
+    const renderLists = () => {
+        return lists.map((list, index) =>
             <MovieListComponent
                 key={index}
                 index={index}
-                hasFocus={this.getListIndex() === index}
+                hasFocus={currentListIndex === index}
                 title={list.title} 
                 movies={list.movieList} 
-                onMount={this.onMountMovieList}
-                onSelect={this.onSelect} 
-                onFocus={this.onFocus} 
+                onMount={onMountMovieList}
+                onSelect={onSelect} 
+                onFocus={onFocus} 
             />
         )
     }
 
-    render() {
-        if (this.state.lists.length === 0) {
-            return <LoadingComponent />
+    useEffect(() => {
+        interactor.get()
+            .then(featuredMovies => {
+                pushStateMovieList('Featured Movies', featuredMovies)
+                getWatchedMovies(featuredMovies)
+            })
+        deviceManager.subscribe(deviceManager.KEY_UP, onKeyUp)
+        deviceManager.subscribe(deviceManager.KEY_DOWN, onKeyDown)
+        return () => {
+            deviceManager.unsubscribe(deviceManager.KEY_UP)
+            deviceManager.unsubscribe(deviceManager.KEY_DOWN)
         }
+    }, [])
 
-        return (
-            <div className={css.container}>
-                <div className={css.selected__movie}>
-                    <SelectedMovieComponent movie={this.state.focusedMovie} />
-                </div>
-                <div ref={this.listsRef} className={css.movies__list}>
-                    {this.renderLists()}
-                </div>
-            </div>
-        )
+    if (lists.length === 0) {
+        return <LoadingComponent />
     }
+
+    return (
+        <div className={css.container}>
+            <div className={css.selected__movie}>
+                <SelectedMovieComponent movie={currentMovie} />
+            </div>
+            <div ref={listsRef} className={css.movies__list}>
+                {renderLists()}
+            </div>
+        </div>
+    )
 }
+
+export { HomeRouteComponent }
