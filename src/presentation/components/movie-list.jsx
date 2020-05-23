@@ -1,98 +1,55 @@
 /** @module presentation/components */
-import React from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { MovieItemComponent } from './movie-item'
 import { deviceManager } from '../../manager/device-manager'
 import orderListMap from '../../helpers/order-list-map'
 import animateList from '../../helpers/animate-list'
 import css from '../styles/movie-list.scss'
 
-export class MovieListComponent extends React.Component {
-    /**
-     * Initialize the MovieListComponent 
-     * @param {React.Props} props - The component props
-     */
-    constructor(props) {
-        super(props)
+const movieListRefMap = new Map()
 
-        this.onKeyOk = this.onKeyOk.bind(this)
-        this.onKeyLeft = this.onKeyLeft.bind(this)
-        this.onKeyRight = this.onKeyRight.bind(this)
-        this.onClickArrowLeft = this.onClickArrowLeft.bind(this)
-        this.onClickArrowRight = this.onClickArrowRight.bind(this)
-        this.onMouseEnterMovieItem = this.onMouseEnterMovieItem.bind(this)
-        this.onMouseEnterArrows = this.onMouseEnterArrows.bind(this)
-        this.onMouseLeaveArrows = this.onMouseLeaveArrows.bind(this)
-        this.onMouseMove = this.onMouseMove.bind(this)
-        this.onMovieItemMount = this.onMovieItemMount.bind(this)
-        this.setMovieItemFocus = this.setMovieItemFocus.bind(this)
-
-        this.wrapperRef = React.createRef()
-        this.listRef = React.createRef()
-        this.arrowLeftRef = React.createRef()
-        this.arrowRightRef = React.createRef()
-
-        this.movieListRefMap = new Map()
-        this.hideArrowsTimer = null
-        this.isPointerOverArrows = false
-        this.state = {
-            focusedMovieIndex: 0
-        }
-    }
-
-    componentDidMount() {
-        window.addEventListener('mousemove', this.onMouseMove)
-        this.props.hasFocus ? this.setFocus() : this.removeFocus()
-        if (this.props.onMount) {
-            this.props.onMount(this.props.index, this.wrapperRef)
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.wrapperRef.current === null) return
-        if (this.props.movies === null) return
-        if (this.props.hasFocus === prevProps.hasFocus) return
-        this.props.hasFocus ? this.setFocus() : this.removeFocus()
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('mousemove', this.onMouseMove)
-        clearTimeout(this.hideArrowsTimer)
-        this.removeFocus()
-    }
+const  MovieListComponent = ({ hasFocus, onFocus, onSelect, onMount, index, title, movies }) => {
+    const wrapperRef = useRef()
+    const listRef = useRef()
+    const arrowLeftRef = useRef()
+    const arrowRightRef = useRef()
+    let hideArrowsTimer = null
+    let isPointerOverArrows = false
+    const [currentMovieIndex, setCurrentMovieIndex] = useState(0)
 
     /**
      * Dispatch on user press ok key
      */
-    onKeyOk() {
-        this.onSelect()
+    const onKeyOk = () => {
+        dispatchOnSelect()
     }
 
     /**
      * Dispatch on user press left key
      */
-    onKeyLeft() {
-        this.navigateLeft()
+    const onKeyLeft = () => {
+        navigateLeft()
     }
 
     /**
      * Dispatch on user press right key
      */
-    onKeyRight() {
-        this.navigateRight()
+    const onKeyRight = () => {
+        navigateRight()
     }
 
     /**
      * Dispatch on user click on the left arrow
      */
-    onClickArrowLeft() {
-        this.navigateLeft()
+    const onClickArrowLeft = () => {
+        navigateLeft()
     }
 
     /**
      * Dispatch on user click on the right arrow
      */
-    onClickArrowRight() {
-        this.navigateRight()
+    const onClickArrowRight = () => {
+        navigateRight()
     }
 
     /**
@@ -100,95 +57,95 @@ export class MovieListComponent extends React.Component {
      * MovieItemComponent
      * @param {number} index 
      */
-    onMouseEnterMovieItem(index) {
-        this.setMovieIndex(index)
-        this.onFocus()
+    const onMouseEnterMovieItem = index => {
+        setMovieIndex(index)
+        dispatchOnFocus()
     }
 
     /**
      * Dispatch on user moves the mouse
      */
-    onMouseMove() {
-        this.showArrows()
+    const onMouseMove = () => {
+        showArrows()
     }
 
     /**
      * Dispatch on user enter the mouse over
      * the arrows
      */
-    onMouseEnterArrows() {
-        this.isPointerOverArrows = true
+    const onMouseEnterArrows = () => {
+        isPointerOverArrows = true
     }
 
     /**
      * Dispatch on user leave the mouse over
      * the arrows
      */    
-    onMouseLeaveArrows() {
-        this.isPointerOverArrows = false
+    const onMouseLeaveArrows = () => {
+        isPointerOverArrows = false
     }
 
     /**
      * Set the timer to hide arrows
      */
-    setHideArrowsTimer() {
-        clearTimeout(this.hideArrowsTimer)
-        this.hideArrowsTimer = setTimeout(() => this.hideArrows(), 3000)
+    const setHideArrowsTimer = () => {
+        clearTimeout(hideArrowsTimer)
+        hideArrowsTimer = setTimeout(() => hideArrows(), 3000)
     }
 
     /**
      * Show mouse arrows
      */
-    showArrows() {
-        this.arrowLeftRef.current.classList.remove(css.arrow__left_hide)
-        this.arrowRightRef.current.classList.remove(css.arrow__right_hide)
-        this.isPointerOverArrows ? 
-            clearTimeout(this.hideArrowsTimer) : this.setHideArrowsTimer()
+    const showArrows = () => {
+        arrowLeftRef.current.classList.remove(css.arrow__left_hide)
+        arrowRightRef.current.classList.remove(css.arrow__right_hide)
+        isPointerOverArrows ? 
+            clearTimeout(hideArrowsTimer) : setHideArrowsTimer()
     }
 
     /**
      * Hide mouse arrows
      */
-    hideArrows() {
-        this.arrowLeftRef.current.classList.add(css.arrow__left_hide)
-        this.arrowRightRef.current.classList.add(css.arrow__right_hide)
+    const hideArrows = () => {
+        arrowLeftRef.current.classList.add(css.arrow__left_hide)
+        arrowRightRef.current.classList.add(css.arrow__right_hide)
     }
 
     /**
      * Discover the previous MovieItemComponent and navigate to it
      */
-    navigateLeft() {
-        const nextIndex = this.getMovieIndex() - 1
-        this.setMovieIndex((this.movieListRefMap.has(nextIndex)) ? nextIndex : this.movieListRefMap.size - 1)
-        animateList(this.listRef.current, -1, css.slide__right, this.setMovieItemFocus)
+    const navigateLeft = () => {
+        const nextIndex = getMovieIndex() - 1
+        setMovieIndex((movieListRefMap.has(nextIndex)) ? nextIndex : movieListRefMap.size - 1)
+        animateList(listRef.current, -1, css.slide__right, setMovieItemFocus)
     }
 
     /**
      * Discover the next MovieItemComponent and navigate to it
      */
-    navigateRight() {
-        const nextIndex = this.getMovieIndex() + 1
-        this.setMovieIndex(this.movieListRefMap.has(nextIndex) ? nextIndex : 0)
-        animateList(this.listRef.current, 1, css.slide__left, this.setMovieItemFocus)
+    const navigateRight = () => {
+        const nextIndex = currentMovieIndex + 1
+        setMovieIndex(movieListRefMap.has(nextIndex) ? nextIndex : 0)
+        animateList(listRef.current, 1, css.slide__left, setMovieItemFocus)
     }
 
     /**
      * Dispatch onFocus when user navigate over the
      * MovieItemComponent component
      */
-    onFocus() {
-        if (this.props.onFocus) {
+    const dispatchOnFocus = () => {
+        if (onFocus) {
             setTimeout(() => 
-                this.props.onFocus(this.props.movies[this.getMovieIndex()]), 200)
+                onFocus(movies[getMovieIndex()]), 200)
         }
     }
 
     /**
      * Dispatch onSelect when user trigger the OK key
      */
-    onSelect() {
-        if (this.props.onSelect) {
-            this.props.onSelect()
+    const dispatchOnSelect = () => {
+        if (onSelect) {
+            onSelect()
         }
     }
 
@@ -198,100 +155,118 @@ export class MovieListComponent extends React.Component {
      * @param {number} index - The MovieItemComponent index
      * @param {React.Ref} ref - The MovieItemComponent Reference
      */
-    onMovieItemMount(index, ref) {
-        this.movieListRefMap.set(index, ref)
+    const onMovieItemMount = (index, ref) => {
+        movieListRefMap.set(index, ref)
     }
 
     /**
      * Set focused style class
      */
-    setFocus() {
-        this.wrapperRef.current.classList.add(css.focused)
-        setTimeout(() => this.subscribe(), 0)
-        this.onFocus()
+    const setFocus = () => {
+        wrapperRef.current.classList.add(css.focused)
+        setTimeout(() => subscribe(), 0)
+        dispatchOnFocus()
     }
 
     /**
      * Remove the focused style class
      */
-    removeFocus() {
-        this.wrapperRef.current.classList.remove(css.focused)
-        this.unsubscribe()
+    const removeFocus = () => {
+        wrapperRef.current.classList.remove(css.focused)
+        unsubscribe()
     }
 
     /**
      * Set focus on the current MovieItemComponent
      */
-    setMovieItemFocus() {
-        orderListMap(this.movieListRefMap, this.getMovieIndex())
-        this.onFocus()
+    const setMovieItemFocus = () => {
+        orderListMap(movieListRefMap, getMovieIndex())
+        dispatchOnFocus()
     }
 
     /**
      * Get the focusedMovieIndex state var
      * @returns {number} The focusedMovieIndex state var
      */
-    getMovieIndex() {
-        return this.state.focusedMovieIndex
+    const getMovieIndex = () => {
+        return currentMovieIndex
     }
 
     /**
      * Set the focusedMovieIndex state var
-     * @param {number} focusedMovieIndex - The index of focused
+     * @param {number} movieIndex - The index of focused
      * Movie.
      */
-    setMovieIndex(focusedMovieIndex) {
-        this.setState({focusedMovieIndex})
+    const setMovieIndex = movieIndex => {
+        setCurrentMovieIndex(movieIndex)
     }
 
     /**
      * Subscribe the keys to navigate on the MovieListComponent
      */
-    subscribe() {
-        deviceManager.subscribe(deviceManager.KEY_OK, this.onKeyOk)
-        deviceManager.subscribe(deviceManager.KEY_LEFT, this.onKeyLeft)
-        deviceManager.subscribe(deviceManager.KEY_RIGHT, this.onKeyRight)
+    const subscribe = () => {
+        deviceManager.subscribe(deviceManager.KEY_OK, onKeyOk)
+        deviceManager.subscribe(deviceManager.KEY_LEFT, onKeyLeft)
+        deviceManager.subscribe(deviceManager.KEY_RIGHT, onKeyRight)
     }
 
     /**
      * Unsubscribe the keys on the MovieListComponent
      */
-    unsubscribe() {
+    const unsubscribe = () => {
         deviceManager.unsubscribe(deviceManager.KEY_OK)
         deviceManager.unsubscribe(deviceManager.KEY_LEFT)
         deviceManager.unsubscribe(deviceManager.KEY_RIGHT)
     }
 
-
-    renderMovies() {
-        return this.props.movies.map((movie, index) => 
+    const renderMovies = () => {
+        return movies.map((movie, index) => 
             <MovieItemComponent 
-                onMount={this.onMovieItemMount} 
-                onMouseEnter={this.onMouseEnterMovieItem}
+                onMount={onMovieItemMount} 
+                onMouseEnter={onMouseEnterMovieItem}
                 key={index} 
                 index={index}
                 movie={movie}
-                hasFocus={this.props.hasFocus && this.state.focusedMovieIndex === index}
+                hasFocus={hasFocus && currentMovieIndex === index}
             />
         )
     }
 
-    render() {
-        if (this.props.movies === null) return null
+    useEffect(() => {
+        window.addEventListener('mousemove', onMouseMove)
+        hasFocus ? setFocus() : removeFocus()
+        if (onMount) {
+            onMount(index, wrapperRef)
+        }
+        return () => {
+            window.removeEventListener('mousemove', onMouseMove)
+            clearTimeout(hideArrowsTimer)
+            removeFocus()
+        }
+    }, [])
 
-        return (
-            <div onKeyDown={this.onKeyDown} ref={this.wrapperRef} className={css.wrapper}>
-                <h2>{this.props.title}</h2>
-                <ul ref={this.listRef} className={css.movies}>
-                    {this.renderMovies()}
-                </ul>
-                <div onClick={this.onClickArrowLeft} onMouseEnter={this.onMouseEnterArrows} onMouseLeave={this.onMouseLeaveArrows} ref={this.arrowLeftRef} className={`${css.arrow} ${css.arrow__left} ${css.arrow__left_hide}`}>
-                    <i className={css.material__icons}>chevron_left</i>
-                </div>
-                <div onClick={this.onClickArrowRight} onMouseEnter={this.onMouseEnterArrows} onMouseLeave={this.onMouseLeaveArrows} ref={this.arrowRightRef} className={`${css.arrow} ${css.arrow__right} ${css.arrow__right_hide}`}>
-                    <i className={css.material__icons}>chevron_right</i>
-                </div>
+    useEffect(() => {
+        if (movies === null) return
+        hasFocus ? setFocus() : removeFocus()
+    }, [hasFocus])
+    
+    if (wrapperRef.current === null) return
+    if (movies === null) return null
+
+    return (
+        <div ref={wrapperRef} className={css.wrapper}>
+            <h2>{title}</h2>
+            <ul ref={listRef} className={css.movies}>
+                {renderMovies()}
+            </ul>
+            <div onClick={onClickArrowLeft} onMouseEnter={onMouseEnterArrows} onMouseLeave={onMouseLeaveArrows} ref={arrowLeftRef} className={`${css.arrow} ${css.arrow__left} ${css.arrow__left_hide}`}>
+                <i className={css.material__icons}>chevron_left</i>
             </div>
-        )
-    }
+            <div onClick={onClickArrowRight} onMouseEnter={onMouseEnterArrows} onMouseLeave={onMouseLeaveArrows} ref={arrowRightRef} className={`${css.arrow} ${css.arrow__right} ${css.arrow__right_hide}`}>
+                <i className={css.material__icons}>chevron_right</i>
+            </div>
+        </div>
+    )
 }
+
+export { MovieListComponent }
