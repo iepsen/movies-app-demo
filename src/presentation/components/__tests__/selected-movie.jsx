@@ -10,17 +10,6 @@ import movieMock from '../__mocks__/movie'
 configure({ adapter: new Adapter() })
 
 describe('<SelectedMovieComponent />', () => {
-    it('calls renderMovie', () => {
-        sinon.spy(SelectedMovieComponent.prototype, 'renderMovie')
-        mount(
-            <MemoryRouter>
-                <SelectedMovieComponent movie={movieMock} />
-            </MemoryRouter>
-        )
-        expect(SelectedMovieComponent.prototype.renderMovie).to.have.property('callCount', 1)
-        SelectedMovieComponent.prototype.renderMovie.restore()
-    })
-
     it('renders movie title', () => {
         const wrapper = mount(
             <MemoryRouter>

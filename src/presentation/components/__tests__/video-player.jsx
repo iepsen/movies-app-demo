@@ -10,17 +10,6 @@ import movieMock from '../__mocks__/movie'
 configure({ adapter: new Adapter() })
 
 describe('<VideoPlayerComponent />', () => {
-    it('calls componentDidMount', () => {
-        sinon.spy(VideoPlayerComponent.prototype, 'componentDidMount')
-        mount(
-            <MemoryRouter>
-                <VideoPlayerComponent data={movieMock} />
-            </MemoryRouter>
-        )
-        expect(VideoPlayerComponent.prototype.componentDidMount).to.have.property('callCount', 1)
-        VideoPlayerComponent.prototype.componentDidMount.restore()
-    })
-
     it('renders movie title', () => {
         const wrapper = mount(
             <MemoryRouter>

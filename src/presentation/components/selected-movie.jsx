@@ -6,31 +6,32 @@ import { SelectedMovieViewModel } from '../viewmodel/selected-movie'
 /**
  * SelectedMovieComponent
  */
-export class SelectedMovieComponent extends React.Component {
+
+const SelectedMovieComponent = ({ movie }) => {
     /**
      * Render the SelectedMovieComponent
      */
-    renderMovie() {
-        if (this.props.movie === null) return null
-        this.viewModel = new SelectedMovieViewModel(this.props.movie).get()
+    const renderMovie = () => {
+        if (movie === null) return null
+        const viewModel = new SelectedMovieViewModel(movie).get()
 
         return (
             <React.Fragment>
-                <h1>{this.viewModel.title}</h1>
-                <span>{this.viewModel.year}</span>
-                <span className={css.rating}>{this.viewModel.rating}</span>
-                <span className={css.categories}>{this.viewModel.categories}</span>
-                <time>{this.viewModel.duration}</time>
-                <p>{this.viewModel.description}</p>
+                <h1>{viewModel.title}</h1>
+                <span>{viewModel.year}</span>
+                <span className={css.rating}>{viewModel.rating}</span>
+                <span className={css.categories}>{viewModel.categories}</span>
+                <time>{viewModel.duration}</time>
+                <p>{viewModel.description}</p>
             </React.Fragment>
         )
     }
     
-    render() {
-        return (
-            <div className={css.movie}>
-                {this.renderMovie()}
-            </div>
-        )
-    }
+    return (
+        <div className={css.movie}>
+            {renderMovie()}
+        </div>
+    )
 }
+
+export { SelectedMovieComponent }
