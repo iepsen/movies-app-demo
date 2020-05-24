@@ -10,27 +10,11 @@ import movieMock from '../__mocks__/movie'
 configure({ adapter: new Adapter() })
 
 describe('<MovieItemComponent />', () => {
-    it('calls componentDidMount', () => {
-        sinon.spy(MovieItemComponent.prototype, 'componentDidMount')
-        mount(
-            <MemoryRouter>
-                <MovieItemComponent 
-                    onMount={jest.fn()} 
-                    key={0} 
-                    index={0}
-                    movie={movieMock}
-                    hasFocus={false}
-                />
-            </MemoryRouter>
-        )
-        expect(MovieItemComponent.prototype.componentDidMount).to.have.property('callCount', 1)
-        MovieItemComponent.prototype.componentDidMount.restore()
-    })
-
     it('renders an image', () => {
         const wrapper = mount(
             <MemoryRouter>
-                <MovieItemComponent 
+                <MovieItemComponent
+                    onMouseEnter={jest.fn()}
                     onMount={jest.fn()} 
                     key={0} 
                     index={0}
@@ -47,7 +31,8 @@ describe('<MovieItemComponent />', () => {
     it('has a link to movie', () => {
         const wrapper = mount(
             <MemoryRouter>
-                <MovieItemComponent 
+                <MovieItemComponent
+                    onMouseEnter={jest.fn()}
                     onMount={jest.fn()} 
                     key={0} 
                     index={0}
