@@ -1,0 +1,31 @@
+{
+  "name": "movies-app-demo",
+  "version": "2.0.0",
+  "description": "Movies App Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iepsen/movies-app-demo.git"
+  },
+  "keywords": [
+    "react",
+    "keyboard-navigation",
+    "smartv-tv"
+  ],
+  "author": "Marcelo Iepsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iepsen/movies-app-demo/issues"
+  },
+  "homepage": "https://github.com/iepsen/movies-app-demo#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
+    "eslint": "^7.1.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.20.0"
+  }
+}
