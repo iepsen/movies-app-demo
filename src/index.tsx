@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {HashRouter, Route} from 'react-router-dom';
+import Home from './views/Home';
+import Details from './views/Details';
+import Player from './views/Player';
 
 const App = () => {
   return (
-    <div>
-      <h1>Hello, app!</h1>
-    </div>
+    <HashRouter>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/details/:id" component={Details} />
+      <Route exact path="/player/:id" component={Player} />
+    </HashRouter>
   );
 };
 
