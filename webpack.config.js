@@ -1,10 +1,10 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     rules: [
@@ -13,26 +13,26 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader',
-          },
-        ],
+            loader: 'ts-loader'
+          }
+        ]
       },
       {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader',
-          },
-        ],
+            loader: 'html-loader'
+          }
+        ]
       },
       {
         enforce: 'pre',
         test: /\.js$/,
-        loader: 'source-map-loader',
-      },
-    ],
+        loader: 'source-map-loader'
+      }
+    ]
   },
   plugins: [new HtmlWebPackPlugin({
-    template: 'public/index.html',
-  })],
-};
+    template: 'public/index.html'
+  })]
+}
