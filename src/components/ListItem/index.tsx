@@ -1,19 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './ListItem.css'
+import { MediaModel } from '../../models/interfaces/MediaModel'
 
 type Props = {
-  active?: boolean
-  link: string
-  title: string
-  posterImage: string
+  onFocus: ((details: MediaModel) => void)
+  data: MediaModel
 }
 
-const ListItem = ({ active = false, link, title, posterImage }: Props): JSX.Element => {
-  const className = active ? 'list-item active' : 'list-item'
+const ListItem = ({ onFocus, data }: Props): JSX.Element => {
   return (
-    <Link className={className} to={link}>
-      <img src={posterImage} alt={title} />
+    <Link onMouseEnter={() => onFocus(data)} className="list-item" to={`/details/${data?.id}`}>
+      <img src={data?.posterImage} alt={data?.title} />
     </Link>
   )
 }
