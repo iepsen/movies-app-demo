@@ -1,10 +1,18 @@
 import React from 'react'
-import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
 import { Link } from 'react-router-dom'
+import './ListItem.css'
 
-const ListItem = ({ link, title, posterImage }: ListItemViewModel): JSX.Element => {
+type Props = {
+  active?: boolean
+  link: string
+  title: string
+  posterImage: string
+}
+
+const ListItem = ({ active = false, link, title, posterImage }: Props): JSX.Element => {
+  const className = active ? 'list-item active' : 'list-item'
   return (
-    <Link to={link}>
+    <Link className={className} to={link}>
       <img src={posterImage} alt={title} />
     </Link>
   )
