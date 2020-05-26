@@ -3,6 +3,9 @@
     "plugins": [
         ["@babel/plugin-transform-runtime", {
           "regenerator": true
+        }],
+        ["react-css-modules", {
+          "option": "value"
         }]
       ]
 }

@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   mode: 'production',
@@ -18,12 +20,15 @@ module.exports = {
         ]
       },
       {
+        include: path.resolve(__dirname, './src'),
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      },
+      {
         test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader'
-          }
-        ]
+        use: [{
+          loader: 'html-loader'
+        }]
       },
       {
         enforce: 'pre',
