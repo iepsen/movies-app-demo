@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         include: path.resolve(__dirname, './src'),
-        test: /\.css$/i,
+        test: /\.css$/,
         use: ['style-loader', 'css-loader']
       },
       {
