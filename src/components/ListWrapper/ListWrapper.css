@@ -1,0 +1,8 @@
+.list-wrapper {
+  overflow: auto;
+  height: 70%
+}
+
+.list-wrapper-container {
+  height: 52rem
+}
