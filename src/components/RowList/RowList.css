@@ -1,0 +1,10 @@
+.row-list-title {
+  font-size: 3rem;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.row-list-container {
+  overflow: auto;
+  scrollbar-width: none;
+}

@@ -1,10 +1,12 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+/* eslint-disable @typescript-eslint/no-var-requires */
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     rules: [
@@ -13,26 +15,29 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'ts-loader',
-          },
-        ],
+            loader: 'ts-loader'
+          }
+        ]
+      },
+      {
+        include: path.resolve(__dirname, './src'),
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       },
       {
         test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
+        use: [{
+          loader: 'html-loader'
+        }]
       },
       {
         enforce: 'pre',
         test: /\.js$/,
-        loader: 'source-map-loader',
-      },
-    ],
+        loader: 'source-map-loader'
+      }
+    ]
   },
   plugins: [new HtmlWebPackPlugin({
-    template: 'public/index.html',
-  })],
-};
+    template: 'public/index.html'
+  })]
+}
