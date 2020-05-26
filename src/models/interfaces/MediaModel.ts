@@ -1,10 +1,10 @@
-export interface MovieModel {
+export interface MediaModel {
   id: number
   title: string
   releaseDate: Date
+  posterImage: string
   backgroundImage: string
   overview: string
-  posterImage: string
   popularity: number
-  mediaType: string
+  type: string
 }
