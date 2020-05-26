@@ -3,11 +3,11 @@ import { MovieModel } from './interfaces/MovieModel'
 
 const Movie = (movie: MovieResponse): MovieModel => {
   const getBackgroundImage = (): string => {
-    return `https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`
+    return `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`
   }
 
   const getPosterImage = (): string => {
-    return `https://image.tmdb.org/t/p/w342/${movie.poster_path}`
+    return `https://image.tmdb.org/t/p/w342${movie.poster_path}`
   }
 
   return {
