@@ -2,8 +2,8 @@
   transition: all .1s ease-in-out;
   border: 1rem solid transparent;
   display: inline-block;
-  width: 20rem;
-  height: 30rem;
+  width: 18rem;
+  height: 26rem;
 }
 
 .list-item:hover, .active {
