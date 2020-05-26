@@ -1,0 +1,34 @@
+.featured-container {
+  transition: all 1s ease-in-out;
+  width: 100%;
+  height: 40%;
+}
+
+.featured-container h2 {
+  font-size: 4.6rem;
+  margin-bottom: 1%;
+}
+
+.featured-container p {
+  width: 70%;
+  height: 44%;
+  overflow: hidden;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+
+.featured-background {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  opacity: 0.2;
+}
+
+.featured-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
