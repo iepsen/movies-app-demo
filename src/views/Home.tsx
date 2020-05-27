@@ -4,13 +4,14 @@ import { getTrendingMovies, getTrendingShows } from '../services/trending'
 import { MediaModel } from '../models/interfaces/MediaModel'
 import { Featured } from '../components/Featured'
 import { ListWrapper } from '../components/ListWrapper'
+import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
 
 const Home = (): JSX.Element => {
-  const [featured, setFeatured] = useState<MediaModel>()
+  const [featured, setFeatured] = useState<FeaturedItemViewModel>()
   const [movies, setMovies] = useState<MediaModel[]>([])
   const [shows, setShows] = useState<MediaModel[]>([])
 
-  const onFocus = (media: MediaModel): void => {
+  const onFocus = (media: FeaturedItemViewModel): void => {
     setFeatured(media)
   }
 
