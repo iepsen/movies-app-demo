@@ -1,5 +1,5 @@
 .list-item {
-  transition: all .1s ease-in-out;
+  transition: all .3s ease-in-out;
   border: 1rem solid transparent;
   display: inline-block;
   width: 18rem;
