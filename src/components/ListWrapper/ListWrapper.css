@@ -1,6 +1,7 @@
 .list-wrapper {
   overflow: auto;
-  height: 70%
+  height: 70%;
+  padding-top: 1%;
 }
 
 .list-wrapper-container {
