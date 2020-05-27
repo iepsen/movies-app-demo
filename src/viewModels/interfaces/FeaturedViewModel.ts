@@ -1,4 +1,4 @@
-export interface ListItemViewModel {
+export interface FeaturedItemViewModel {
   link: string
   title: string
   overview: string
