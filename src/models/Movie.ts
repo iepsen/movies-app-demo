@@ -27,7 +27,6 @@ const Movie = (movie: MovieResponse): MovieModel => {
     title: getTitle(),
     originalTitle: movie.original_title,
     overview: movie.overview,
-    tagline: movie.tagline,
     releaseDate: new Date(movie.release_date),
     posterImage: getPosterImage(),
     backgroundImage: getBackgroundImage(),
