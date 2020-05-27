@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getMovie } from '../services/movie'
 import { MovieModel } from '../models/interfaces/MovieModel'
+import { Background } from '../components/Background'
+import { Cover } from '../components/Cover'
+import { Metadata } from '../components/Metadata'
+import './Movie.css'
 
 const Movie = (): JSX.Element|null => {
   const { id } = useParams()
@@ -15,11 +19,13 @@ const Movie = (): JSX.Element|null => {
   }
 
   return (
-    <div>
-      <h1>{movie.title}</h1>
-      <p>{movie.overview}</p>
-      <p>{movie.genres}</p>
-    </div>
+    <>
+      <Background image={movie.backgroundImage} />
+      <div className="movie-view">
+        <Cover image={movie.posterImage} />
+        <Metadata data={movie} />
+      </div>
+    </>
   )
 }
 

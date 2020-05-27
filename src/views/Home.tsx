@@ -5,8 +5,9 @@ import { MediaModel } from '../models/interfaces/MediaModel'
 import { Featured } from '../components/Featured'
 import { ListWrapper } from '../components/ListWrapper'
 import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
+import { Background } from '../components/Background'
 
-const Home = (): JSX.Element => {
+const Home = (): JSX.Element|null => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
   const [movies, setMovies] = useState<MediaModel[]>([])
   const [shows, setShows] = useState<MediaModel[]>([])
@@ -22,6 +23,7 @@ const Home = (): JSX.Element => {
 
   return (
     <>
+      <Background image={featured?.backgroundImage} />
       <Featured data={featured} />
       <ListWrapper>
         <RowList onFocus={onFocus} title="Trending Movies" data={movies} />
