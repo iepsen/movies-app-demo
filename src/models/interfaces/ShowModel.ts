@@ -1,4 +1,4 @@
-export interface MovieModel {
+export interface ShowModel {
   id: number
   title: string
   originalTitle: string
@@ -6,6 +6,6 @@ export interface MovieModel {
   releaseDate: Date
   posterImage: string
   backgroundImage: string
-  genres: string
   popularity: number
+  genres: string
 }

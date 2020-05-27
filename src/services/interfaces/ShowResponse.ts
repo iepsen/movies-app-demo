@@ -1,3 +1,8 @@
+interface Genre {
+  id: number
+  name: string
+}
+
 export interface ShowResponse {
   'original_name': string
   'id': number
@@ -6,7 +11,7 @@ export interface ShowResponse {
   'vote_average': number
   'first_air_date': string
   'poster_path': string
-  'genre_ids': number[]
+  'genres': Genre[]
   'original_language': string
   'backdrop_path': string
   'overview': string
