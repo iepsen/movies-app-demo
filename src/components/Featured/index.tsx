@@ -1,9 +1,9 @@
 import React from 'react'
 import './Featured.css'
-import { MediaModel } from '../../models/interfaces/MediaModel'
+import { FeaturedItemViewModel } from '../../viewModels/interfaces/FeaturedViewModel'
 
 type Props = {
-  data?: MediaModel
+  data?: FeaturedItemViewModel
 }
 
 const Featured = ({ data }: Props): JSX.Element => {
