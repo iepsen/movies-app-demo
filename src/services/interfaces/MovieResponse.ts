@@ -1,16 +1,19 @@
+interface Genre {
+  id: number
+  name: string
+}
+
 export interface MovieResponse {
   'id': number
-  'video': boolean
-  'vote_count': number
-  'vote_average': number
   'title': string
-  'release_date': string
-  'original_language': string
   'original_title': string
-  'genre_ids': number[]
+  'original_language': string
+  'tagline': string
+  'overview': string
+  'release_date': string
+  'genres': Genre[]
   'backdrop_path': string
   'adult': boolean
-  'overview': string
   'poster_path': string
   'popularity': number
   'media_type': string

@@ -1,17 +1,17 @@
-import { MovieResponse } from './MovieResponse'
-import { ShowResponse } from './ShowResponse'
+import { TrendingMovieResponse } from './TrendingMovieResponse'
+import { TrendingShowResponse } from './TrendingShowResponse'
 
 export interface TrendingResponse {
   'page': number
   'total_pages': number
   'total_results': number
-  'results': MovieResponse[]|ShowResponse[]
+  'results': TrendingMovieResponse[]|TrendingShowResponse[]
 }
 
 export interface TrendingMoviesResponse extends TrendingResponse {
-  'results': MovieResponse[]
+  'results': TrendingMovieResponse[]
 }
 
 export interface TrendingShowsResponse extends TrendingResponse {
-  'results': ShowResponse[]
+  'results': TrendingShowResponse[]
 }
