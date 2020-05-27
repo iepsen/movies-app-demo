@@ -1,7 +1,7 @@
 import { MediaModel } from '../models/interfaces/MediaModel'
-import { ListItemViewModel } from './interfaces/ListItemViewModel'
+import { FeaturedItemViewModel } from './interfaces/FeaturedViewModel'
 
-const ListItemView = (media: MediaModel): ListItemViewModel => {
+const FeaturedView = (media: MediaModel): FeaturedItemViewModel => {
   const getLink = (): string => {
     return media.type === 'movie' ? `/movie/${media.id}` : `/show/${media.id}`
   }
@@ -15,4 +15,4 @@ const ListItemView = (media: MediaModel): ListItemViewModel => {
   }
 }
 
-export { ListItemView }
+export { FeaturedView }

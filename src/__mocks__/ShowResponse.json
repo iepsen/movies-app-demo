@@ -1,20 +1,114 @@
 {
-  "original_name": "Snowpiercer",
-  "id": 79680,
-  "name": "Snowpiercer",
-  "vote_count": 16,
-  "vote_average": 8.4,
-  "first_air_date": "2020-05-17",
-  "poster_path": "/n6UNHZoiYj81abwmG38HbNjflDx.jpg",
-  "genre_ids": [
-    10765
+  "backdrop_path": "/xGexTKCJDkl12dTW4YCBDXWb1AD.jpg",
+  "created_by": [
+    {
+      "id": 82725,
+      "credit_id": "590e3f13c3a368650a013106",
+      "name": "Álex Pina",
+      "gender": 2,
+      "profile_path": "/hMKcFPRKo0I4WLBvkvppyBFDGr8.jpg"
+    }
   ],
-  "original_language": "en",
-  "backdrop_path": "/a9dT4YLNkyh4m2DTvD8tkXTiYpR.jpg",
-  "overview": "Set more than seven years after the world has become a frozen wasteland, the remnants of humanity inhabit a gigantic, perpetually-moving train that circles the globe as class warfare, social injustice and the politics of survival play out.",
+  "episode_run_time": [
+    70,
+    47
+  ],
+  "first_air_date": "2017-05-02",
+  "genres": [
+    {
+      "id": 80,
+      "name": "Crime"
+    },
+    {
+      "id": 18,
+      "name": "Drama"
+    }
+  ],
+  "homepage": "https://www.netflix.com/title/80192098",
+  "id": 71446,
+  "in_production": true,
+  "languages": [
+    "es"
+  ],
+  "last_air_date": "2020-04-03",
+  "last_episode_to_air": {
+    "air_date": "2020-04-03",
+    "episode_number": 16,
+    "id": 2208994,
+    "name": "The Paris Plan",
+    "overview": "The Professor, Benjamin and the others attempt to free Lisboa. Tokyo's anger threatens her faith in the plan. Sierra takes matters into her own hands.",
+    "production_code": "",
+    "season_number": 2,
+    "show_id": 71446,
+    "still_path": "/tTmzHsIA2tsLYIK9lHTRLvBpZqs.jpg",
+    "vote_average": 6.833,
+    "vote_count": 6
+  },
+  "name": "Money Heist",
+  "next_episode_to_air": null,
+  "networks": [
+    {
+      "name": "Netflix",
+      "id": 213,
+      "logo_path": "/wwemzKWzjKYJFfCeiB57q3r4Bcm.png",
+      "origin_country": ""
+    },
+    {
+      "name": "Antena 3",
+      "id": 400,
+      "logo_path": "/l7MngINTyv0O6mNlwNsUlhQ9iwZ.png",
+      "origin_country": "ES"
+    }
+  ],
+  "number_of_episodes": 31,
+  "number_of_seasons": 2,
   "origin_country": [
-    "US"
+    "ES"
   ],
-  "popularity": 86.258,
-  "media_type": "tv"
+  "original_language": "es",
+  "original_name": "La casa de papel",
+  "overview": "To carry out the biggest heist in history, a mysterious man called The Professor recruits a band of eight robbers who have a single characteristic: none of them has anything to lose. Five months of seclusion - memorizing every step, every detail, every probability - culminate in eleven days locked up in the National Coinage and Stamp Factory of Spain, surrounded by police forces and with dozens of hostages in their power, to find out whether their suicide wager will lead to everything or nothing.",
+  "popularity": 59.558,
+  "poster_path": "/MoEKaPFHABtA1xKoOteirGaHl1.jpg",
+  "production_companies": [
+    {
+      "id": 100783,
+      "logo_path": "/1q2hr0UqW0PdMwyfWpnVbwmV1y3.png",
+      "name": "Vancouver Media",
+      "origin_country": "ES"
+    }
+  ],
+  "seasons": [
+    {
+      "air_date": "2017-12-20",
+      "episode_count": 22,
+      "id": 150472,
+      "name": "Specials",
+      "overview": "",
+      "poster_path": null,
+      "season_number": 0
+    },
+    {
+      "air_date": "2017-05-02",
+      "episode_count": 15,
+      "id": 87809,
+      "name": "Season 1",
+      "overview": "Under the guidance of The Professor, a group of eight very peculiar robbers have attacked the National Coinage and Stamp Factory of Spain and took hostages to carry out the most perfect robbery in the history, aiming to take home 2.4 billion Euros in cash.",
+      "poster_path": "/jAGeeCuAh4Id4p78BOYsSFXLrC8.jpg",
+      "season_number": 1
+    },
+    {
+      "air_date": "2019-07-18",
+      "episode_count": 16,
+      "id": 122186,
+      "name": "Season 2",
+      "overview": "The Professor and his team reunite to free Rio, this time targeting the Bank of Spain with a daring and dangerous new plan. The Resistance continues.",
+      "poster_path": "/1GEp7DDQhIHlw0vgBdQGiF4WhgS.jpg",
+      "season_number": 2
+    }
+  ],
+  "status": "Returning Series",
+  "type": "Scripted",
+  "vote_average": 8.4,
+  "vote_count": 6356
 }
