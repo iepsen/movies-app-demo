@@ -33,6 +33,7 @@ const Metadata = ({ data }: Props): JSX.Element|null => {
       <p><strong>{data?.genres}</strong></p>
       <p>{data?.overview}</p>
       <Button
+        href="#/video/hA6hldpSTF8"
         variant="contained"
         className={classes.button}
         startIcon={<PlayCircleOutlineIcon className={classes.icon} />}
