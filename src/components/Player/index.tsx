@@ -96,6 +96,7 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
       return
     }
     player.stopVideo()
+    onEnd()
   }
 
   const onFastRewind = (): void => {
@@ -128,7 +129,7 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
       }
       const duration = player.getDuration()
       const currentTime = player.getCurrentTime()
-      setProgress(currentTime * 100 / duration)
+      setProgress((currentTime * 100 / duration) || 0)
     }, 200)
     return () => clearInterval(progressTimer)
   })
