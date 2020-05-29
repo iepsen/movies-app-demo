@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+let progressTimer: number
+
+let visibilityTimer: number
+
 const Player = ({ id }: Props): JSX.Element => {
   const history = useHistory()
   const [player, setPlayer] = useState<YT.Player>()
@@ -57,7 +61,6 @@ const Player = ({ id }: Props): JSX.Element => {
       iv_load_policy: 3
     }
   }
-  let progressTimer: number
 
   const onReady = (event: { target: YT.Player }): void => {
     setPlayer(event?.target)
@@ -69,7 +72,8 @@ const Player = ({ id }: Props): JSX.Element => {
 
   const onMouseMove = (): void => {
     setVisibleControls(true)
-    window.setTimeout(() => {
+    clearTimeout(visibilityTimer)
+    visibilityTimer = window.setTimeout(() => {
       setVisibleControls(false)
     }, 3000)
   }
