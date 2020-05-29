@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import YouTube, { Options } from 'react-youtube'
 import { IconButton } from '@material-ui/core'
 import { PlayArrow, Pause, Stop, FastRewind, FastForward, ArrowBack } from '@material-ui/icons'
@@ -8,6 +7,8 @@ import './Player.css'
 
 type Props = {
   id: string
+  onEnd: () => void
+  onBack: () => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -40,8 +41,7 @@ let progressTimer: number
 
 let visibilityTimer: number
 
-const Player = ({ id }: Props): JSX.Element => {
-  const history = useHistory()
+const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
   const [player, setPlayer] = useState<YT.Player>()
   const [playerState, setPlayerState] = useState<number>()
   const [progress, setProgress] = useState<number>(0)
@@ -76,13 +76,6 @@ const Player = ({ id }: Props): JSX.Element => {
     visibilityTimer = window.setTimeout(() => {
       setVisibleControls(false)
     }, 3000)
-  }
-
-  const onBack = (): void => {
-    if (player) {
-      player.stopVideo()
-    }
-    history.goBack()
   }
 
   const onPlayPause = (): void => {
@@ -131,12 +124,15 @@ const Player = ({ id }: Props): JSX.Element => {
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove)
-    return () => window.removeEventListener('mousemove', onMouseMove)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      player?.stopVideo()
+    }
   }, [])
 
   return (
     <>
-      <YouTube className="player" videoId={id} opts={options} onStateChange={onStateChange} onReady={onReady} />
+      <YouTube className="player" videoId={id} opts={options} onStateChange={onStateChange} onReady={onReady} onEnd={onEnd} />
       {visibleControls && (
         <div className="player-overlay">
           <div className="player-overlay-background" />
