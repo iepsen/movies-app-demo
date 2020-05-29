@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { HashRouter, Route } from 'react-router-dom'
 import Home from './views/Home'
 import Movie from './views/Movie'
-import Player from './views/Player'
+import Video from './views/Video'
 import Show from './views/Show'
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
       <Route exact path="/" component={Home} />
       <Route exact path="/movie/:id" component={Movie} />
       <Route exact path="/show/:id" component={Show} />
-      <Route exact path="/player/:id" component={Player} />
+      <Route exact path="/video/:id" component={Video} />
     </HashRouter>
   )
 }
