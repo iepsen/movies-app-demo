@@ -4,9 +4,11 @@ import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import './Metadata.css'
+import { VideoModel } from '../../models/interfaces/VideoModel'
 
 type Props = {
   data?: MovieModel
+  videos?: VideoModel[]
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -25,21 +27,28 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Metadata = ({ data }: Props): JSX.Element|null => {
+const Metadata = ({ data, videos }: Props): JSX.Element|null => {
   const classes = useStyles()
+  let videoId = ''
+  if (videos?.length) {
+    const [video] = videos
+    videoId = video.id
+  }
   return (
     <div className="metadata">
       <h2>{data?.title}</h2>
       <p><strong>{data?.genres}</strong></p>
       <p>{data?.overview}</p>
-      <Button
-        href="#/video/hA6hldpSTF8"
-        variant="contained"
-        className={classes.button}
-        startIcon={<PlayCircleOutlineIcon className={classes.icon} />}
-      >
+      {videoId && (
+        <Button
+          href={`#/video/${videoId}`}
+          variant="contained"
+          className={classes.button}
+          startIcon={<PlayCircleOutlineIcon className={classes.icon} />}
+        >
         Play Trailer
-      </Button>
+        </Button>
+      )}
     </div>
   )
 }

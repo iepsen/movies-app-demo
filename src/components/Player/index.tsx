@@ -37,6 +37,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const seekAmount = 10
+
 let progressTimer: number
 
 let visibilityTimer: number
@@ -100,14 +102,23 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
     if (!player) {
       return
     }
-    player.seekTo(player.getCurrentTime() - 10, true)
+    const time = player.getCurrentTime()
+    const amount = time - seekAmount
+    if (amount < 0) {
+      player.seekTo(amount, true)
+    }
   }
 
   const onFastForward = (): void => {
     if (!player) {
       return
     }
-    player.seekTo(player.getCurrentTime() + 10, true)
+    const time = player.getCurrentTime()
+    const duration = player.getDuration()
+    const amount = time + seekAmount
+    if (amount < duration) {
+      player.seekTo(amount, true)
+    }
   }
 
   useEffect(() => {
@@ -126,7 +137,11 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
     window.addEventListener('mousemove', onMouseMove)
     return () => {
       window.removeEventListener('mousemove', onMouseMove)
-      player?.stopVideo()
+      if (player) {
+        player.stopVideo()
+      }
+      clearInterval(progressTimer)
+      clearTimeout(visibilityTimer)
     }
   }, [])
 

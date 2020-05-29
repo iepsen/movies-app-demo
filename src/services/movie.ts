@@ -1,6 +1,8 @@
 import { API_ENDPOINT, API_KEY } from './constants'
 import { MovieResponse } from './interfaces/MovieResponse'
 import { MovieModel } from '../models/interfaces/MovieModel'
+import { VideoModel } from '../models/interfaces/VideoModel'
+import { getVideosByType } from './video'
 import { Movie } from '../models/Movie'
 
 const request = async (path: string): Promise<MovieResponse> => {
@@ -13,4 +15,8 @@ const getMovie = async (id: number): Promise<MovieModel> => {
   return Movie(movie)
 }
 
-export { getMovie }
+const getVideos = async (id: number): Promise<VideoModel[]> => {
+  return getVideosByType(id, 'movie')
+}
+
+export { getMovie, getVideos }
