@@ -6,13 +6,14 @@ import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
 
 interface Props {
+  isActive: boolean
   onFocus: ((details: ListItemViewModel) => void)
   title: string
   data: MediaModel[]
   children?: ReactNode
 }
 
-const RowList = ({ onFocus, title, data }: Props): JSX.Element => {
+const RowList = ({ isActive, onFocus, title, data }: Props): JSX.Element => {
   return (
     <>
       <h1 className="row-list-title">{title}</h1>
