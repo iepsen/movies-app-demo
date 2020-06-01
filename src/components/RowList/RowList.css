@@ -4,6 +4,7 @@
 }
 
 .row-list-container {
+  scroll-behavior: smooth;
   overflow: auto;
   scrollbar-width: none;
 }

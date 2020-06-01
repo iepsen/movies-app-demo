@@ -28,7 +28,6 @@ const Home = (): JSX.Element|null => {
       return
     }
     wrapper.current.scrollTop = index * 432
-    // wrapper.current.style = { transform: `translate3d(${index * 432})` }
   }
 
   return (

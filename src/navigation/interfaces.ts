@@ -5,14 +5,32 @@ export interface UseSectionInterface {
   onDown?: string
   onLeft?: string
   onRight?: string
-  onActive?: (index: number) => void
+}
+export interface UseFocusInterface {
+  id: string
+  focus?: boolean
+  onUp?: string
+  onDown?: string
+  onLeft?: string
+  onRight?: string
 }
 
-interface InjectedProps {
+interface InjectedSectionProps {
   isActive: boolean
+}
+
+interface InjectedFocusProps {
+  isFocused: boolean
 }
 
 export interface SectionInterface extends UseSectionInterface {
   index: number
-  children: (props: InjectedProps) => JSX.Element
+  onActive?: (index: number) => void
+  children: (props: InjectedSectionProps) => JSX.Element
+}
+
+export interface FocusInterface extends UseFocusInterface {
+  index: number
+  onFocus?: (index: number) => void
+  children: (props: InjectedFocusProps) => JSX.Element
 }
