@@ -6,6 +6,7 @@ import { Featured } from '../components/Featured'
 import { ListWrapper } from '../components/ListWrapper'
 import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
 import { Background } from '../components/Background'
+import { Section } from '../navigation/Section'
 
 const Home = (): JSX.Element|null => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
@@ -26,8 +27,12 @@ const Home = (): JSX.Element|null => {
       <Background image={featured?.backgroundImage} />
       <Featured data={featured} />
       <ListWrapper>
-        <RowList onFocus={onFocus} title="Trending Movies" data={movies} />
-        <RowList onFocus={onFocus} title="Trending Shows" data={shows} />
+        <Section id="trending-movies" onDown="trending-shows" active>
+          {injectedProps => <RowList isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Movies" data={movies} />}
+        </Section>
+        <Section id="trending-shows" onUp="trending-movies">
+          {injectedProps => <RowList isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Shows" data={shows} />}
+        </Section>
       </ListWrapper>
     </>
   )
