@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import RowList from '../components/RowList'
 import { getTrendingMovies, getTrendingShows } from '../services/trending'
 import { MediaModel } from '../models/interfaces/MediaModel'
@@ -12,6 +12,7 @@ const Home = (): JSX.Element|null => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
   const [movies, setMovies] = useState<MediaModel[]>([])
   const [shows, setShows] = useState<MediaModel[]>([])
+  const wrapper = useRef<HTMLDivElement|null>(null)
 
   const onFocus = (media: FeaturedItemViewModel): void => {
     setFeatured(media)
@@ -22,15 +23,23 @@ const Home = (): JSX.Element|null => {
     getTrendingShows().then(data => setShows(data))
   }, [])
 
+  const onActive = (index: number): void => {
+    if (!wrapper.current) {
+      return
+    }
+    wrapper.current.scrollTop = index * 432
+    // wrapper.current.style = { transform: `translate3d(${index * 432})` }
+  }
+
   return (
     <>
       <Background image={featured?.backgroundImage} />
       <Featured data={featured} />
-      <ListWrapper>
-        <Section id="trending-movies" onDown="trending-shows" active>
+      <ListWrapper ref={wrapper}>
+        <Section index={0} id="trending-movies" onDown="trending-shows" onActive={onActive} active>
           {injectedProps => <RowList isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Movies" data={movies} />}
         </Section>
-        <Section id="trending-shows" onUp="trending-movies">
+        <Section index={1} id="trending-shows" onUp="trending-movies" onActive={onActive}>
           {injectedProps => <RowList isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Shows" data={shows} />}
         </Section>
       </ListWrapper>

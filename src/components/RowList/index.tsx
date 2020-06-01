@@ -13,7 +13,7 @@ interface Props {
   children?: ReactNode
 }
 
-const RowList = ({ isActive, onFocus, title, data }: Props): JSX.Element => {
+const RowList = ({ isActive, onFocus,title, data }: Props): JSX.Element => {
   return (
     <>
       <h1 className="row-list-title">{title}</h1>

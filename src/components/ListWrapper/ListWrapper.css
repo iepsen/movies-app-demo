@@ -1,4 +1,5 @@
 .list-wrapper {
+  scroll-behavior: smooth;
   overflow: auto;
   height: 70%;
 }
