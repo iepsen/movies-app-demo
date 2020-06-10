@@ -1,12 +1,15 @@
+import { useEffect } from 'react'
 import { useFocus } from './useFocus'
 import { FocusInterface } from './interfaces'
 
 const Focus = ({ children, onFocus, ...props }: FocusInterface): JSX.Element => {
   const isFocused = useFocus(props)
 
-  if (isFocused && onFocus) {
-    onFocus(props.index)
-  }
+  useEffect(() => {
+    if (isFocused && onFocus) {
+      onFocus()
+    }
+  }, [isFocused])
   return children({ isFocused })
 }
 

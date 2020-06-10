@@ -13,9 +13,11 @@ export interface UseFocusInterface {
   onDown?: string
   onLeft?: string
   onRight?: string
+  onClick?: () => void
 }
 
 interface InjectedSectionProps {
+  id: string
   isActive: boolean
 }
 
@@ -30,7 +32,13 @@ export interface SectionInterface extends UseSectionInterface {
 }
 
 export interface FocusInterface extends UseFocusInterface {
-  index: number
-  onFocus?: (index: number) => void
+  onFocus?: () => void
   children: (props: InjectedFocusProps) => JSX.Element
+}
+
+export type CallbackEventType = (() => void) | (() => boolean) | null
+
+export interface DeviceInterface {
+  subscribe: (type: string, callback: CallbackEventType) => void
+  unsubscribe: (type: string) => void
 }

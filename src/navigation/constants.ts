@@ -1,7 +1,7 @@
 /**
  * Navigation Custom Event constant
  */
-export const ON_NAV_CHANGE = 'onnavchange'
+export const ON_SECTION_CHANGE = 'onsectionchange'
 
 /**
  * Navigation Custom Event constant

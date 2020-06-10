@@ -1,44 +1,35 @@
 import { useEffect, useState } from 'react'
-import { ON_KEY_DOWN, ON_NAV_CHANGE } from './constants'
-import { UseSectionInterface } from './interfaces'
+import { ON_SECTION_CHANGE } from './constants'
+import { UseSectionInterface, CallbackEventType } from './interfaces'
+import { Device, KEY_UP, KEY_DOWN, KEY_RIGHT, KEY_LEFT } from './device'
 
 const useSection = ({ id, active = false, onUp, onDown, onLeft, onRight }: UseSectionInterface): boolean => {
   const [isActive, setActive] = useState(active)
+  const { subscribe } = Device()
 
   useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (!isActive) return
-      switch (event.key) {
-        case 'ArrowUp':
-          dispatchEvent(onUp)
-          break
-        case 'ArrowDown':
-          dispatchEvent(onDown)
-          break
-        case 'ArrowLeft':
-          dispatchEvent(onLeft)
-          break
-        case 'ArrowRight':
-          dispatchEvent(onRight)
-          break
-        default:
-          break
-      }
-    }
-
     const onNavChange = (event: CustomEvent) => setActive(id === event.detail.id)
-
-    const dispatchEvent = (nextId?: string): void => {
-      if (!nextId) return
-      document.dispatchEvent(new CustomEvent(ON_NAV_CHANGE, { detail: { id: nextId } }))
+    const dispatchEvent = (nextId?: string): CallbackEventType => {
+      if (!nextId) return null
+      return () => document.dispatchEvent(new CustomEvent(ON_SECTION_CHANGE, { detail: { id: nextId } }))
     }
-    document.addEventListener(ON_KEY_DOWN, onKeyDown)
-    document.addEventListener(ON_NAV_CHANGE, onNavChange as EventListener)
+    if (onUp && active) {
+      subscribe(KEY_UP, dispatchEvent(onUp))
+    }
+    if (onDown && active) {
+      subscribe(KEY_DOWN, dispatchEvent(onDown))
+    }
+    if (onLeft && active) {
+      subscribe(KEY_LEFT, dispatchEvent(onLeft))
+    }
+    if (onRight && active) {
+      subscribe(KEY_RIGHT, dispatchEvent(onRight))
+    }
+    document.addEventListener(ON_SECTION_CHANGE, onNavChange as EventListener)
     return () => {
-      document.removeEventListener(ON_KEY_DOWN, onKeyDown)
-      document.removeEventListener(ON_NAV_CHANGE, onNavChange as EventListener)
+      document.removeEventListener(ON_SECTION_CHANGE, onNavChange as EventListener)
     }
-  })
+  }, [active])
 
   return isActive
 }
