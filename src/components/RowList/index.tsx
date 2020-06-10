@@ -7,28 +7,30 @@ import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel
 import { Focus } from '../../navigation/Focus'
 
 interface Props {
+  id: string
   isActive: boolean
   onFocus: ((details: ListItemViewModel) => void)
+  onClick: () => void
   title: string
   data: MediaModel[]
   children?: ReactNode
 }
 
-const RowList = ({ isActive, onFocus, title, data }: Props): JSX.Element => {
+const RowList = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.Element => {
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
-  const buildId = (id: number): string => `list-item-${id}`
-  const onLeft = (id: number): string | undefined => {
-    if (id < 0) {
+  const buildId = (nextId: number): string => `${id}-list-item-${nextId}`
+  const onLeft = (nextId: number): string | undefined => {
+    if (nextId < 0) {
       return
     }
-    return buildId(id)
+    return buildId(nextId)
   }
-  const onRight = (id: number): string |undefined => {
-    if (id > data.length - 1) {
+  const onRight = (nextId: number): string |undefined => {
+    if (nextId > data.length - 1) {
       return
     }
-    return buildId(id)
+    return buildId(nextId)
   }
 
   const innerFocus = (index: number, details: ListItemViewModel): void => {
@@ -42,19 +44,16 @@ const RowList = ({ isActive, onFocus, title, data }: Props): JSX.Element => {
     }
     row.current.scrollLeft = current * 288
   }, [current])
-
   return (
     <>
       <h1 className="row-list-title">{title}</h1>
       <div ref={row} className="row-list-container">
-        <div style={{ width: data.length * 288 }}>
+        <div className="row-list-wrapper" style={{ width: data.length * 288 }}>
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
-              <Focus index={index} id={buildId(index)} onLeft={onLeft(index - 1)} onRight={onRight(index + 1)} key={media.title} focus={isActive && index === current}>
-                {injectedProps =>
-                  <ListItem index={index} hasFocus={isActive && injectedProps.isFocused} onFocus={innerFocus} data={viewModel} />
-                }
+              <Focus onClick={onClick} id={buildId(index)} onLeft={onLeft(index - 1)} onRight={onRight(index + 1)} key={media.title} focus={isActive && index === current}>
+                {injectedProps => <ListItem index={index} hasFocus={isActive && injectedProps.isFocused} onFocus={() => innerFocus(index, viewModel)} data={viewModel} />}
               </Focus>
             )
           })}
@@ -64,4 +63,4 @@ const RowList = ({ isActive, onFocus, title, data }: Props): JSX.Element => {
   )
 }
 
-export default RowList
+export { RowList }

@@ -15,23 +15,19 @@ const Movie = (): JSX.Element|null => {
   const [movie, setMovie] = useState<MovieModel|null>()
   const [videos, setVideos] = useState<VideoModel[]|undefined>()
 
-  const onBack = (): void => {
-    history.goBack()
-  }
+  const onBack = (): void => history.goBack()
 
   useEffect(() => {
     getMovie(id).then(movie => setMovie(movie))
     getVideos(id).then(videos => setVideos(videos))
   }, [])
 
-  if (!movie) {
-    return null
-  }
+  if (!movie) return null
 
   return (
     <>
       <Background image={movie.backgroundImage} />
-      <BackButton onBack={onBack} />
+      <BackButton onBack={onBack} onDown="play-button" />
       <div className="movie-view">
         <Cover image={movie.posterImage} />
         <Metadata data={movie} videos={videos} />

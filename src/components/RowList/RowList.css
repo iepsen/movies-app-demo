@@ -8,3 +8,7 @@
   overflow: auto;
   scrollbar-width: none;
 }
+
+.row-list-wrapper {
+  transition: 200ms ease-in-out;
+}
