@@ -22,15 +22,16 @@ const useFocus = (id: string): UseFocus => {
   const [hasFocus, setFocus] = useState(false)
 
   useEffect(() => {
-    focusManager.subscribe({
-      next: focus => setFocus(focus === id)
-    })
     if (focusSet.has(id)) {
       throw FocusIdDefinedError(id)
     }
     focusSet.add(id)
+    const subscription = focusManager.subscribe({
+      next: focus => setFocus(focus === id)
+    })
     return () => {
       focusSet.delete(id)
+      subscription.unsubscribe()
     }
   }, [])
 
@@ -41,15 +42,16 @@ const useSection = (id: string): UseSection => {
   const [isActive, setActive] = useState(false)
 
   useEffect(() => {
-    sectionManager.subscribe({
-      next: focus => setActive(focus === id)
-    })
     if (sectionSet.has(id)) {
       throw SectionIdDefinedError(id)
     }
     sectionSet.add(id)
+    const subscription = sectionManager.subscribe({
+      next: focus => setActive(focus === id)
+    })
     return () => {
       sectionSet.delete(id)
+      subscription.unsubscribe()
     }
   }, [])
 

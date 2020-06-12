@@ -13,16 +13,10 @@ const Home = (): JSX.Element|null => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
   const [movies, setMovies] = useState<MediaModel[]>([])
   const [shows, setShows] = useState<MediaModel[]>([])
-  const history = useHistory()
   const wrapper = useRef<HTMLDivElement|null>(null)
 
   const onFocus = (media: FeaturedItemViewModel): void => setFeatured(media)
 
-  const onClick = (): void => {
-    if (featured?.link) {
-      history.push(featured.link)
-    }
-  }
   const onActive = (id: string): void => {
     if (!wrapper.current) {
       return
@@ -41,10 +35,10 @@ const Home = (): JSX.Element|null => {
       <Featured data={featured} />
       <ListWrapper ref={wrapper}>
         <Section id="trending-movies" downId="trending-shows" auto>
-          <ListRow id="trending-movies" onClick={onClick} onActive={onActive} onFocus={onFocus} title="Trending Movies" data={movies} />
+          <ListRow id="trending-movies" onActive={onActive} onFocus={onFocus} title="Trending Movies" data={movies} />
         </Section>
         <Section id="trending-shows" upId="trending-movies">
-          <ListRow id="trending-shows" onClick={onClick} onActive={onActive} onFocus={onFocus} title="Trending Shows" data={shows} />
+          <ListRow id="trending-shows" onActive={onActive} onFocus={onFocus} title="Trending Shows" data={shows} />
         </Section>
       </ListWrapper>
     </>
