@@ -3,7 +3,8 @@ import { MediaModel } from '../../models/interfaces/MediaModel'
 import { ListItem } from '../ListItem'
 import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
-import { Focus } from '../../navigation/Focus'
+import { focusManager } from '../../navigation/focus'
+import Focus from '../Focus'
 import './ListRow.css'
 
 interface Props {
@@ -44,6 +45,13 @@ const ListRow = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.El
     }
     row.current.scrollLeft = current * 288
   }, [current])
+
+  useEffect(() => {
+    if (isActive) {
+      focusManager.next(buildId(current))
+    }
+  }, [isActive])
+
   return (
     <>
       <h1 className="row-list-title">{title}</h1>
@@ -52,8 +60,8 @@ const ListRow = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.El
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
-              <Focus onClick={onClick} id={buildId(index)} onLeft={onLeft(index - 1)} onRight={onRight(index + 1)} key={media.title} focus={isActive && index === current}>
-                {injectedProps => <ListItem index={index} hasFocus={isActive && injectedProps.isFocused} onFocus={() => innerFocus(index, viewModel)} data={viewModel} />}
+              <Focus auto={isActive && index === current} onClick={onClick} id={buildId(index)} leftId={onLeft(index - 1)} rightId={onRight(index + 1)} key={media.title}>
+                <ListItem index={index} onFocus={() => innerFocus(index, viewModel)} data={viewModel} />
               </Focus>
             )
           })}

@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import './Metadata.css'
 import { VideoModel } from '../../models/interfaces/VideoModel'
-import { Focus } from '../../navigation/Focus'
+import Focus from '../Focus'
 
 type Props = {
   data?: MovieModel
@@ -53,20 +53,15 @@ const Metadata = ({ data, videos }: Props): JSX.Element|null => {
       <p><strong>{data?.genres}</strong></p>
       <p>{data?.overview}</p>
       {videoId && (
-        <Focus id="play-button" onUp="back-button" onClick={onClick} focus>
-          {
-            injectedProps => {
-              return (<Button
-                href={`#/video/${videoId}`}
-                variant="contained"
-                className={injectedProps.isFocused ? classes.buttonFocused : classes.button}
-                startIcon={<PlayCircleOutlineIcon className={classes.icon} />}
-              >
-                Play Trailer
-              </Button>
-              )
-            }
-          }
+        <Focus id="play-button" upId="back-button" onClick={onClick}>
+          <Button
+            href={`#/video/${videoId}`}
+            variant="contained"
+            className={classes.button}
+            startIcon={<PlayCircleOutlineIcon className={classes.icon} />}
+          >
+            Play Trailer
+          </Button>
         </Focus>
       )}
     </div>

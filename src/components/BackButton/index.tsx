@@ -2,7 +2,7 @@ import React from 'react'
 import { IconButton } from '@material-ui/core'
 import { ArrowBack } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { Focus } from '../../navigation/Focus'
+import Focus from '../Focus'
 
 type Props = {
   onBack: () => void
@@ -48,13 +48,10 @@ const useStyles = makeStyles((theme) => ({
 const BackButton = ({ onBack, onUp, onDown, onLeft, onRight }: Props): JSX.Element => {
   const classes = useStyles()
   return (
-    <Focus id="back-button" onClick={onBack} onUp={onUp} onDown={onDown} onLeft={onLeft} onRight={onRight}>
-      {injectedProps => (
-        <IconButton onClick={onBack} className={injectedProps.isFocused ? classes.buttonFocused : classes.button}>
-          <ArrowBack className={classes.icon} />
-        </IconButton>
-      )
-      }
+    <Focus id="back-button" onClick={onBack} upId={onUp} downId={onDown} leftId={onLeft} rightId={onRight}>
+      <IconButton onClick={onBack} className={classes.button}>
+        <ArrowBack className={classes.icon} />
+      </IconButton>
     </Focus>
   )
 }

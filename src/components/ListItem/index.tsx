@@ -5,12 +5,12 @@ import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel
 
 type Props = {
   index: number
-  hasFocus: boolean
+  hasFocus?: boolean
   onFocus: (index: number, details: ListItemViewModel) => void
   data: ListItemViewModel
 }
 
-const ListItem = ({ index, hasFocus, onFocus, data }: Props): JSX.Element => {
+const ListItem = ({ index, hasFocus = false, onFocus, data }: Props): JSX.Element => {
   const [className, setClassName] = useState('list-item')
   useEffect(() => {
     if (hasFocus && onFocus) {
