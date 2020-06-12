@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import YouTube, { Options } from 'react-youtube'
-import { IconButton } from '@material-ui/core'
-import { PlayArrow, Pause, Stop, FastRewind, FastForward, ArrowBack } from '@material-ui/icons'
+import { PlayArrow, Pause, Stop, FastRewind, FastForward } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
+import { Focus } from '../Focus'
+import { PlayerButton } from './PlayerButton'
+import { BackButton } from '../BackButton'
+import { focusManager } from '../../navigation'
 import './Player.css'
 
 type Props = {
@@ -11,26 +14,7 @@ type Props = {
   onBack: () => void
 }
 
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(2),
-    backgroundColor: 'rgb(200, 200, 200)',
-    color: 'rgb(32, 32, 32)',
-    '&:hover, &:focus': {
-      backgroundColor: 'rgb(94, 146, 108)'
-    },
-    width: '5rem',
-    height: '5rem',
-    fontSize: '1.2rem',
-    fontWeight: 'bold',
-    fontFamily: 'Poppins'
-  },
-  buttonBack: {
-    position: 'absolute',
-    top: '5%',
-    left: '5%',
-    zIndex: 10
-  },
+const useStyles = makeStyles(() => ({
   icon: {
     width: '100%',
     height: '100%'
@@ -47,7 +31,7 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
   const [player, setPlayer] = useState<YT.Player>()
   const [playerState, setPlayerState] = useState<number>()
   const [progress, setProgress] = useState<number>(0)
-  const [visibleControls, setVisibleControls] = useState<boolean>(false)
+  const [visibleControls, setVisibleControls] = useState<boolean>(true)
   const classes = useStyles()
   const options: Options = {
     width: '100%',
@@ -135,8 +119,12 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
   })
 
   useEffect(() => {
+    const subscription = focusManager.subscribe({
+      next: () => onMouseMove()
+    })
     window.addEventListener('mousemove', onMouseMove)
     return () => {
+      subscription.unsubscribe()
       window.removeEventListener('mousemove', onMouseMove)
       if (player) {
         player.stopVideo()
@@ -152,25 +140,33 @@ const Player = ({ id, onBack, onEnd }: Props): JSX.Element => {
       {visibleControls && (
         <div className="player-overlay">
           <div className="player-overlay-background" />
-          <IconButton onClick={onBack} className={`${classes.button} ${classes.buttonBack}`}>
-            <ArrowBack className={classes.icon} />
-          </IconButton>
+          <Focus onClick={onBack} id="button-back" downId="button-play-pause">
+            <BackButton onClick={onBack} />
+          </Focus>
           <div className="player-progress">
             <progress value={progress} max="100"></progress>
           </div>
           <div className="player-controls">
-            <IconButton onClick={onFastRewind} className={classes.button}>
-              <FastRewind className={classes.icon} />
-            </IconButton>
-            <IconButton onClick={onPlayPause} className={classes.button}>
-              {playerState === YouTube.PlayerState.PLAYING ? <Pause className={classes.icon} /> : <PlayArrow className={classes.icon} /> }
-            </IconButton>
-            <IconButton onClick={onStop} className={classes.button}>
-              <Stop className={classes.icon} />
-            </IconButton>
-            <IconButton onClick={onFastForward} className={classes.button}>
-              <FastForward className={classes.icon} />
-            </IconButton>
+            <Focus onClick={onFastRewind} id="button-rewind" rightId="button-play-pause" upId="button-back">
+              <PlayerButton onClick={onFastRewind}>
+                <FastRewind className={classes.icon} />
+              </PlayerButton>
+            </Focus>
+            <Focus onClick={onPlayPause} id="button-play-pause" leftId="button-rewind" rightId="button-stop" upId="button-back" auto>
+              <PlayerButton onClick={onPlayPause}>
+                {playerState === YouTube.PlayerState.PLAYING ? <Pause className={classes.icon} /> : <PlayArrow className={classes.icon} /> }
+              </PlayerButton>
+            </Focus>
+            <Focus onClick={onStop} id="button-stop" leftId="button-play-pause" rightId="button-fast-forward" upId="button-back">
+              <PlayerButton onClick={onStop}>
+                <Stop className={classes.icon} />
+              </PlayerButton>
+            </Focus>
+            <Focus onClick={onFastForward} id="button-fast-forward" leftId="button-stop" upId="button-back">
+              <PlayerButton onClick={onFastForward}>
+                <FastForward className={classes.icon} />
+              </PlayerButton>
+            </Focus>
           </div>
         </div>
       )}

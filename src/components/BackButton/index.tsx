@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover, &:focus': {
       backgroundColor: 'rgb(144, 206, 161)'
     },
+    position: 'absolute',
+    top: '5%',
+    left: '3%',
+    zIndex: 10,
     width: '5rem',
     height: '5rem',
     fontSize: '1.2rem',
@@ -29,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     '&:hover, &:focus': {
       backgroundColor: 'rgb(144, 206, 161)'
     },
+    position: 'absolute',
+    top: '5%',
+    left: '3%',
+    zIndex: 10,
     width: '5rem',
     height: '5rem',
     fontSize: '1.2rem',
