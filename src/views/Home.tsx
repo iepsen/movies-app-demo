@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { getTrendingMovies, getTrendingShows } from '../services/trending'
 import { MediaModel } from '../models/interfaces/MediaModel'
 import { Section } from '../navigation/Section'
-import { RowList } from '../components/RowList'
+import { ListRow } from '../components/ListRow'
 import { Featured } from '../components/Featured'
 import { ListWrapper } from '../components/ListWrapper'
 import { Background } from '../components/Background'
@@ -44,10 +44,10 @@ const Home = (): JSX.Element|null => {
       <Featured data={featured} />
       <ListWrapper ref={wrapper}>
         <Section index={0} id="trending-movies" onDown="trending-shows" onActive={onActive} active={current === 0}>
-          {injectedProps => <RowList onClick={onClick} id={injectedProps.id} isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Movies" data={movies} />}
+          {injectedProps => <ListRow onClick={onClick} id={injectedProps.id} isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Movies" data={movies} />}
         </Section>
         <Section index={1} id="trending-shows" onUp="trending-movies" onActive={onActive} active={current === 1}>
-          {injectedProps => <RowList onClick={onClick} id={injectedProps.id} isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Shows" data={shows} />}
+          {injectedProps => <ListRow onClick={onClick} id={injectedProps.id} isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Shows" data={shows} />}
         </Section>
       </ListWrapper>
     </>

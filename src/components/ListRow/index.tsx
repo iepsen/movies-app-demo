@@ -1,10 +1,10 @@
 import React, { ReactNode, useState, useEffect, useRef } from 'react'
 import { MediaModel } from '../../models/interfaces/MediaModel'
 import { ListItem } from '../ListItem'
-import './RowList.css'
 import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
 import { Focus } from '../../navigation/Focus'
+import './ListRow.css'
 
 interface Props {
   id: string
@@ -16,7 +16,7 @@ interface Props {
   children?: ReactNode
 }
 
-const RowList = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.Element => {
+const ListRow = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.Element => {
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
   const buildId = (nextId: number): string => `${id}-list-item-${nextId}`
@@ -63,4 +63,4 @@ const RowList = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.El
   )
 }
 
-export { RowList }
+export { ListRow }
