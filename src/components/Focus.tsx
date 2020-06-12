@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useFocus, focusManager } from '../navigation/focus'
+import { useFocus, focusManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT } from '../navigation/device'
 
 type Props = {

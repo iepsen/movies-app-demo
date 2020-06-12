@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { useSection } from './useSection'
-import { SectionInterface } from './interfaces'
+import { useSection } from '../navigation/useSection'
+import { SectionInterface } from '../navigation/interfaces'
 
 const Section = (props: SectionInterface): JSX.Element => {
   const { onActive, children, id } = props

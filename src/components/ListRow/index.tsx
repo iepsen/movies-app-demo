@@ -3,7 +3,7 @@ import { MediaModel } from '../../models/interfaces/MediaModel'
 import { ListItem } from '../ListItem'
 import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
-import { focusManager } from '../../navigation/focus'
+import { focusManager } from '../../navigation'
 import Focus from '../Focus'
 import './ListRow.css'
 
