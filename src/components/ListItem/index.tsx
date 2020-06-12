@@ -12,6 +12,7 @@ type Props = {
 
 const ListItem = ({ index, hasFocus = false, onFocus, data }: Props): JSX.Element => {
   const [className, setClassName] = useState('list-item')
+
   useEffect(() => {
     if (hasFocus && onFocus) {
       onFocus(index, data)

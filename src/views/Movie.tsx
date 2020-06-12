@@ -4,6 +4,7 @@ import { getMovie, getVideos } from '../services/movie'
 import { MovieModel } from '../models/interfaces/MovieModel'
 import { Background } from '../components/Background'
 import { BackButton } from '../components/BackButton'
+import { Focus } from '../components/Focus'
 import { Cover } from '../components/Cover'
 import { Metadata } from '../components/Metadata'
 import { VideoModel } from '../models/interfaces/VideoModel'
@@ -27,7 +28,9 @@ const Movie = (): JSX.Element|null => {
   return (
     <>
       <Background image={movie.backgroundImage} />
-      <BackButton onBack={onBack} onDown="play-button" />
+      <Focus id="back-button" onClick={onBack} downId="play-button">
+        <BackButton onClick={onBack} />
+      </Focus>
       <div className="movie-view">
         <Cover image={movie.posterImage} />
         <Metadata data={movie} videos={videos} />

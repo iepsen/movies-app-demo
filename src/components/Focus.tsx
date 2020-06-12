@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useFocus, focusManager } from '../navigation'
-import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT } from '../navigation/device'
+import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_OK } from '../navigation/device'
 
 type Props = {
   id: string,
@@ -9,7 +9,7 @@ type Props = {
   downId?: string,
   leftId?: string,
   rightId?: string,
-  onClick: (id: string) => void,
+  onClick?: () => void,
   children: JSX.Element
 }
 
@@ -19,8 +19,7 @@ const Focus = ({ id, auto = false, upId, downId, leftId, rightId, onClick, child
   const { hasFocus } = useFocus(id)
   const enhancedChildren = React.cloneElement(children, {
     ...children.props,
-    hasFocus,
-    onClick
+    hasFocus
   })
 
   const next = (id: string) => {
@@ -46,6 +45,9 @@ const Focus = ({ id, auto = false, upId, downId, leftId, rightId, onClick, child
       }
       if (rightId) {
         subscribe(KEY_RIGHT, next(rightId))
+      }
+      if (onClick) {
+        subscribe(KEY_OK, onClick)
       }
     }
   }, [hasFocus])

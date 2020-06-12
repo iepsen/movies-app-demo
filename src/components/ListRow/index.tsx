@@ -62,7 +62,7 @@ const ListRow = ({ id, isActive = false, onFocus, onClick, onActive, title, data
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
-              <Focus auto={isActive && index === current} onClick={onClick} id={buildId(index)} leftId={onLeft(index - 1)} rightId={onRight(index + 1)} key={media.title}>
+              <Focus auto={isActive && index === current} id={buildId(index)} leftId={onLeft(index - 1)} rightId={onRight(index + 1)} onClick={onClick} key={media.title}>
                 <ListItem index={index} onFocus={() => innerFocus(index, viewModel)} data={viewModel} />
               </Focus>
             )

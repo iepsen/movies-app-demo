@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { getShow, getVideos } from '../services/show'
 import { Background } from '../components/Background'
 import { BackButton } from '../components/BackButton'
+import { Focus } from '../components/Focus'
 import { Cover } from '../components/Cover'
 import { Metadata } from '../components/Metadata'
 import { ShowModel } from '../models/interfaces/ShowModel'
@@ -31,7 +32,9 @@ const Show = (): JSX.Element|null => {
   return (
     <>
       <Background image={show.backgroundImage} />
-      <BackButton onBack={onBack} />
+      <Focus id="back-button" onClick={onBack} downId="play-button">
+        <BackButton onClick={onBack} />
+      </Focus>
       <div className="show-view">
         <Cover image={show.posterImage} />
         <Metadata data={show} videos={videos} />
