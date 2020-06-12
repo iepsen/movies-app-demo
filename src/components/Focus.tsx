@@ -53,4 +53,4 @@ const Focus = ({ id, auto = false, upId, downId, leftId, rightId, onClick, child
   return enhancedChildren
 }
 
-export default Focus
+export { Focus }

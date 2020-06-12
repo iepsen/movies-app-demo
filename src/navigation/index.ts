@@ -5,11 +5,18 @@ type UseFocus = {
   hasFocus: boolean
 }
 
-const FocusIdDefinedError = (id: string) => `The ${id} is already defined.`
+type UseSection = {
+  isActive: boolean
+}
+
+const FocusIdDefinedError = (id: string) => `The focus element with "${id}" is already defined.`
+const SectionIdDefinedError = (id: string) => `The section element with "${id}" is already defined.`
 
 const focusSet = new Set<string>()
+const sectionSet = new Set<string>()
 
 const focusManager = new Subject<string>()
+const sectionManager = new Subject<string>()
 
 const useFocus = (id: string): UseFocus => {
   const [hasFocus, setFocus] = useState(false)
@@ -30,4 +37,23 @@ const useFocus = (id: string): UseFocus => {
   return { hasFocus }
 }
 
-export { useFocus, focusManager }
+const useSection = (id: string): UseSection => {
+  const [isActive, setActive] = useState(false)
+
+  useEffect(() => {
+    sectionManager.subscribe({
+      next: focus => setActive(focus === id)
+    })
+    if (sectionSet.has(id)) {
+      throw SectionIdDefinedError(id)
+    }
+    sectionSet.add(id)
+    return () => {
+      sectionSet.delete(id)
+    }
+  }, [])
+
+  return { isActive }
+}
+
+export { useFocus, useSection, focusManager, sectionManager }

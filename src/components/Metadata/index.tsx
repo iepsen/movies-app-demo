@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline'
 import './Metadata.css'
 import { VideoModel } from '../../models/interfaces/VideoModel'
-import Focus from '../Focus'
+import { Focus } from '../Focus'
 
 type Props = {
   data?: MovieModel

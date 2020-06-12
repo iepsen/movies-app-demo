@@ -11,7 +11,6 @@ import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewMode
 
 const Home = (): JSX.Element|null => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
-  const [current, setCurrent] = useState(0)
   const [movies, setMovies] = useState<MediaModel[]>([])
   const [shows, setShows] = useState<MediaModel[]>([])
   const history = useHistory()
@@ -24,30 +23,28 @@ const Home = (): JSX.Element|null => {
       history.push(featured.link)
     }
   }
+  const onActive = (id: string): void => {
+    if (!wrapper.current) {
+      return
+    }
+    wrapper.current.scrollTop = id === 'trending-shows' ? 432 : 0
+  }
 
   useEffect(() => {
     getTrendingMovies().then(data => setMovies(data))
     getTrendingShows().then(data => setShows(data))
   }, [])
 
-  const onActive = (index: number): void => {
-    if (!wrapper.current) {
-      return
-    }
-    setCurrent(index)
-    wrapper.current.scrollTop = index * 432
-  }
-
   return (
     <>
       <Background image={featured?.backgroundImage} />
       <Featured data={featured} />
       <ListWrapper ref={wrapper}>
-        <Section index={0} id="trending-movies" onDown="trending-shows" onActive={onActive} active={current === 0}>
-          {injectedProps => <ListRow onClick={onClick} id={injectedProps.id} isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Movies" data={movies} />}
+        <Section id="trending-movies" downId="trending-shows" auto>
+          <ListRow id="trending-movies" onClick={onClick} onActive={onActive} onFocus={onFocus} title="Trending Movies" data={movies} />
         </Section>
-        <Section index={1} id="trending-shows" onUp="trending-movies" onActive={onActive} active={current === 1}>
-          {injectedProps => <ListRow onClick={onClick} id={injectedProps.id} isActive={injectedProps.isActive} onFocus={onFocus} title="Trending Shows" data={shows} />}
+        <Section id="trending-shows" upId="trending-movies">
+          <ListRow id="trending-shows" onClick={onClick} onActive={onActive} onFocus={onFocus} title="Trending Shows" data={shows} />
         </Section>
       </ListWrapper>
     </>

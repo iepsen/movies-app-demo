@@ -4,20 +4,21 @@ import { ListItem } from '../ListItem'
 import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
 import { focusManager } from '../../navigation'
-import Focus from '../Focus'
+import { Focus } from '../Focus'
 import './ListRow.css'
 
 interface Props {
   id: string
-  isActive: boolean
+  isActive?: boolean
   onFocus: ((details: ListItemViewModel) => void)
   onClick: () => void
+  onActive: (id: string) => void
   title: string
   data: MediaModel[]
   children?: ReactNode
 }
 
-const ListRow = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.Element => {
+const ListRow = ({ id, isActive = false, onFocus, onClick, onActive, title, data }: Props): JSX.Element => {
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
   const buildId = (nextId: number): string => `${id}-list-item-${nextId}`
@@ -49,6 +50,7 @@ const ListRow = ({ id, isActive, onFocus, onClick, title, data }: Props): JSX.El
   useEffect(() => {
     if (isActive) {
       focusManager.next(buildId(current))
+      onActive(id)
     }
   }, [isActive])
 
