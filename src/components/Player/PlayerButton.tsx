@@ -1,25 +1,21 @@
 import React from 'react'
 import { IconButton } from '@material-ui/core'
-import { ArrowBack } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
 type Props = {
+  children: React.ReactNode
   onClick: () => void
   hasFocus?: boolean
 }
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    marginBottom: theme.spacing(10),
+    margin: theme.spacing(2),
     backgroundColor: 'rgb(200, 200, 200)',
     color: 'rgb(32, 32, 32)',
     '&:hover, &:focus': {
-      backgroundColor: 'rgb(144, 206, 161)'
+      backgroundColor: 'rgb(94, 146, 108)'
     },
-    position: 'absolute',
-    top: '5%',
-    left: '3%',
-    zIndex: 10,
     width: '5rem',
     height: '5rem',
     fontSize: '1.2rem',
@@ -27,16 +23,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Poppins'
   },
   buttonFocused: {
-    marginBottom: theme.spacing(10),
-    backgroundColor: 'rgb(144, 206, 161)',
+    margin: theme.spacing(2),
+    backgroundColor: 'rgb(94, 146, 108)',
     color: 'rgb(32, 32, 32)',
-    '&:hover, &:focus': {
-      backgroundColor: 'rgb(144, 206, 161)'
-    },
-    position: 'absolute',
-    top: '5%',
-    left: '3%',
-    zIndex: 10,
     width: '5rem',
     height: '5rem',
     fontSize: '1.2rem',
@@ -49,13 +38,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const BackButton = ({ onClick, hasFocus = false }: Props): JSX.Element => {
+const PlayerButton = ({ children, onClick, hasFocus = false }: Props): JSX.Element => {
   const classes = useStyles()
   return (
     <IconButton onClick={onClick} className={hasFocus ? classes.buttonFocused : classes.button}>
-      <ArrowBack className={classes.icon} />
+      {children}
     </IconButton>
   )
 }
 
-export { BackButton }
+export { PlayerButton }

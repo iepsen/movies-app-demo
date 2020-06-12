@@ -4,6 +4,11 @@
 }
 
 .row-list-container {
+  scroll-behavior: smooth;
   overflow: auto;
   scrollbar-width: none;
+}
+
+.row-list-wrapper {
+  transition: 200ms ease-in-out;
 }

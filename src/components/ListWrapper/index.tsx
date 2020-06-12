@@ -1,18 +1,19 @@
-import React, { ReactNode } from 'react'
+import React, { forwardRef } from 'react'
 import './ListWrapper.css'
 
-type Props = {
-  children?: ReactNode
+interface ListWrapperInterface {
+  children: React.ReactNodeArray
 }
 
-const ListWrapper = ({ children }: Props): JSX.Element => {
+const ListWrapper = forwardRef<HTMLDivElement, ListWrapperInterface>((props: ListWrapperInterface, ref): JSX.Element => {
   return (
-    <div className="list-wrapper">
+    <div ref={ref} className="list-wrapper">
       <div className="list-wrapper-container">
-        {children}
+        {props.children}
       </div>
     </div>
   )
-}
+})
+ListWrapper.displayName = 'ListWrapper'
 
 export { ListWrapper }
