@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router-dom'
-import { getTrendingMovies, getTrendingShows } from '../services/trending'
+import { getPopularMovies, getPopularShows } from '../services/popular'
 import { MediaModel } from '../models/interfaces/MediaModel'
 import { Section } from '../components/Section'
 import { ListRow } from '../components/ListRow'
@@ -21,12 +20,12 @@ const Home = (): JSX.Element|null => {
     if (!wrapper.current) {
       return
     }
-    wrapper.current.scrollTop = id === 'trending-shows' ? 432 : 0
+    wrapper.current.scrollTop = id === 'popular-shows' ? 432 : 0
   }
 
   useEffect(() => {
-    getTrendingMovies().then(data => setMovies(data))
-    getTrendingShows().then(data => setShows(data))
+    getPopularMovies().then(data => setMovies(data))
+    getPopularShows().then(data => setShows(data))
   }, [])
 
   return (
@@ -34,11 +33,11 @@ const Home = (): JSX.Element|null => {
       <Background image={featured?.backgroundImage} />
       <Featured data={featured} />
       <ListWrapper ref={wrapper}>
-        <Section id="trending-movies" downId="trending-shows" auto>
-          <ListRow id="trending-movies" onActive={onActive} onFocus={onFocus} title="Trending Movies" data={movies} />
+        <Section id="popular-movies" downId="popular-shows" auto>
+          <ListRow id="popular-movies" onActive={onActive} onFocus={onFocus} title="Popular Movies" data={movies} />
         </Section>
-        <Section id="trending-shows" upId="trending-movies">
-          <ListRow id="trending-shows" onActive={onActive} onFocus={onFocus} title="Trending Shows" data={shows} />
+        <Section id="popular-shows" upId="popular-movies">
+          <ListRow id="popular-shows" onActive={onActive} onFocus={onFocus} title="Popular Shows" data={shows} />
         </Section>
       </ListWrapper>
     </>

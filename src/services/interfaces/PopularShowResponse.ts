@@ -1,4 +1,4 @@
-export interface TrendingShowResponse {
+export interface PopularShowResponse {
   'id': number
   'vote_count': number
   'vote_average': number
@@ -11,5 +11,4 @@ export interface TrendingShowResponse {
   'overview': string
   'poster_path': string
   'popularity': number
-  'media_type': string
 }
