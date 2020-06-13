@@ -1,18 +1,14 @@
 import { MediaModel } from './interfaces/MediaModel'
-import { TrendingMovieResponse } from '../services/interfaces/TrendingMovieResponse'
-import { TrendingShowResponse } from '../services/interfaces/TrendingShowResponse'
+import { PopularMovieResponse } from '../services/interfaces/PopularMovieResponse'
+import { PopularShowResponse } from '../services/interfaces/PopularShowResponse'
 
-const Media = (media: TrendingMovieResponse|TrendingShowResponse): MediaModel => {
-  const getType = () => {
-    return media.media_type === 'tv' ? 'show' : media.media_type
-  }
-
+const Media = (media: PopularMovieResponse|PopularShowResponse, type: 'movie'|'show'): MediaModel => {
   const getTitle = () => {
-    if (getType() === 'movie') {
-      const movieMedia = media as TrendingMovieResponse
+    if (type === 'movie') {
+      const movieMedia = media as PopularMovieResponse
       return movieMedia.title
     } else {
-      const showMedia = media as TrendingShowResponse
+      const showMedia = media as PopularShowResponse
       return showMedia.name
     }
   }
@@ -31,7 +27,7 @@ const Media = (media: TrendingMovieResponse|TrendingShowResponse): MediaModel =>
     overview: media.overview,
     backgroundImage: getBackgroundImage(),
     posterImage: getPosterImage(),
-    type: getType()
+    type
   }
 }
 

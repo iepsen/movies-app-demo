@@ -1,4 +1,4 @@
-export interface TrendingMovieResponse {
+export interface PopularMovieResponse {
   'id': number
   'video': boolean
   'vote_count': number
@@ -13,5 +13,4 @@ export interface TrendingMovieResponse {
   'overview': string
   'poster_path': string
   'popularity': number
-  'media_type': string
 }
