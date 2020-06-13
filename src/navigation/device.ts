@@ -17,6 +17,7 @@ const Device = (): DeviceInterface => {
     if (callback) {
       callback()
     }
+    event.preventDefault()
   }
   const subscribe = (type: string, callback: CallbackEventType): void => {
     device.set(type, callback)
