@@ -11,10 +11,9 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
-        val webview: WebView = findViewById(R.id.webview)
-        webview.settings.javaScriptEnabled = true
-        webview.webViewClient = WebViewClient()
-        // webview.loadUrl("http://192.168.10.190:8080")
-        webview.loadUrl("http://movies-app-demo.s3-website-us-west-2.amazonaws.com/")
+        val webView: WebView = findViewById(R.id.webview)
+        webView.settings.javaScriptEnabled = true
+        webView.webViewClient = WebViewClient()
+        webView.loadUrl(BuildConfig.WEBVIEW_URL)
     }
 }
