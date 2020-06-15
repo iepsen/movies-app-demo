@@ -24,10 +24,14 @@ android {
 
         debug {
             buildConfigField "String", "WEBVIEW_URL", "\"https://movies-app-demo.s3-website-us-west-2.amazonaws.com/\""
+            applicationIdSuffix ".debug"
         }
 
         local {
             buildConfigField "String", "WEBVIEW_URL", "\"http://192.168.10.190:8080/\""
+            applicationIdSuffix ".local"
+            debuggable true
+            signingConfig signingConfigs.debug
         }
 
     }
