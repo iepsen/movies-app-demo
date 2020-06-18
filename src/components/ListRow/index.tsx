@@ -52,7 +52,13 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
     if (!row.current) {
       return
     }
-    row.current.scrollLeft = current * 288
+    // row.current.scrollLeft = current * 288
+    const htmlElement = document.querySelector('html')
+    if (!htmlElement) {
+      return
+    }
+    const fontSize = getComputedStyle(htmlElement).getPropertyValue('font-size')
+    row.current.scrollLeft = current * (parseInt(fontSize) * 18)
   }, [current])
 
   useEffect(() => {
@@ -66,7 +72,7 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
     <>
       <h1 className="row-list-title">{title}</h1>
       <div ref={row} className="row-list-container">
-        <div className="row-list-wrapper" style={{ width: data.length * 288 }}>
+        <div className="row-list-wrapper" style={{ width: `${data.length * 18}rem` }}>
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
