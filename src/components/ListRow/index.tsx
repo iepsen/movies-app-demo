@@ -6,6 +6,7 @@ import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
 import { focusManager } from '../../navigation'
 import { Focus } from '../Focus'
+import { LIST_ITEM_WIDTH } from '../../constants/dimensions'
 import './ListRow.css'
 
 interface Props {
@@ -52,13 +53,12 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
     if (!row.current) {
       return
     }
-    // row.current.scrollLeft = current * 288
     const htmlElement = document.querySelector('html')
     if (!htmlElement) {
       return
     }
     const fontSize = getComputedStyle(htmlElement).getPropertyValue('font-size')
-    row.current.scrollLeft = current * (parseInt(fontSize) * 18)
+    row.current.scrollLeft = current * (parseFloat(fontSize) * LIST_ITEM_WIDTH)
   }, [current])
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
     <>
       <h1 className="row-list-title">{title}</h1>
       <div ref={row} className="row-list-container">
-        <div className="row-list-wrapper" style={{ width: `${data.length * 18}rem` }}>
+        <div className="row-list-wrapper" style={{ width: `${data.length * LIST_ITEM_WIDTH}rem` }}>
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
