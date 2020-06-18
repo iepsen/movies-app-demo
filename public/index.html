@@ -31,7 +31,13 @@
         margin: 5%;
       }
 
-      @media screen and (-webkit-device-pixel-ratio: 2.0){
+      @media screen and (max-width: 1280px) {
+        html {
+          font-size: 50%;
+        }
+      }
+
+      @media screen and (-webkit-min-device-pixel-ratio: 1.1){
         html {
           font-size: 50%;
         }
@@ -54,5 +60,6 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>console.log(devicePixelRatio)</script>
   </body>
 </html>
