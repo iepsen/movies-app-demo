@@ -17,7 +17,7 @@ const getPopularMovies = async (): Promise<MediaModel[]> => {
 
 const getPopularShows = async (): Promise<MediaModel[]> => {
   const shows = await request('/tv/popular') as PopularShowsResponse
-  return shows.results.map(show => Media(show, 'movie'))
+  return shows.results.map(show => Media(show, 'show'))
 }
 
 export { getPopularMovies, getPopularShows }
