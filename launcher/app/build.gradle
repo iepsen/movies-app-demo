@@ -24,6 +24,7 @@ android {
 
         debug {
             buildConfigField "String", "WEBVIEW_URL", "\"http://movies-app-demo.s3-website-us-west-2.amazonaws.com/\""
+            debuggable true
             applicationIdSuffix ".debug"
         }
 
