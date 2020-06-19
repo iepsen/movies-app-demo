@@ -31,8 +31,8 @@ class MainActivity : Activity() {
             override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
                 if (url === null) return
 
-                val pattern = Regex("https?:\\/\\/[a-z0-9.:]+\\/#\\/video\\/([0-9a-zA-Z]+)")
-                val match = pattern.find(url)
+                val regex = """https?://\S+/#/video/([0-9a-zA-Z]+)""".toRegex()
+                val match = regex.find(url)
                 if (match === null) return
 
                 val (videoId) = match.destructured
