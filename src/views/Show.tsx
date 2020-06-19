@@ -32,7 +32,7 @@ const Show = (): JSX.Element|null => {
   return (
     <>
       <Background image={show.backgroundImage} />
-      <Focus id="back-button" onClick={onBack} downId="play-button">
+      <Focus id="back-button" onClick={onBack} downId="play-button" auto>
         <BackButton onClick={onBack} />
       </Focus>
       <div className="show-view">
