@@ -2,11 +2,16 @@ package com.iepsen.moviesapp
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Window
-import android.webkit.*
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.google.android.youtube.player.YouTubeIntents
+
 
 class MainActivity : Activity() {
     private var webView: WebView? = null
@@ -15,6 +20,11 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
+
+        if (0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
+
         webView = findViewById(R.id.webview)
         webView?.settings?.javaScriptEnabled = true
         webView?.webViewClient = object : WebViewClient() {
