@@ -8,8 +8,8 @@ const request = async (path: string): Promise<VideosResponse> => {
   return fetch(url).then((response: Response) => response.json())
 }
 
-const getVideosByType = async (id: number, type: 'movie' | 'tv'): Promise<VideoModel[]> => {
-  const videos = await request(`/${type}/${id}/videos`) as VideosResponse
+const getVideosByType = async (id: string, type: 'movie' | 'tv'): Promise<VideoModel[]> => {
+  const videos = (await request(`/${type}/${id}/videos`)) as VideosResponse
   return videos.results.map(video => Video(video))
 }
 

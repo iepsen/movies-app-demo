@@ -10,11 +10,11 @@ import { ShowModel } from '../models/interfaces/ShowModel'
 import { VideoModel } from '../models/interfaces/VideoModel'
 import './Show.css'
 
-const Show = (): JSX.Element|null => {
-  const { id } = useParams()
+const Show = (): JSX.Element | null => {
+  const { id } = useParams<{ id: string }>()
   const history = useHistory()
-  const [show, setShow] = useState<ShowModel|null>()
-  const [videos, setVideos] = useState<VideoModel[]|undefined>()
+  const [show, setShow] = useState<ShowModel | null>()
+  const [videos, setVideos] = useState<VideoModel[] | undefined>()
 
   const onBack = (): void => {
     history.goBack()
@@ -32,7 +32,7 @@ const Show = (): JSX.Element|null => {
   return (
     <>
       <Background image={show.backgroundImage} />
-      <Focus id="back-button" onClick={onBack} downId="play-button" auto>
+      <Focus id="back-button" onClick={onBack} downId="play-button" autoFocus>
         <BackButton onClick={onBack} />
       </Focus>
       <div className="show-view">

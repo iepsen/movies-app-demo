@@ -12,7 +12,7 @@ import './ListRow.css'
 interface Props {
   id: string
   isActive?: boolean
-  onFocus: ((details: ListItemViewModel) => void)
+  onFocus: (details: ListItemViewModel) => void
   onActive: (id: string) => void
   title: string
   data: MediaModel[]
@@ -33,7 +33,7 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
     return buildId(nextId)
   }
 
-  const onRight = (nextId: number): string |undefined => {
+  const onRight = (nextId: number): string | undefined => {
     if (nextId > data.length - 1) {
       return
     }
@@ -76,8 +76,19 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
-              <Focus auto={isActive && index === current} id={buildId(index)} leftId={onLeft(index - 1)} rightId={onRight(index + 1)} onClick={() => onClick(viewModel.link)} key={media.title}>
-                <ListItem index={index} onFocus={() => innerFocus(index, viewModel)} data={viewModel} />
+              <Focus
+                autoFocus={isActive && index === current}
+                id={buildId(index)}
+                leftId={onLeft(index - 1)}
+                rightId={onRight(index + 1)}
+                onClick={() => onClick(viewModel.link)}
+                key={media.title}
+              >
+                <ListItem
+                  index={index}
+                  onFocus={() => innerFocus(index, viewModel)}
+                  data={viewModel}
+                />
               </Focus>
             )
           })}

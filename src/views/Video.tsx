@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Player } from '../components/Player'
 
 const Video = (): JSX.Element => {
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
   const history = useHistory()
 
   const onBack = (): void => {
@@ -14,9 +14,7 @@ const Video = (): JSX.Element => {
     history.goBack()
   }
 
-  return (
-    <Player id={id} onBack={onBack} onEnd={onEnd} />
-  )
+  return <Player id={id} onBack={onBack} onEnd={onEnd} />
 }
 
 export default Video

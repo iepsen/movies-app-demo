@@ -11,7 +11,7 @@ type Props = {
   videos?: VideoModel[]
 }
 
-const Metadata = ({ data, videos }: Props): JSX.Element|null => {
+const Metadata = ({ data, videos }: Props): JSX.Element | null => {
   const history = useHistory()
   let videoId = ''
   if (videos?.length) {
@@ -22,10 +22,12 @@ const Metadata = ({ data, videos }: Props): JSX.Element|null => {
   return (
     <div className="metadata">
       <h2>{data?.title}</h2>
-      <p><strong>{data?.genres}</strong></p>
+      <p>
+        <strong>{data?.genres}</strong>
+      </p>
       <p>{data?.overview}</p>
       {videoId && (
-        <Focus id="play-button" upId="back-button" onClick={onClick} auto>
+        <Focus id="play-button" upId="back-button" onClick={onClick} autoFocus>
           <ActionButton onClick={onClick} text="Play Trailer" />
         </Focus>
       )}

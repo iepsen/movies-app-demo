@@ -10,11 +10,11 @@ import { Metadata } from '../components/Metadata'
 import { VideoModel } from '../models/interfaces/VideoModel'
 import './Movie.css'
 
-const Movie = (): JSX.Element|null => {
-  const { id } = useParams()
+const Movie = (): JSX.Element | null => {
+  const { id } = useParams<{ id: string }>()
   const history = useHistory()
-  const [movie, setMovie] = useState<MovieModel|null>()
-  const [videos, setVideos] = useState<VideoModel[]|undefined>()
+  const [movie, setMovie] = useState<MovieModel | null>()
+  const [videos, setVideos] = useState<VideoModel[] | undefined>()
 
   const onBack = (): void => history.goBack()
 
@@ -28,7 +28,7 @@ const Movie = (): JSX.Element|null => {
   return (
     <>
       <Background image={movie.backgroundImage} />
-      <Focus id="back-button" onClick={onBack} downId="play-button" auto>
+      <Focus id="back-button" onClick={onBack} downId="play-button" autoFocus>
         <BackButton onClick={onBack} />
       </Focus>
       <div className="movie-view">

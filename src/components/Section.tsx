@@ -2,19 +2,27 @@ import React, { useEffect } from 'react'
 import { useSection, sectionManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT } from '../navigation/device'
 
-type Props = {
-  id: string,
-  auto?: boolean,
-  upId?: string,
-  downId?: string,
-  leftId?: string,
-  rightId?: string,
+type SectionProps = {
+  id: string
+  autoFocus?: boolean
+  upId?: string
+  downId?: string
+  leftId?: string
+  rightId?: string
   children: JSX.Element
 }
 
 const { subscribe } = Device()
 
-const Section = ({ id, auto = false, upId, downId, leftId, rightId, children }: Props): JSX.Element => {
+const Section = ({
+  id,
+  autoFocus = false,
+  upId,
+  downId,
+  leftId,
+  rightId,
+  children
+}: SectionProps): JSX.Element => {
   const { isActive } = useSection(id)
   const enhancedChildren = React.cloneElement(children, {
     ...children.props,
@@ -26,7 +34,7 @@ const Section = ({ id, auto = false, upId, downId, leftId, rightId, children }: 
   }
 
   useEffect(() => {
-    if (auto) {
+    if (autoFocus) {
       sectionManager.next(id)
     }
   }, [])

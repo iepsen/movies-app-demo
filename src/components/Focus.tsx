@@ -2,20 +2,29 @@ import React, { useEffect } from 'react'
 import { useFocus, focusManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_OK } from '../navigation/device'
 
-type Props = {
-  id: string,
-  auto?: boolean,
-  upId?: string,
-  downId?: string,
-  leftId?: string,
-  rightId?: string,
-  onClick?: () => void,
+type FocusProps = {
+  id: string
+  autoFocus?: boolean
+  upId?: string
+  downId?: string
+  leftId?: string
+  rightId?: string
+  onClick?: () => void
   children: JSX.Element
 }
 
 const { subscribe } = Device()
 
-const Focus = ({ id, auto = false, upId, downId, leftId, rightId, onClick, children }: Props): JSX.Element => {
+const Focus = ({
+  id,
+  autoFocus = false,
+  upId,
+  downId,
+  leftId,
+  rightId,
+  onClick,
+  children
+}: FocusProps): JSX.Element => {
   const { hasFocus } = useFocus(id)
   const enhancedChildren = React.cloneElement(children, {
     ...children.props,
@@ -27,7 +36,7 @@ const Focus = ({ id, auto = false, upId, downId, leftId, rightId, onClick, child
   }
 
   useEffect(() => {
-    if (auto) {
+    if (autoFocus) {
       focusManager.next(id)
     }
   }, [])

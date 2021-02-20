@@ -10,12 +10,12 @@ const request = async (path: string): Promise<ShowResponse> => {
   return fetch(url).then((response: Response) => response.json())
 }
 
-const getShow = async (id: number): Promise<ShowModel> => {
-  const show = await request(`/tv/${id}`) as ShowResponse
+const getShow = async (id: string): Promise<ShowModel> => {
+  const show = (await request(`/tv/${id}`)) as ShowResponse
   return Show(show)
 }
 
-const getVideos = async (id: number): Promise<VideoModel[]> => {
+const getVideos = async (id: string): Promise<VideoModel[]> => {
   return getVideosByType(id, 'tv')
 }
 

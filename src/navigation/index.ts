@@ -10,6 +10,7 @@ type UseSection = {
 }
 
 const FocusIdDefinedError = (id: string) => `The focus element with "${id}" is already defined.`
+
 const SectionIdDefinedError = (id: string) => `The section element with "${id}" is already defined.`
 
 const focusSet = new Set<string>()
@@ -27,7 +28,7 @@ const useFocus = (id: string): UseFocus => {
     }
     focusSet.add(id)
     const subscription = focusManager.subscribe({
-      next: focus => setFocus(focus === id)
+      next: (focus) => setFocus(focus === id)
     })
     return () => {
       focusSet.delete(id)
@@ -47,7 +48,7 @@ const useSection = (id: string): UseSection => {
     }
     sectionSet.add(id)
     const subscription = sectionManager.subscribe({
-      next: focus => setActive(focus === id)
+      next: (focus) => setActive(focus === id)
     })
     return () => {
       sectionSet.delete(id)
