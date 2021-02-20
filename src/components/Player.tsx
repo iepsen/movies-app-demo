@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react'
 import YouTube, { Options } from 'react-youtube'
 import { PlayArrow, Pause, Stop, FastRewind, FastForward } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
-import { Focus } from '../Focus'
+import { Focus } from './Focus'
 import { PlayerButton } from './PlayerButton'
-import { BackButton } from '../BackButton'
-import { focusManager } from '../../navigation'
-import './Player.css'
+import { BackButton } from './BackButton'
+import { focusManager } from '../navigation'
+
+const seekAmount = 10
+let progressTimer: number
+let visibilityTimer: number
 
 type PlayerProps = {
   id: string
@@ -18,21 +21,64 @@ const useStyles = makeStyles(() => ({
   icon: {
     width: '100%',
     height: '100%'
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: 10
+  },
+  overlayBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    opacity: '0.5',
+    backgroundColor: 'black'
+  },
+  playerControls: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100%',
+    height: '8%',
+    bottom: '10%',
+    zIndex: 10
+  },
+  playerProgressContainer: {
+    display: 'flex',
+    position: 'absolute',
+    bottom: '20%',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  /**
+   * @todo FIXME: get pseudo css working with Material-UI
+   */
+  playerProgressBar: {
+    width: '90%',
+    height: '0.5rem',
+    '[value]': {
+      appearance: 'none'
+    },
+    '[value]::-webkit-progress-bar': {
+      backgroundColor: 'rgb(200, 200, 200)'
+    },
+    '[value]::-webkit-progress-value': {
+      backgroundColor: 'rgb(94, 146, 108)'
+    }
   }
 }))
 
-const seekAmount = 10
-
-let progressTimer: number
-
-let visibilityTimer: number
-
-const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
+export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
   const [player, setPlayer] = useState<YT.Player>()
   const [playerState, setPlayerState] = useState<number>()
   const [progress, setProgress] = useState<number>(0)
   const [visibleControls, setVisibleControls] = useState<boolean>(true)
-  const classes = useStyles()
+  const styles = useStyles()
   const options: Options = {
     width: '100%',
     height: '100%',
@@ -145,15 +191,15 @@ const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
         onEnd={onEnd}
       />
       {visibleControls && (
-        <div className="player-overlay">
-          <div className="player-overlay-background" />
+        <div className={styles.overlay}>
+          <div className={styles.overlayBackground} />
           <Focus onClick={onBack} id="button-back" downId="button-play-pause">
             <BackButton onClick={onBack} />
           </Focus>
-          <div className="player-progress">
-            <progress value={progress} max="100"></progress>
+          <div className={styles.playerProgressContainer}>
+            <progress className={styles.playerProgressBar} value={progress} max="100"></progress>
           </div>
-          <div className="player-controls">
+          <div className={styles.playerControls}>
             <Focus
               onClick={onFastRewind}
               id="button-rewind"
@@ -161,7 +207,7 @@ const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
               upId="button-back"
             >
               <PlayerButton onClick={onFastRewind}>
-                <FastRewind className={classes.icon} />
+                <FastRewind className={styles.icon} />
               </PlayerButton>
             </Focus>
             <Focus
@@ -174,9 +220,9 @@ const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
             >
               <PlayerButton onClick={onPlayPause}>
                 {playerState === YouTube.PlayerState.PLAYING ? (
-                  <Pause className={classes.icon} />
+                  <Pause className={styles.icon} />
                 ) : (
-                  <PlayArrow className={classes.icon} />
+                  <PlayArrow className={styles.icon} />
                 )}
               </PlayerButton>
             </Focus>
@@ -188,7 +234,7 @@ const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
               upId="button-back"
             >
               <PlayerButton onClick={onStop}>
-                <Stop className={classes.icon} />
+                <Stop className={styles.icon} />
               </PlayerButton>
             </Focus>
             <Focus
@@ -198,7 +244,7 @@ const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
               upId="button-back"
             >
               <PlayerButton onClick={onFastForward}>
-                <FastForward className={classes.icon} />
+                <FastForward className={styles.icon} />
               </PlayerButton>
             </Focus>
           </div>
@@ -207,5 +253,3 @@ const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     </>
   )
 }
-
-export { Player }

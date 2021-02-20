@@ -1,15 +1,16 @@
 import React, { ReactNode, useState, useEffect, useRef } from 'react'
+import { makeStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
-import { IMediaModel } from '../../models/interfaces'
-import { ListItem } from '../ListItem'
-import { ListItemView } from '../../viewModels/ListItemView'
-import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
-import { focusManager } from '../../navigation'
-import { Focus } from '../Focus'
-import './ListRow.css'
+import { IMediaModel } from '../models/interfaces'
+import { ListItemView } from '../viewModels/ListItemView'
+import { ListItemViewModel } from '../viewModels/interfaces/ListItemViewModel'
+import { focusManager } from '../navigation'
+import { ListItem } from './ListItem'
+import { Focus } from './Focus'
 
 const LIST_ITEM_WIDTH = 18
-interface Props {
+
+type ListRowProps = {
   id: string
   isActive?: boolean
   onFocus: (details: ListItemViewModel) => void
@@ -19,7 +20,30 @@ interface Props {
   children?: ReactNode
 }
 
-const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props): JSX.Element => {
+const useStyles = makeStyles(() => ({
+  title: {
+    fontSize: '2.2rem',
+    textTransform: 'uppercase'
+  },
+  container: {
+    scrollBehavior: 'smooth',
+    overflow: 'auto',
+    scrollbarWidth: 'none'
+  },
+  wrapper: {
+    transition: '200ms ease-in-out'
+  }
+}))
+
+export const ListRow = ({
+  id,
+  isActive = false,
+  onFocus,
+  onActive,
+  title,
+  data
+}: ListRowProps): JSX.Element => {
+  const styles = useStyles()
   const history = useHistory()
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
@@ -70,9 +94,9 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
 
   return (
     <>
-      <h1 className="row-list-title">{title}</h1>
-      <div ref={row} className="row-list-container">
-        <div className="row-list-wrapper" style={{ width: `${data.length * LIST_ITEM_WIDTH}rem` }}>
+      <h1 className={styles.title}>{title}</h1>
+      <div ref={row} className={styles.container}>
+        <div className={styles.wrapper} style={{ width: `${data.length * LIST_ITEM_WIDTH}rem` }}>
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (
@@ -97,5 +121,3 @@ const ListRow = ({ id, isActive = false, onFocus, onActive, title, data }: Props
     </>
   )
 }
-
-export { ListRow }

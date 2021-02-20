@@ -1,14 +1,16 @@
 import React from 'react'
+import clsx from 'clsx'
 import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-type Props = {
+type ActionButtonProps = {
   text: string
   onClick: () => void
   hasFocus?: boolean
+  className?: string
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
     backgroundColor: 'rgb(200, 200, 200)',
@@ -29,15 +31,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ActionButton = ({ text, onClick, hasFocus = false }: Props): JSX.Element => {
+export const ActionButton = ({
+  text,
+  onClick,
+  hasFocus = false,
+  className
+}: ActionButtonProps): JSX.Element => {
   const classes = useStyles()
+  const buttonStyle = clsx(
+    hasFocus && classes.buttonFocused,
+    !hasFocus && classes.button,
+    className && className
+  )
   return (
-    <Button onClick={onClick}
-      variant="contained"
-      className={hasFocus ? classes.buttonFocused : classes.button}>
+    <Button onClick={onClick} variant="contained" className={buttonStyle}>
       {text}
     </Button>
   )
 }
-
-export { ActionButton }

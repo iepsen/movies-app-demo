@@ -2,13 +2,13 @@ import React from 'react'
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
-type Props = {
+type PlayerButtonProps = {
   children: React.ReactNode
   onClick: () => void
   hasFocus?: boolean
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(2),
     backgroundColor: 'rgb(200, 200, 200)',
@@ -38,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PlayerButton = ({ children, onClick, hasFocus = false }: Props): JSX.Element => {
+export const PlayerButton = ({
+  children,
+  onClick,
+  hasFocus = false
+}: PlayerButtonProps): JSX.Element => {
   const classes = useStyles()
   return (
     <IconButton onClick={onClick} className={hasFocus ? classes.buttonFocused : classes.button}>
@@ -46,5 +50,3 @@ const PlayerButton = ({ children, onClick, hasFocus = false }: Props): JSX.Eleme
     </IconButton>
   )
 }
-
-export { PlayerButton }

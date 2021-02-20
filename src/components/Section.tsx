@@ -14,7 +14,7 @@ type SectionProps = {
 
 const { subscribe } = Device()
 
-const Section = ({
+export const Section = ({
   id,
   autoFocus = false,
   upId,
@@ -58,5 +58,3 @@ const Section = ({
 
   return enhancedChildren
 }
-
-export { Section }

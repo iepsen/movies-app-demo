@@ -3,12 +3,12 @@ import { IconButton } from '@material-ui/core'
 import { ArrowBack } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
-type Props = {
+type BackButtonProps = {
   onClick: () => void
   hasFocus?: boolean
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   button: {
     marginBottom: theme.spacing(10),
     backgroundColor: 'rgb(200, 200, 200)',
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const BackButton = ({ onClick, hasFocus = false }: Props): JSX.Element => {
+export const BackButton = ({ onClick, hasFocus = false }: BackButtonProps): JSX.Element => {
   const classes = useStyles()
   return (
     <IconButton onClick={onClick} className={hasFocus ? classes.buttonFocused : classes.button}>
@@ -57,5 +57,3 @@ const BackButton = ({ onClick, hasFocus = false }: Props): JSX.Element => {
     </IconButton>
   )
 }
-
-export { BackButton }

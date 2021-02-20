@@ -15,7 +15,7 @@ type FocusProps = {
 
 const { subscribe } = Device()
 
-const Focus = ({
+export const Focus = ({
   id,
   autoFocus = false,
   upId,
@@ -63,5 +63,3 @@ const Focus = ({
 
   return enhancedChildren
 }
-
-export { Focus }
