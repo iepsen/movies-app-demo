@@ -6,9 +6,9 @@ import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
 import { focusManager } from '../../navigation'
 import { Focus } from '../Focus'
-import { LIST_ITEM_WIDTH } from '../../constants/dimensions'
 import './ListRow.css'
 
+const LIST_ITEM_WIDTH = 18
 interface Props {
   id: string
   isActive?: boolean
