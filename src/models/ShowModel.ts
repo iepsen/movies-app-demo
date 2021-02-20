@@ -1,7 +1,7 @@
-import { ShowResponse } from '../services/interfaces/ShowResponse'
-import { ShowModel } from './interfaces/ShowModel'
+import { IShowServiceResponse } from '../services/interfaces'
+import { IShowModel } from './interfaces'
 
-const Show = (show: ShowResponse): ShowModel => {
+export const ShowModel = (show: IShowServiceResponse): IShowModel => {
   const getTitle = (): string => {
     if (show.name === show.original_name) {
       return show.name
@@ -34,5 +34,3 @@ const Show = (show: ShowResponse): ShowModel => {
     genres: getGenres()
   }
 }
-
-export { Show }

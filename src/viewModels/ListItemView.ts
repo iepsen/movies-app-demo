@@ -1,7 +1,7 @@
-import { MediaModel } from '../models/interfaces/MediaModel'
+import { IMediaModel } from '../models/interfaces'
 import { ListItemViewModel } from './interfaces/ListItemViewModel'
 
-const ListItemView = (media: MediaModel): ListItemViewModel => {
+const ListItemView = (media: IMediaModel): ListItemViewModel => {
   const getLink = (): string => {
     return media.type === 'movie' ? `/movie/${media.id}` : `/show/${media.id}`
   }

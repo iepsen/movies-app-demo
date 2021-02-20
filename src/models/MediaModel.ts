@@ -1,14 +1,16 @@
-import { MediaModel } from './interfaces/MediaModel'
-import { PopularMovieResponse } from '../services/interfaces/PopularMovieResponse'
-import { PopularShowResponse } from '../services/interfaces/PopularShowResponse'
+import { IMediaModel } from './interfaces'
+import { IPopularMovieServiceResponse, IPopularShowServiceResponse } from '../services/interfaces'
 
-const Media = (media: PopularMovieResponse|PopularShowResponse, type: 'movie'|'show'): MediaModel => {
+export const MediaModel = (
+  media: IPopularMovieServiceResponse | IPopularShowServiceResponse,
+  type: 'movie' | 'show'
+): IMediaModel => {
   const getTitle = () => {
     if (type === 'movie') {
-      const movieMedia = media as PopularMovieResponse
+      const movieMedia = media as IPopularMovieServiceResponse
       return movieMedia.title
     } else {
-      const showMedia = media as PopularShowResponse
+      const showMedia = media as IPopularShowServiceResponse
       return showMedia.name
     }
   }
@@ -30,5 +32,3 @@ const Media = (media: PopularMovieResponse|PopularShowResponse, type: 'movie'|'s
     type
   }
 }
-
-export { Media }

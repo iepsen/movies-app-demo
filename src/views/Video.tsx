@@ -17,4 +17,4 @@ const Video = (): JSX.Element => {
   return <Player id={id} onBack={onBack} onEnd={onEnd} />
 }
 
-export default Video
+export { Video }

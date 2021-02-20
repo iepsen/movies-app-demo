@@ -1,7 +1,7 @@
-import { MediaModel } from '../models/interfaces/MediaModel'
+import { IMediaModel } from '../models/interfaces'
 import { FeaturedItemViewModel } from './interfaces/FeaturedViewModel'
 
-const FeaturedView = (media: MediaModel): FeaturedItemViewModel => {
+const FeaturedView = (media: IMediaModel): FeaturedItemViewModel => {
   const getLink = (): string => {
     return media.type === 'movie' ? `/movie/${media.id}` : `/show/${media.id}`
   }

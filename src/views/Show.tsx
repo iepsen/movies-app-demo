@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import { getShow, getVideos } from '../services/show'
+import { getShow, getShowVideos } from '../services'
 import { Background } from '../components/Background'
 import { BackButton } from '../components/BackButton'
 import { Focus } from '../components/Focus'
 import { Cover } from '../components/Cover'
 import { Metadata } from '../components/Metadata'
-import { ShowModel } from '../models/interfaces/ShowModel'
-import { VideoModel } from '../models/interfaces/VideoModel'
+import { IShowModel, IVideoModel } from '../models/interfaces'
 import './Show.css'
 
 const Show = (): JSX.Element | null => {
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
-  const [show, setShow] = useState<ShowModel | null>()
-  const [videos, setVideos] = useState<VideoModel[] | undefined>()
+  const [show, setShow] = useState<IShowModel | null>()
+  const [videos, setVideos] = useState<IVideoModel[]>([])
 
   const onBack = (): void => {
     history.goBack()
@@ -22,7 +21,7 @@ const Show = (): JSX.Element | null => {
 
   useEffect(() => {
     getShow(id).then(show => setShow(show))
-    getVideos(id).then(videos => setVideos(videos))
+    getShowVideos(id).then(videos => setVideos(videos))
   }, [])
 
   if (!show) {
@@ -43,4 +42,4 @@ const Show = (): JSX.Element | null => {
   )
 }
 
-export default Show
+export { Show }

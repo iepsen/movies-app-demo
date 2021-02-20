@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
-import { MediaModel } from '../../models/interfaces/MediaModel'
+import { IMediaModel } from '../../models/interfaces'
 import { ListItem } from '../ListItem'
 import { ListItemView } from '../../viewModels/ListItemView'
 import { ListItemViewModel } from '../../viewModels/interfaces/ListItemViewModel'
@@ -15,7 +15,7 @@ interface Props {
   onFocus: (details: ListItemViewModel) => void
   onActive: (id: string) => void
   title: string
-  data: MediaModel[]
+  data: IMediaModel[]
   children?: ReactNode
 }
 

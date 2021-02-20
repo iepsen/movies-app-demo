@@ -1,17 +1,16 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { MovieModel } from '../../models/interfaces/MovieModel'
-import { VideoModel } from '../../models/interfaces/VideoModel'
+import { IMovieModel, IVideoModel } from '../../models/interfaces'
 import { Focus } from '../Focus'
 import { ActionButton } from '../ActionButton'
 import './Metadata.css'
 
 type Props = {
-  data?: MovieModel
-  videos?: VideoModel[]
+  data?: IMovieModel
+  videos: IVideoModel[]
 }
 
-const Metadata = ({ data, videos }: Props): JSX.Element | null => {
+const Metadata = ({ data, videos = [] }: Props): JSX.Element | null => {
   const history = useHistory()
   let videoId = ''
   if (videos?.length) {

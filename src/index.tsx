@@ -1,10 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter, Route } from 'react-router-dom'
-import Home from './views/Home'
-import Movie from './views/Movie'
-import Video from './views/Video'
-import Show from './views/Show'
+import { Home, Movie, Video, Show } from './views'
 
 const App = () => {
   return (

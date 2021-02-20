@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { getPopularMovies, getPopularShows } from '../services/popular'
-import { MediaModel } from '../models/interfaces/MediaModel'
+import { getPopularMovies, getPopularShows } from '../services'
+import { IMediaModel } from '../models/interfaces'
 import { Section } from '../components/Section'
 import { ListRow } from '../components/ListRow'
 import { Featured } from '../components/Featured'
@@ -10,8 +10,8 @@ import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewMode
 
 const Home = (): JSX.Element | null => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
-  const [movies, setMovies] = useState<MediaModel[]>([])
-  const [shows, setShows] = useState<MediaModel[]>([])
+  const [movies, setMovies] = useState<IMediaModel[]>([])
+  const [shows, setShows] = useState<IMediaModel[]>([])
   const wrapper = useRef<HTMLDivElement | null>(null)
 
   const onFocus = (media: FeaturedItemViewModel): void => setFeatured(media)
@@ -24,8 +24,8 @@ const Home = (): JSX.Element | null => {
   }
 
   useEffect(() => {
-    getPopularMovies().then((data) => setMovies(data))
-    getPopularShows().then((data) => setShows(data))
+    getPopularMovies().then(data => setMovies(data))
+    getPopularShows().then(data => setShows(data))
   }, [])
 
   return (
@@ -56,4 +56,4 @@ const Home = (): JSX.Element | null => {
   )
 }
 
-export default Home
+export { Home }

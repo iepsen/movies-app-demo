@@ -1,7 +1,7 @@
-import { MovieResponse } from '../services/interfaces/MovieResponse'
-import { MovieModel } from './interfaces/MovieModel'
+import { IMovieServiceResponse } from '../services/interfaces'
+import { IMovieModel } from './interfaces'
 
-const Movie = (movie: MovieResponse): MovieModel => {
+export const MovieModel = (movie: IMovieServiceResponse): IMovieModel => {
   const getTitle = (): string => {
     if (movie.title === movie.original_title) {
       return movie.title
@@ -34,5 +34,3 @@ const Movie = (movie: MovieResponse): MovieModel => {
     popularity: movie.popularity
   }
 }
-
-export { Movie }
