@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import YouTube, { Options } from 'react-youtube'
 import { PlayArrow, Pause, Stop, FastRewind, FastForward } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/core/styles'
+import { LinearProgress } from '@material-ui/core'
+import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { Focus } from './Focus'
 import { PlayerButton } from './PlayerButton'
 import { BackButton } from './BackButton'
@@ -54,24 +55,19 @@ const useStyles = makeStyles(() => ({
     bottom: '20%',
     justifyContent: 'center',
     width: '100%'
-  },
-  /**
-   * @todo FIXME: get pseudo css working with Material-UI
-   */
-  playerProgressBar: {
-    width: '90%',
-    height: '0.5rem',
-    '[value]': {
-      appearance: 'none'
-    },
-    '[value]::-webkit-progress-bar': {
-      backgroundColor: 'rgb(200, 200, 200)'
-    },
-    '[value]::-webkit-progress-value': {
-      backgroundColor: 'rgb(94, 146, 108)'
-    }
   }
 }))
+
+const ProgressBar = withStyles({
+  root: {
+    width: '80%',
+    height: '0.5rem',
+    backgroundColor: 'rgb(200, 200, 200)'
+  },
+  barColorPrimary: {
+    backgroundColor: 'rgb(94, 146, 108)'
+  }
+})(LinearProgress)
 
 export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
   const [player, setPlayer] = useState<YT.Player>()
@@ -197,7 +193,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
             <BackButton onClick={onBack} />
           </Focus>
           <div className={styles.playerProgressContainer}>
-            <progress className={styles.playerProgressBar} value={progress} max="100"></progress>
+            <ProgressBar variant="determinate" value={progress} />
           </div>
           <div className={styles.playerControls}>
             <Focus
