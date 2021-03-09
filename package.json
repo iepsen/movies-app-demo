@@ -1,79 +1,78 @@
 {
   "name": "movies-app-demo",
-  "version": "1.1.0",
+  "version": "2.0.0",
+  "description": "Movies App Demo",
   "main": "index.js",
-  "repository": "https://github.com/iepsen/movies-app-demo.git",
-  "homepage": "http://movies-app-demo.s3-website-us-west-2.amazonaws.com/",
-  "author": "Marcelo Iepsen <iepsen@gmail.com>",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack",
+    "deploy": "node ./tools/deploy.js",
+    "tslint": "tslint -c tslint.json 'src/**/*.ts",
+    "test": "mocha -r ts-node/register src/__tests__/*.ts",
+    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iepsen/movies-app-demo.git"
+  },
+  "keywords": [
+    "react",
+    "keyboard-navigation",
+    "smartv-tv"
+  ],
+  "author": "Marcelo Iepsen",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iepsen/movies-app-demo/issues"
+  },
+  "homepage": "https://github.com/iepsen/movies-app-demo#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
-    "@babel/runtime": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/chai": "^4.2.11",
+    "@types/mocha": "^7.0.2",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/youtube": "0.0.39",
+    "@typescript-eslint/eslint-plugin": "^3.0.1",
+    "@typescript-eslint/parser": "^3.0.1",
     "aws-sdk": "^2.683.0",
-    "babel-core": "^7.0.0-bridge",
-    "babel-jest": "^24.9.0",
-    "babel-loader": "^8.1.0",
+    "babel-plugin-react-css-modules": "^5.2.6",
     "chai": "^4.2.0",
     "css-loader": "^3.5.3",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.4.4",
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.0",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "jest": "^24.9.0",
-    "jest-css-modules": "^2.1.0",
-    "jsdoc": "^3.6.4",
-    "node-sass": "^4.14.1",
-    "sass-loader": "^7.3.1",
-    "sinon": "^7.5.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "html-loader": "^1.1.0",
+    "html-webpack-plugin": "^4.3.0",
+    "mocha": "^7.2.0",
+    "nyc": "^15.0.1",
+    "source-map-loader": "^0.2.4",
     "style-loader": "^1.2.1",
+    "ts-loader": "^7.0.5",
+    "ts-node": "^8.10.1",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@types/jest": "^25.2.3",
-    "history": "^4.10.1",
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
+    "clsx": "^1.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
-  },
-  "scripts": {
-    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --open --mode development",
-    "eslint": "./node_modules/eslint/bin/eslint.js src",
-    "test": "./node_modules/jest/bin/jest.js --env=jsdom --testURL=http://localhost:8080",
-    "build": "./node_modules/webpack/bin/webpack.js --mode=production",
-    "docs": "./node_modules/.bin/jsdoc -d ./docs/ -R ./README.md -r ./src/",
-    "deploy": "node ./deploy.js"
-  },
-  "jest": {
-    "verbose": true,
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.jsx$": "babel-jest",
-      "^.+\\.(css|scss)$": "jest-css-modules"
-    },
-    "globals": {
-      "NODE_ENV": "test"
-    },
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|scss)$": "identity-obj-proxy"
-    }
+    "react-router-dom": "^5.2.0",
+    "react-youtube": "^7.11.2",
+    "rxjs": "^6.6.3"
   }
 }

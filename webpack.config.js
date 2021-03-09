@@ -1,50 +1,46 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
-    module: {
-        rules: [
-            {
-                test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /\.scss$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true,
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: 'html-loader'
-                    }
-                ]
-            }
+  mode: 'production',
+  devtool: 'source-map',
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader'
+          }
         ]
-    },
-    devServer: {
-        historyApiFallback: true
-    },
-    plugins: [new HtmlWebPackPlugin({
-        template: 'public/index.html'
-    })],
-    resolve: {
-        extensions: ['.js', '.jsx']
-    }
+      },
+      {
+        include: path.resolve(__dirname, './src'),
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.html$/,
+        use: [{
+          loader: 'html-loader'
+        }]
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
+      }
+    ]
+  },
+  plugins: [new HtmlWebPackPlugin({
+    template: 'public/index.html'
+  })],
+  devServer: {
+    host: '0.0.0.0'
+  }
 }
