@@ -1,4 +1,3 @@
-import React from 'react'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 import { LinearProgress } from '@material-ui/core'
 import YouTube from 'react-youtube'

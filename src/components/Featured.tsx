@@ -1,4 +1,3 @@
-import React from 'react'
 import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
 import { makeStyles } from '@material-ui/core'
 

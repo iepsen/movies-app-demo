@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useEffect, useRef } from 'react'
+import { ReactNode, useState, useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { IMediaModel } from '../models/interfaces'

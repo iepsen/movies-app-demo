@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { cloneElement, useEffect } from 'react'
 import { useSection, sectionManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT } from '../navigation/device'
 
@@ -24,7 +24,7 @@ export const Section = ({
   children
 }: SectionProps): JSX.Element => {
   const { isActive } = useSection(id)
-  const enhancedChildren = React.cloneElement(children, {
+  const enhancedChildren = cloneElement(children, {
     ...children.props,
     isActive
   })

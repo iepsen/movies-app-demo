@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { cloneElement, useEffect } from 'react'
 import { useFocus, focusManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_OK } from '../navigation/device'
 
@@ -26,7 +26,7 @@ export const Focus = ({
   children
 }: FocusProps): JSX.Element => {
   const { hasFocus } = useFocus(id)
-  const enhancedChildren = React.cloneElement(children, {
+  const enhancedChildren = cloneElement(children, {
     ...children.props,
     hasFocus
   })

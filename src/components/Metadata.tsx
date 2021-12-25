@@ -1,4 +1,3 @@
-import React from 'react'
 import { makeStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { IMovieModel, IVideoModel } from '../models/interfaces'

@@ -1,8 +1,8 @@
 import { describe, it } from 'mocha'
-import { MediaModel } from '../models/MediaModel'
 import { expect } from 'chai'
 import mockMovieResponse from '../__mocks__/PopularMovieResponse.json'
 import showMovieResponse from '../__mocks__/PopularShowResponse.json'
+import { MediaModel } from '../src/models/MediaModel'
 
 describe('Media Model', () => {
   it('should convert a popular movie response data into a Media model', () => {
