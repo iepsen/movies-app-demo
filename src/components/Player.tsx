@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import YouTube, { Options } from 'react-youtube'
 import { focusManager } from '../navigation'
 import { PlayerControls } from './PlayerControls'

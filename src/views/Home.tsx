@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getPopularMovies, getPopularShows } from '../services'
 import { IMediaModel } from '../models/interfaces'
 import { Section } from '../components/Section'
