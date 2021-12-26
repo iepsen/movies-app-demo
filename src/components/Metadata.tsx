@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { IMovieModel, IVideoModel } from '../models/interfaces'
 import { Focus } from './Focus'
 import { ActionButton } from './ActionButton'
+import { ReactElement } from 'react'
 
 type MetadataProps = {
   data?: IMovieModel
@@ -30,7 +31,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Metadata = ({ data, videos = [] }: MetadataProps): JSX.Element | null => {
+export const Metadata = ({ data, videos = [] }: MetadataProps): ReactElement => {
   const styles = useStyles()
   const history = useHistory()
 

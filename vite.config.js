@@ -8,7 +8,9 @@ export default defineConfig({
     react({
       babelrc: true
     }),
-    eslintPlugin()
+    eslintPlugin({
+      cache: false
+    })
   ],
   build: {
     rollupOptions: {

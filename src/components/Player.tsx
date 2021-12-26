@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import YouTube, { Options } from 'react-youtube'
 import { focusManager } from '../navigation'
 import { PlayerControls } from './PlayerControls'
@@ -13,8 +13,8 @@ type PlayerProps = {
   onBack: () => void
 }
 
-export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
-  const [player, setPlayer] = useState<YT.Player>()
+export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
+  const [player, setPlayer] = useState<YouTube>()
   const [playerState, setPlayerState] = useState<number>(0)
   const [progress, setProgress] = useState<number>(0)
   const [visibleControls, setVisibleControls] = useState<boolean>(true)
@@ -33,9 +33,9 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     }
   }
 
-  const onReady = (event: { target: YT.Player }): void => setPlayer(event?.target)
+  const onReady = (event: { target: YouTube }): void => setPlayer(event?.target)
 
-  const onStateChange = (event: { target: YT.Player; data: number }): void =>
+  const onStateChange = (event: { target: YouTube; data: number }): void =>
     setPlayerState(event.data)
 
   const onMouseMove = (): void => {
@@ -50,10 +50,10 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     if (!player) {
       return
     }
-    if (player.getPlayerState() === YouTube.PlayerState.PLAYING) {
-      player.pauseVideo()
+    if (player.getInternalPlayer().getPlayerState() === YouTube.PlayerState.PLAYING) {
+      player.getInternalPlayer().pauseVideo()
     } else {
-      player.playVideo()
+      player.getInternalPlayer().playVideo()
     }
   }
 
@@ -61,7 +61,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     if (!player) {
       return
     }
-    player.stopVideo()
+    player.getInternalPlayer().stopVideo()
     onEnd()
   }
 
@@ -69,11 +69,11 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     if (!player) {
       return
     }
-    const time = player.getCurrentTime()
+    const time = player.getInternalPlayer().getCurrentTime()
     const amount = time - seekAmount
     console.log(amount, time)
     if (amount > 0) {
-      player.seekTo(amount, true)
+      player.getInternalPlayer().seekTo(amount, true)
     }
   }
 
@@ -81,11 +81,11 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     if (!player) {
       return
     }
-    const time = player.getCurrentTime()
-    const duration = player.getDuration()
+    const time = player.getInternalPlayer().getCurrentTime()
+    const duration = player.getInternalPlayer().getDuration()
     const amount = time + seekAmount
     if (amount < duration) {
-      player.seekTo(amount, true)
+      player.getInternalPlayer().seekTo(amount, true)
     }
   }
 
@@ -94,8 +94,8 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
       if (!player) {
         return
       }
-      const duration = player.getDuration()
-      const currentTime = player.getCurrentTime()
+      const duration = player.getInternalPlayer().getDuration()
+      const currentTime = player.getInternalPlayer().getCurrentTime()
       setProgress((currentTime * 100) / duration || 0)
     }, 200)
     return () => clearInterval(progressTimer)
@@ -110,7 +110,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
       subscription.unsubscribe()
       window.removeEventListener('mousemove', onMouseMove)
       if (player) {
-        player.stopVideo()
+        player.getInternalPlayer().stopVideo()
       }
       clearInterval(progressTimer)
       clearTimeout(visibilityTimer)

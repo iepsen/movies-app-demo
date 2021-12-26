@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles'
+import { ReactElement } from 'react'
 
 type BackgroundProps = {
   image?: string
@@ -20,7 +21,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Background = ({ image }: BackgroundProps): JSX.Element => {
+export const Background = ({ image }: BackgroundProps): ReactElement => {
   const styles = useStyles()
   return (
     <div className={styles.background}>

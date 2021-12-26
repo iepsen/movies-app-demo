@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core'
+import { ReactElement } from 'react'
 
 type CoverProps = {
   image?: string
@@ -16,7 +17,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Cover = ({ image }: CoverProps): JSX.Element => {
+export const Cover = ({ image }: CoverProps): ReactElement => {
   const styles = useStyles()
   return (
     <div className={styles.cover}>

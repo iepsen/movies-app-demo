@@ -1,4 +1,4 @@
-import { cloneElement, useEffect } from 'react'
+import { cloneElement, ReactElement, useEffect } from 'react'
 import { useFocus, focusManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_OK } from '../navigation/device'
 
@@ -10,7 +10,7 @@ type FocusProps = {
   leftId?: string
   rightId?: string
   onClick?: () => void
-  children: JSX.Element
+  children: ReactElement
 }
 
 const { subscribe } = Device()
@@ -24,10 +24,10 @@ export const Focus = ({
   rightId,
   onClick,
   children
-}: FocusProps): JSX.Element => {
+}: FocusProps): ReactElement => {
   const { hasFocus } = useFocus(id)
   const enhancedChildren = cloneElement(children, {
-    ...children.props,
+    ...children?.props,
     hasFocus
   })
 

@@ -1,4 +1,4 @@
-import { cloneElement, useEffect } from 'react'
+import { cloneElement, ReactElement, useEffect } from 'react'
 import { useSection, sectionManager } from '../navigation'
 import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT } from '../navigation/device'
 
@@ -9,7 +9,7 @@ type SectionProps = {
   downId?: string
   leftId?: string
   rightId?: string
-  children: JSX.Element
+  children: ReactElement
 }
 
 const { subscribe } = Device()
@@ -22,7 +22,7 @@ export const Section = ({
   leftId,
   rightId,
   children
-}: SectionProps): JSX.Element => {
+}: SectionProps): ReactElement => {
   const { isActive } = useSection(id)
   const enhancedChildren = cloneElement(children, {
     ...children.props,

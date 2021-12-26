@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { ReactElement, useEffect } from 'react'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core'
 import { Link } from 'react-router-dom'
@@ -34,7 +34,7 @@ export const ListItem = ({
   hasFocus = false,
   onFocus,
   data
-}: ListItemProps): JSX.Element => {
+}: ListItemProps): ReactElement => {
   const styles = useStyles({ hasFocus })
   useEffect(() => {
     if (hasFocus) {

@@ -5,6 +5,7 @@ import { BackButton } from './BackButton'
 import { Focus } from './Focus'
 import { PlayerButton } from './PlayerButton'
 import { FastRewind, Stop, FastForward, Pause, PlayArrow } from '@material-ui/icons'
+import { ReactElement } from 'react'
 
 type PlayerControlsProps = {
   onPlayPause: () => void
@@ -75,7 +76,7 @@ export const PlayerControls = ({
   onBack,
   playerState,
   progress
-}: PlayerControlsProps): JSX.Element => {
+}: PlayerControlsProps): ReactElement => {
   const styles = useStyles()
   return (
     <div className={styles.overlay}>
