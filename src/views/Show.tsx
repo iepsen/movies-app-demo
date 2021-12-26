@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { getShow, getShowVideos } from '../services'
 import { Background } from '../components/Background'
@@ -9,10 +9,10 @@ import { Metadata } from '../components/Metadata'
 import { IShowModel, IVideoModel } from '../models/interfaces'
 import './Show.css'
 
-const Show = (): JSX.Element | null => {
+const Show = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
-  const [show, setShow] = useState<IShowModel | null>()
+  const [show, setShow] = useState<IShowModel | undefined>()
   const [videos, setVideos] = useState<IVideoModel[]>([])
 
   const onBack = (): void => {
@@ -24,18 +24,14 @@ const Show = (): JSX.Element | null => {
     getShowVideos(id).then(videos => setVideos(videos))
   }, [])
 
-  if (!show) {
-    return null
-  }
-
   return (
     <>
-      <Background image={show.backgroundImage} />
+      <Background image={show?.backgroundImage} />
       <Focus id="back-button" onClick={onBack} downId="play-button" autoFocus>
         <BackButton onClick={onBack} />
       </Focus>
       <div className="show-view">
-        <Cover image={show.posterImage} />
+        <Cover image={show?.posterImage} />
         <Metadata data={show} videos={videos} />
       </div>
     </>

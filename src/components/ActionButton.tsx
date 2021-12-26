@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { ReactElement } from 'react'
 
 type ActionButtonProps = {
   text: string
@@ -35,7 +36,7 @@ export const ActionButton = ({
   onClick,
   hasFocus = false,
   className
-}: ActionButtonProps): JSX.Element => {
+}: ActionButtonProps): ReactElement => {
   const classes = useStyles()
   const buttonStyle = clsx(
     hasFocus && classes.buttonFocused,

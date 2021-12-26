@@ -1,7 +1,8 @@
+import { ReactElement } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { Player } from '../components/Player'
 
-const Video = (): JSX.Element => {
+const Video = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
   const history = useHistory()
 

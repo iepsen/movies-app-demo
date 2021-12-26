@@ -1,4 +1,4 @@
-import { ReactNode, useState, useEffect, useRef } from 'react'
+import { ReactElement, useState, useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { IMediaModel } from '../models/interfaces'
@@ -17,7 +17,7 @@ type ListRowProps = {
   onActive: (id: string) => void
   title: string
   data: IMediaModel[]
-  children?: ReactNode
+  children?: ReactElement
 }
 
 const useStyles = makeStyles(() => ({
@@ -42,7 +42,7 @@ export const ListRow = ({
   onActive,
   title,
   data
-}: ListRowProps): JSX.Element => {
+}: ListRowProps): ReactElement => {
   const styles = useStyles()
   const history = useHistory()
   const row = useRef<HTMLDivElement>(null)

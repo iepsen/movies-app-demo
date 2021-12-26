@@ -1,5 +1,6 @@
 import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
 import { makeStyles } from '@material-ui/core'
+import { ReactElement } from 'react'
 
 type FeaturedProps = {
   data?: FeaturedItemViewModel
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Featured = ({ data }: FeaturedProps): JSX.Element => {
+export const Featured = ({ data }: FeaturedProps): ReactElement => {
   const styles = useStyles()
   return (
     <>

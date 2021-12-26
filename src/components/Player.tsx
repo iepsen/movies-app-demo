@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import YouTube, { Options } from 'react-youtube'
 import { focusManager } from '../navigation'
 import { PlayerControls } from './PlayerControls'
+import { YouTubePlayer } from 'youtube-player/dist/types'
 
 const seekAmount = 10
 let progressTimer: number
@@ -13,8 +14,8 @@ type PlayerProps = {
   onBack: () => void
 }
 
-export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
-  const [player, setPlayer] = useState<YT.Player>()
+export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
+  const [player, setPlayer] = useState<YouTubePlayer>()
   const [playerState, setPlayerState] = useState<number>(0)
   const [progress, setProgress] = useState<number>(0)
   const [visibleControls, setVisibleControls] = useState<boolean>(true)
@@ -33,9 +34,9 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): JSX.Element => {
     }
   }
 
-  const onReady = (event: { target: YT.Player }): void => setPlayer(event?.target)
+  const onReady = (event: { target: YouTubePlayer }): void => setPlayer(event?.target)
 
-  const onStateChange = (event: { target: YT.Player; data: number }): void =>
+  const onStateChange = (event: { target: YouTubePlayer; data: number }): void =>
     setPlayerState(event.data)
 
   const onMouseMove = (): void => {

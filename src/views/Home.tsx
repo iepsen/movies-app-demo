@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, ReactElement } from 'react'
 import { getPopularMovies, getPopularShows } from '../services'
 import { IMediaModel } from '../models/interfaces'
 import { Section } from '../components/Section'
@@ -8,7 +8,7 @@ import { ListWrapper } from '../components/ListWrapper'
 import { Background } from '../components/Background'
 import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
 
-const Home = (): JSX.Element | null => {
+const Home = (): ReactElement => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
   const [movies, setMovies] = useState<IMediaModel[]>([])
   const [shows, setShows] = useState<IMediaModel[]>([])

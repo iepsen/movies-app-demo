@@ -1,8 +1,8 @@
-import { forwardRef } from 'react'
+import { forwardRef, ReactElement } from 'react'
 import { makeStyles } from '@material-ui/core'
 
 type ListWrapperInterface = {
-  children: React.ReactNodeArray
+  children: ReactElement[]
 }
 
 const useStyles = makeStyles(() => ({
@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 export const ListWrapper = forwardRef<HTMLDivElement, ListWrapperInterface>(
-  (props: ListWrapperInterface, ref): JSX.Element => {
+  (props: ListWrapperInterface, ref): ReactElement => {
     const styles = useStyles()
     return (
       <div ref={ref} className={styles.wrapper}>

@@ -1,8 +1,9 @@
 import { IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import { ReactElement } from 'react'
 
 type PlayerButtonProps = {
-  children: React.ReactNode
+  children: ReactElement
   onClick: () => void
   hasFocus?: boolean
 }
@@ -41,7 +42,7 @@ export const PlayerButton = ({
   children,
   onClick,
   hasFocus = false
-}: PlayerButtonProps): JSX.Element => {
+}: PlayerButtonProps): ReactElement => {
   const classes = useStyles()
   return (
     <IconButton onClick={onClick} className={hasFocus ? classes.buttonFocused : classes.button}>
