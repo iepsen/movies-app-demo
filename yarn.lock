@@ -1285,6 +1285,11 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
 
+"@types/youtube-player@^5.5.5":
+  version "5.5.5"
+  resolved "https://registry.yarnpkg.com/@types/youtube-player/-/youtube-player-5.5.5.tgz#4a9ae54a3bab14844ddce7284b72f942d7b1153b"
+  integrity sha512-BuasP4ZumO2W/MSrL2eOFD5wG35kBRpkoFSwuCvdwAcjTyJAgMWBodu2KW6jud6o3IE03MoeOSRNHmWyC5LeNA==
+
 "@types/youtube@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/youtube/-/youtube-0.0.39.tgz#1c80e882d339a4d89da16b10acc411ceadc26955"
@@ -4907,7 +4912,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-youtube-player@5.5.2:
+youtube-player@5.5.2, youtube-player@^5.5.2:
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/youtube-player/-/youtube-player-5.5.2.tgz#052b86b1eabe21ff331095ffffeae285fa7f7cb5"
   integrity sha512-ZGtsemSpXnDky2AUYWgxjaopgB+shFHgXVpiJFeNB5nWEugpW1KWYDaHKuLqh2b67r24GtP6HoSW5swvf0fFIQ==
