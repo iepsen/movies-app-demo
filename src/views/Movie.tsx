@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { getMovie, getMovieVideos } from '../services'
 import { IMovieModel, IVideoModel } from '../models/interfaces'
 import { Background } from '../components/Background'
@@ -11,15 +11,15 @@ import './Movie.css'
 
 const Movie = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [movie, setMovie] = useState<IMovieModel | undefined>()
   const [videos, setVideos] = useState<IVideoModel[]>([])
 
-  const onBack = (): void => history.goBack()
+  const onBack = (): void => navigate(-1)
 
   useEffect(() => {
-    getMovie(id).then(movie => setMovie(movie))
-    getMovieVideos(id).then(videos => setVideos(videos))
+    getMovie(id ?? '').then(movie => setMovie(movie))
+    getMovieVideos(id ?? '').then(videos => setVideos(videos))
   }, [])
   return (
     <>

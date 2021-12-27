@@ -1,17 +1,17 @@
 import { ReactElement } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Player } from '../components/Player'
 
 const Video = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const onBack = (): void => {
-    history.goBack()
+    navigate(-1)
   }
 
   const onEnd = (): void => {
-    history.goBack()
+    navigate(-1)
   }
 
   return <Player id={id} onBack={onBack} onEnd={onEnd} />

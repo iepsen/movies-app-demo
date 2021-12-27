@@ -9,7 +9,7 @@ let progressTimer: number
 let visibilityTimer: number
 
 type PlayerProps = {
-  id: string
+  id?: string
   onEnd: () => void
   onBack: () => void
 }

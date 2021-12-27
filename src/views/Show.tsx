@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { getShow, getShowVideos } from '../services'
 import { Background } from '../components/Background'
 import { BackButton } from '../components/BackButton'
@@ -11,17 +11,17 @@ import './Show.css'
 
 const Show = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [show, setShow] = useState<IShowModel | undefined>()
   const [videos, setVideos] = useState<IVideoModel[]>([])
 
   const onBack = (): void => {
-    history.goBack()
+    navigate(-1)
   }
 
   useEffect(() => {
-    getShow(id).then(show => setShow(show))
-    getShowVideos(id).then(videos => setVideos(videos))
+    getShow(id ?? '').then(show => setShow(show))
+    getShowVideos(id ?? '').then(videos => setVideos(videos))
   }, [])
 
   return (

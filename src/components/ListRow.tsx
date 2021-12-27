@@ -1,6 +1,6 @@
 import { ReactElement, useState, useEffect, useRef } from 'react'
 import { makeStyles } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { IMediaModel } from '../models/interfaces'
 import { ListItemView } from '../viewModels/ListItemView'
 import { ListItemViewModel } from '../viewModels/interfaces/ListItemViewModel'
@@ -44,7 +44,7 @@ export const ListRow = ({
   data
 }: ListRowProps): ReactElement => {
   const styles = useStyles()
-  const history = useHistory()
+  const navigate = useNavigate()
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
 
@@ -65,7 +65,7 @@ export const ListRow = ({
   }
 
   const onClick = (link: string) => {
-    history.push(link)
+    navigate(link)
   }
 
   const innerFocus = (index: number, details: ListItemViewModel): void => {
