@@ -72,7 +72,6 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
     }
     const time = player.getCurrentTime()
     const amount = time - seekAmount
-    console.log(amount, time)
     if (amount > 0) {
       player.seekTo(amount, true)
     }
