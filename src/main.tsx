@@ -1,14 +1,16 @@
 import ReactDOM from 'react-dom'
-import { HashRouter, Route } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import { Home, Movie, Video, Show } from './views'
 
 const App = () => {
   return (
     <HashRouter>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/movie/:id" component={Movie} />
-      <Route exact path="/show/:id" component={Show} />
-      <Route exact path="/video/:id" component={Video} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<Movie />} />
+        <Route path="/show/:id" element={<Show />} />
+        <Route path="/video/:id" element={<Video />} />
+      </Routes>
     </HashRouter>
   )
 }

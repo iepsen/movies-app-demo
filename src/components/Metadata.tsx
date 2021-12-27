@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { IMovieModel, IVideoModel } from '../models/interfaces'
 import { Focus } from './Focus'
 import { ActionButton } from './ActionButton'
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 
 export const Metadata = ({ data, videos = [] }: MetadataProps): ReactElement => {
   const styles = useStyles()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   let videoId = ''
   if (videos?.length) {
@@ -41,7 +41,7 @@ export const Metadata = ({ data, videos = [] }: MetadataProps): ReactElement => 
     videoId = video.id
   }
 
-  const onClick = () => history.push(`/video/${videoId}`)
+  const onClick = () => navigate(`/video/${videoId}`)
 
   return (
     <div className={styles.container}>
