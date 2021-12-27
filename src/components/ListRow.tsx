@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect, useRef } from 'react'
+import { ReactElement, useState, useEffect, useRef, useCallback } from 'react'
 import { makeStyles } from '@material-ui/core'
 import { useNavigate } from 'react-router-dom'
 import { IMediaModel } from '../models/interfaces'
@@ -48,7 +48,7 @@ export const ListRow = ({
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
 
-  const buildId = (nextId: number): string => `${id}-list-item-${nextId}`
+  const buildId = useCallback((nextId: number): string => `${id}-list-item-${nextId}`, [id])
 
   const onLeft = (nextId: number): string | undefined => {
     if (nextId < 0) {
@@ -68,10 +68,13 @@ export const ListRow = ({
     navigate(link)
   }
 
-  const innerFocus = (index: number, details: ListItemViewModel): void => {
-    onFocus(details)
-    setCurrent(index)
-  }
+  const innerFocus = useCallback(
+    (index: number, details: ListItemViewModel): void => {
+      onFocus(details)
+      setCurrent(index)
+    },
+    [onFocus]
+  )
 
   useEffect(() => {
     if (!row.current) {
@@ -90,7 +93,7 @@ export const ListRow = ({
       focusManager.next(buildId(current))
       onActive(id)
     }
-  }, [isActive])
+  }, [buildId, current, id, isActive, onActive])
 
   return (
     <>
@@ -108,11 +111,7 @@ export const ListRow = ({
                 onClick={() => onClick(viewModel.link)}
                 key={media.title}
               >
-                <ListItem
-                  index={index}
-                  onFocus={() => innerFocus(index, viewModel)}
-                  data={viewModel}
-                />
+                <ListItem index={index} onFocus={innerFocus} data={viewModel} />
               </Focus>
             )
           })}

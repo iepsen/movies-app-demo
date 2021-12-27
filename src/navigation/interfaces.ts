@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 export interface UseSectionInterface {
   id: string
   active?: boolean
@@ -28,12 +30,12 @@ interface InjectedFocusProps {
 export interface SectionInterface extends UseSectionInterface {
   index: number
   onActive?: (index: number) => void
-  children: (props: InjectedSectionProps) => JSX.Element
+  children: (props: InjectedSectionProps) => ReactElement
 }
 
 export interface FocusInterface extends UseFocusInterface {
   onFocus?: () => void
-  children: (props: InjectedFocusProps) => JSX.Element
+  children: (props: InjectedFocusProps) => ReactElement
 }
 
 export type CallbackEventType = (() => void) | (() => boolean) | null

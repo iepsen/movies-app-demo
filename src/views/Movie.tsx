@@ -20,7 +20,7 @@ const Movie = (): ReactElement => {
   useEffect(() => {
     getMovie(id ?? '').then(movie => setMovie(movie))
     getMovieVideos(id ?? '').then(videos => setVideos(videos))
-  }, [])
+  }, [id])
   return (
     <>
       <Background image={movie?.backgroundImage} />

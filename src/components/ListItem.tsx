@@ -40,7 +40,7 @@ export const ListItem = ({
     if (hasFocus) {
       onFocus?.(index, data)
     }
-  }, [hasFocus])
+  }, [data, hasFocus, index, onFocus])
 
   const linkStyle = clsx(styles.link, hasFocus && styles.activeLink)
 
