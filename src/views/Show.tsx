@@ -22,7 +22,7 @@ const Show = (): ReactElement => {
   useEffect(() => {
     getShow(id ?? '').then(show => setShow(show))
     getShowVideos(id ?? '').then(videos => setVideos(videos))
-  }, [])
+  }, [id])
 
   return (
     <>

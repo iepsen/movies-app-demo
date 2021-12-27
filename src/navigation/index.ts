@@ -28,13 +28,13 @@ const useFocus = (id: string): UseFocus => {
     }
     focusSet.add(id)
     const subscription = focusManager.subscribe({
-      next: (focus) => setFocus(focus === id)
+      next: focus => setFocus(focus === id)
     })
     return () => {
       focusSet.delete(id)
       subscription.unsubscribe()
     }
-  }, [])
+  }, [id])
 
   return { hasFocus }
 }
@@ -48,13 +48,13 @@ const useSection = (id: string): UseSection => {
     }
     sectionSet.add(id)
     const subscription = sectionManager.subscribe({
-      next: (focus) => setActive(focus === id)
+      next: focus => setActive(focus === id)
     })
     return () => {
       sectionSet.delete(id)
       subscription.unsubscribe()
     }
-  }, [])
+  }, [id])
 
   return { isActive }
 }

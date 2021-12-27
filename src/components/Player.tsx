@@ -116,7 +116,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
       clearInterval(progressTimer)
       clearTimeout(visibilityTimer)
     }
-  }, [])
+  }, [player])
 
   return (
     <>

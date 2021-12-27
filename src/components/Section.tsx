@@ -37,7 +37,7 @@ export const Section = ({
     if (autoFocus) {
       sectionManager.next(id)
     }
-  }, [])
+  }, [autoFocus, id])
 
   useEffect(() => {
     if (sectionManager) {
@@ -54,7 +54,7 @@ export const Section = ({
         subscribe(KEY_RIGHT, next(rightId))
       }
     }
-  }, [sectionManager])
+  }, [downId, leftId, rightId, upId])
 
   return enhancedChildren
 }

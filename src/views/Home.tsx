@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactElement } from 'react'
+import { useState, useEffect, useRef, ReactElement, useCallback } from 'react'
 import { getPopularMovies, getPopularShows } from '../services'
 import { IMediaModel } from '../models/interfaces'
 import { Section } from '../components/Section'
@@ -14,14 +14,21 @@ const Home = (): ReactElement => {
   const [shows, setShows] = useState<IMediaModel[]>([])
   const wrapper = useRef<HTMLDivElement | null>(null)
 
-  const onFocus = (media: FeaturedItemViewModel): void => setFeatured(media)
+  const onFocus = useCallback(
+    (media: FeaturedItemViewModel): void => {
+      if (featured?.backgroundImage !== media.backgroundImage) {
+        setFeatured(media)
+      }
+    },
+    [featured?.backgroundImage]
+  )
 
-  const onActive = (id: string): void => {
+  const onActive = useCallback((id: string): void => {
     if (!wrapper.current) {
       return
     }
     wrapper.current.scrollTop = id === 'popular-shows' ? 432 : 0
-  }
+  }, [])
 
   useEffect(() => {
     getPopularMovies().then(data => setMovies(data))

@@ -39,7 +39,7 @@ export const Focus = ({
     if (autoFocus) {
       focusManager.next(id)
     }
-  }, [])
+  }, [autoFocus, id])
 
   useEffect(() => {
     if (hasFocus) {
@@ -59,7 +59,7 @@ export const Focus = ({
         subscribe(KEY_OK, onClick)
       }
     }
-  }, [hasFocus])
+  }, [downId, hasFocus, leftId, onClick, rightId, upId])
 
   return enhancedChildren
 }
