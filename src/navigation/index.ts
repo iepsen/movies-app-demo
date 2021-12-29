@@ -1,62 +1,40 @@
 import { useState, useEffect } from 'react'
-import { Subject } from 'rxjs'
+import { FocusState } from './FocusState'
+import { SectionState } from './SectionState'
 
-type UseFocus = {
-  hasFocus: boolean
-}
-
-type UseSection = {
-  isActive: boolean
-}
-
-const FocusIdDefinedError = (id: string) => `The focus element with "${id}" is already defined.`
-
-const SectionIdDefinedError = (id: string) => `The section element with "${id}" is already defined.`
-
-const focusSet = new Set<string>()
-const sectionSet = new Set<string>()
-
-const focusManager = new Subject<string>()
-const sectionManager = new Subject<string>()
-
-const useFocus = (id: string): UseFocus => {
+const useFocus = (id: string) => {
   const [hasFocus, setFocus] = useState(false)
+  const { getNode, currentNode, setCurrentNode, addNode, deleteNode } =
+    FocusState.getInstance()
 
   useEffect(() => {
-    if (focusSet.has(id)) {
-      throw FocusIdDefinedError(id)
-    }
-    focusSet.add(id)
-    const subscription = focusManager.subscribe({
-      next: focus => setFocus(focus === id)
+    currentNode.subscribe(node => {
+      setFocus(node?.id === id)
+      console.log(`FocusState currentNode: ${node?.id}`)
     })
-    return () => {
-      focusSet.delete(id)
-      subscription.unsubscribe()
-    }
-  }, [id])
-
-  return { hasFocus }
+  }, [id, currentNode])
+  return { hasFocus, currentNode, setCurrentNode, getNode, addNode, deleteNode }
 }
 
-const useSection = (id: string): UseSection => {
+const useSection = (id: string) => {
   const [isActive, setActive] = useState(false)
+  const { getNode, currentNode, setCurrentNode, addNode, deleteNode } =
+    SectionState.getInstance()
 
   useEffect(() => {
-    if (sectionSet.has(id)) {
-      throw SectionIdDefinedError(id)
-    }
-    sectionSet.add(id)
-    const subscription = sectionManager.subscribe({
-      next: focus => setActive(focus === id)
+    currentNode.subscribe(node => {
+      setActive(node?.id === id)
+      console.log(`SectionState currentNode: ${node?.id}`)
     })
-    return () => {
-      sectionSet.delete(id)
-      subscription.unsubscribe()
-    }
-  }, [id])
+  }, [id, currentNode])
 
-  return { isActive }
+  return {
+    isActive,
+    currentNode,
+    setCurrentNode,
+    getNode,
+    addNode,
+    deleteNode
+  }
 }
-
-export { useFocus, useSection, focusManager, sectionManager }
+export { useFocus, useSection }
