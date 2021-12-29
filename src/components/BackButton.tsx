@@ -49,10 +49,16 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export const BackButton = ({ onClick, hasFocus = false }: BackButtonProps): ReactElement => {
+export const BackButton = ({
+  onClick,
+  hasFocus = false
+}: BackButtonProps): ReactElement => {
   const classes = useStyles()
   return (
-    <IconButton onClick={onClick} className={hasFocus ? classes.buttonFocused : classes.button}>
+    <IconButton
+      onClick={onClick}
+      className={hasFocus ? classes.buttonFocused : classes.button}
+    >
       <ArrowBack className={classes.icon} />
     </IconButton>
   )

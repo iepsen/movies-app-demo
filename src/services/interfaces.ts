@@ -59,11 +59,13 @@ export interface IPopularServiceResponse {
   results: IPopularMovieServiceResponse[] | IPopularShowServiceResponse[]
 }
 
-export interface IPopularMovieListServiceResponse extends IPopularServiceResponse {
+export interface IPopularMovieListServiceResponse
+  extends IPopularServiceResponse {
   results: IPopularMovieServiceResponse[]
 }
 
-export interface IPopularShowListServiceResponse extends IPopularServiceResponse {
+export interface IPopularShowListServiceResponse
+  extends IPopularServiceResponse {
   results: IPopularShowServiceResponse[]
 }
 
@@ -90,7 +92,13 @@ export interface IVideoServiceResponse {
   name: string
   site: string
   size: 360 | 480 | 720 | 1080
-  type: 'Trailer' | 'Teaser' | 'Clip' | 'Featurette' | 'Behind the Scenes' | 'Bloopers'
+  type:
+    | 'Trailer'
+    | 'Teaser'
+    | 'Clip'
+    | 'Featurette'
+    | 'Behind the Scenes'
+    | 'Bloopers'
 }
 
 export interface IVideoListServiceResponse {
