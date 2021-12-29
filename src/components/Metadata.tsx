@@ -31,7 +31,10 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export const Metadata = ({ data, videos = [] }: MetadataProps): ReactElement => {
+export const Metadata = ({
+  data,
+  videos = []
+}: MetadataProps): ReactElement => {
   const styles = useStyles()
   const navigate = useNavigate()
 
@@ -51,8 +54,18 @@ export const Metadata = ({ data, videos = [] }: MetadataProps): ReactElement => 
       </p>
       <p>{data?.overview}</p>
       {videoId && (
-        <Focus id="play-button" upId="back-button" onClick={onClick} autoFocus>
-          <ActionButton className={styles.actionButton} onClick={onClick} text="Play Trailer" />
+        <Focus
+          id="play-button"
+          leftId="back-button"
+          topId="back-button"
+          onClick={onClick}
+          autoFocus
+        >
+          <ActionButton
+            className={styles.actionButton}
+            onClick={onClick}
+            text="Play Trailer"
+          />
         </Focus>
       )}
     </div>

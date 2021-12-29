@@ -45,7 +45,10 @@ export const PlayerButton = ({
 }: PlayerButtonProps): ReactElement => {
   const classes = useStyles()
   return (
-    <IconButton onClick={onClick} className={hasFocus ? classes.buttonFocused : classes.button}>
+    <IconButton
+      onClick={onClick}
+      className={hasFocus ? classes.buttonFocused : classes.button}
+    >
       {children}
     </IconButton>
   )

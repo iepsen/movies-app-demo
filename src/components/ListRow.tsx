@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { IMediaModel } from '../models/interfaces'
 import { ListItemView } from '../viewModels/ListItemView'
 import { ListItemViewModel } from '../viewModels/interfaces/ListItemViewModel'
-import { focusManager } from '../navigation'
 import { ListItem } from './ListItem'
 import { Focus } from './Focus'
 
@@ -12,6 +11,7 @@ const LIST_ITEM_WIDTH = 18
 
 type ListRowProps = {
   id: string
+  parentId?: string
   isActive?: boolean
   onFocus: (details: ListItemViewModel) => void
   onActive: (id: string) => void
@@ -48,7 +48,10 @@ export const ListRow = ({
   const row = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
 
-  const buildId = useCallback((nextId: number): string => `${id}-list-item-${nextId}`, [id])
+  const buildId = useCallback(
+    (nextId: number): string => `${id}-list-item-${nextId}`,
+    [id]
+  )
 
   const onLeft = (nextId: number): string | undefined => {
     if (nextId < 0) {
@@ -90,7 +93,6 @@ export const ListRow = ({
 
   useEffect(() => {
     if (isActive) {
-      focusManager.next(buildId(current))
       onActive(id)
     }
   }, [buildId, current, id, isActive, onActive])
@@ -99,7 +101,10 @@ export const ListRow = ({
     <>
       <h1 className={styles.title}>{title}</h1>
       <div ref={row} className={styles.container}>
-        <div className={styles.wrapper} style={{ width: `${data.length * LIST_ITEM_WIDTH}rem` }}>
+        <div
+          className={styles.wrapper}
+          style={{ width: `${data.length * LIST_ITEM_WIDTH}rem` }}
+        >
           {data.map((media, index) => {
             const viewModel = ListItemView(media)
             return (

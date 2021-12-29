@@ -24,7 +24,12 @@ const Movie = (): ReactElement => {
   return (
     <>
       <Background image={movie?.backgroundImage} />
-      <Focus id="back-button" onClick={onBack} downId="play-button" autoFocus>
+      <Focus
+        id="back-button"
+        onClick={onBack}
+        bottomId="play-button"
+        rightId="play-button"
+      >
         <BackButton onClick={onBack} />
       </Focus>
       <div className="movie-view">

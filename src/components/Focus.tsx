@@ -1,65 +1,41 @@
 import { cloneElement, ReactElement, useEffect } from 'react'
-import { useFocus, focusManager } from '../navigation'
-import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_OK } from '../navigation/device'
+import { useFocus } from '../navigation'
 
 type FocusProps = {
   id: string
   autoFocus?: boolean
-  upId?: string
-  downId?: string
   leftId?: string
   rightId?: string
+  topId?: string
+  bottomId?: string
   onClick?: () => void
   children: ReactElement
 }
 
-const { subscribe } = Device()
-
 export const Focus = ({
   id,
   autoFocus = false,
-  upId,
-  downId,
   leftId,
   rightId,
-  onClick,
+  topId,
+  bottomId,
   children
 }: FocusProps): ReactElement => {
-  const { hasFocus } = useFocus(id)
+  const { hasFocus, addNode, setCurrentNode } = useFocus(id)
   const enhancedChildren = cloneElement(children, {
     ...children?.props,
     hasFocus
   })
 
-  const next = (id: string) => {
-    return () => focusManager.next(id)
-  }
+  useEffect(() => {
+    addNode(id, leftId, rightId, topId, bottomId)
+  }, [id, leftId, rightId, topId, bottomId, addNode])
 
   useEffect(() => {
     if (autoFocus) {
-      focusManager.next(id)
+      setCurrentNode(id)
     }
-  }, [autoFocus, id])
-
-  useEffect(() => {
-    if (hasFocus) {
-      if (upId) {
-        subscribe(KEY_UP, next(upId))
-      }
-      if (downId) {
-        subscribe(KEY_DOWN, next(downId))
-      }
-      if (leftId) {
-        subscribe(KEY_LEFT, next(leftId))
-      }
-      if (rightId) {
-        subscribe(KEY_RIGHT, next(rightId))
-      }
-      if (onClick) {
-        subscribe(KEY_OK, onClick)
-      }
-    }
-  }, [downId, hasFocus, leftId, onClick, rightId, upId])
+  }, [autoFocus, id, setCurrentNode])
 
   return enhancedChildren
 }
