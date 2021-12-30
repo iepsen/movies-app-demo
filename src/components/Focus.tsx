@@ -1,5 +1,5 @@
 import { cloneElement, ReactElement, useEffect } from 'react'
-import { useFocus } from '../navigation'
+import { useFocusNode } from '../navigation'
 
 type FocusProps = {
   id: string
@@ -21,7 +21,7 @@ export const Focus = ({
   bottomId,
   children
 }: FocusProps): ReactElement => {
-  const { hasFocus, addNode, setCurrentNode } = useFocus(id)
+  const { hasFocus, addNode, setCurrentNode } = useFocusNode(id)
   const enhancedChildren = cloneElement(children, {
     ...children?.props,
     hasFocus

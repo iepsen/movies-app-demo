@@ -1,5 +1,5 @@
 import { cloneElement, ReactElement, useEffect } from 'react'
-import { useSection } from '../navigation'
+import { useFocusArea } from '../navigation'
 
 type SectionProps = {
   id: string
@@ -20,7 +20,7 @@ export const Section = ({
   bottomId,
   children
 }: SectionProps): ReactElement => {
-  const { isActive, addNode, setCurrentNode } = useSection(id)
+  const { isActive, addNode, setCurrentNode } = useFocusArea(id)
   const enhancedChildren = cloneElement(children, {
     ...children.props,
     isActive

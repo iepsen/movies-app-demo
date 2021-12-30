@@ -4,8 +4,8 @@ import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN } from './keys/computer'
 import { NavigationNode } from './NavigationNode'
 import { NavigationStorage } from './NavigationStorage'
 
-export class SectionState {
-  private static instance: SectionState
+export class FocusNodeState {
+  private static instance: FocusNodeState
   private navigationStorage: NavigationStorage
   public currentNode = new BehaviorSubject<NavigationNode | undefined>(
     undefined
@@ -18,7 +18,6 @@ export class SectionState {
     this.clearNodes = this.clearNodes.bind(this)
     this.consumeEvent = this.consumeEvent.bind(this)
     this.setCurrentNode = this.setCurrentNode.bind(this)
-
     this.navigationStorage = NavigationStorage.getInstance()
 
     fromEvent(document, 'keydown')
@@ -27,10 +26,10 @@ export class SectionState {
   }
 
   public static getInstance() {
-    if (!SectionState.instance) {
-      SectionState.instance = new SectionState()
+    if (!FocusNodeState.instance) {
+      FocusNodeState.instance = new FocusNodeState()
     }
-    return SectionState.instance
+    return FocusNodeState.instance
   }
 
   public consumeEvent(event: KeyboardEvent) {

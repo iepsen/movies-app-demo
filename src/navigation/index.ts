@@ -1,30 +1,30 @@
 import { useState, useEffect } from 'react'
-import { FocusState } from './FocusState'
-import { SectionState } from './SectionState'
+import { FocusNodeState } from './FocusNodeState'
+import { FocusAreaState } from './FocusAreaState'
 
-const useFocus = (id: string) => {
+const useFocusNode = (id: string) => {
   const [hasFocus, setFocus] = useState(false)
   const { getNode, currentNode, setCurrentNode, addNode, deleteNode } =
-    FocusState.getInstance()
+    FocusNodeState.getInstance()
 
   useEffect(() => {
     currentNode.subscribe(node => {
       setFocus(node?.id === id)
-      console.log(`FocusState currentNode: ${node?.id}`)
+      return () => currentNode.unsubscribe()
     })
   }, [id, currentNode])
   return { hasFocus, currentNode, setCurrentNode, getNode, addNode, deleteNode }
 }
 
-const useSection = (id: string) => {
+const useFocusArea = (id: string) => {
   const [isActive, setActive] = useState(false)
   const { getNode, currentNode, setCurrentNode, addNode, deleteNode } =
-    SectionState.getInstance()
+    FocusAreaState.getInstance()
 
   useEffect(() => {
     currentNode.subscribe(node => {
       setActive(node?.id === id)
-      console.log(`SectionState currentNode: ${node?.id}`)
+      return () => currentNode.unsubscribe()
     })
   }, [id, currentNode])
 
@@ -37,4 +37,4 @@ const useSection = (id: string) => {
     deleteNode
   }
 }
-export { useFocus, useSection }
+export { useFocusNode, useFocusArea }
