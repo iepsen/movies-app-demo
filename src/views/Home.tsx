@@ -12,6 +12,7 @@ import { Featured } from '../components/Featured'
 import { ListWrapper } from '../components/ListWrapper'
 import { Background } from '../components/Background'
 import { FeaturedItemViewModel } from '../viewModels/interfaces/FeaturedViewModel'
+import { NavigationStorage } from '../navigation/NavigationStorage'
 
 const Home = (): ReactElement => {
   const [featured, setFeatured] = useState<FeaturedItemViewModel>()
@@ -60,6 +61,9 @@ const Home = (): ReactElement => {
     getPopularShows().then(setShows)
     getDiscoverMovies().then(setDiscoverMovies)
     getDiscoverShows().then(setDiscoverShows)
+    return () => {
+      NavigationStorage.getInstance().clearNodes()
+    }
   }, [])
 
   return (
