@@ -8,7 +8,12 @@ import {
   IPopularShowListServiceResponse,
   IPopularMovieListServiceResponse
 } from './interfaces'
-import { IMovieModel, IVideoModel, IMediaModel, IShowModel } from '../models/interfaces'
+import {
+  IMovieModel,
+  IVideoModel,
+  IMediaModel,
+  IShowModel
+} from '../models/interfaces'
 import { MediaModel, MovieModel, ShowModel, VideoModel } from '../models'
 
 type ResponseType =
@@ -35,8 +40,13 @@ export const getShow = async (id: string): Promise<IShowModel> => {
   return ShowModel(show)
 }
 
-export const getVideosByType = async (id: string, type: 'movie' | 'tv'): Promise<IVideoModel[]> => {
-  const videos = (await request(`/${type}/${id}/videos`)) as IVideoListServiceResponse
+export const getVideosByType = async (
+  id: string,
+  type: 'movie' | 'tv'
+): Promise<IVideoModel[]> => {
+  const videos = (await request(
+    `/${type}/${id}/videos`
+  )) as IVideoListServiceResponse
   return videos.results.map(video => VideoModel(video))
 }
 
@@ -49,11 +59,29 @@ export const getShowVideos = async (id: string): Promise<IVideoModel[]> => {
 }
 
 export const getPopularMovies = async (): Promise<IMediaModel[]> => {
-  const movies = (await request('/movie/popular')) as IPopularMovieListServiceResponse
+  const movies = (await request(
+    '/movie/popular'
+  )) as IPopularMovieListServiceResponse
   return movies.results.map(movie => MediaModel(movie, 'movie'))
 }
 
+export const getDiscoverMovies = async (): Promise<IMediaModel[]> => {
+  const movies = (await request(
+    '/discover/movie'
+  )) as IPopularShowListServiceResponse
+  return movies.results.map(show => MediaModel(show, 'movie'))
+}
+
 export const getPopularShows = async (): Promise<IMediaModel[]> => {
-  const shows = (await request('/tv/popular')) as IPopularShowListServiceResponse
+  const shows = (await request(
+    '/tv/popular'
+  )) as IPopularShowListServiceResponse
+  return shows.results.map(show => MediaModel(show, 'show'))
+}
+
+export const getDiscoverShows = async (): Promise<IMediaModel[]> => {
+  const shows = (await request(
+    '/discover/tv'
+  )) as IPopularShowListServiceResponse
   return shows.results.map(show => MediaModel(show, 'show'))
 }

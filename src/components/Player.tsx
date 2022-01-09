@@ -1,12 +1,11 @@
 import { useState, useEffect, ReactElement } from 'react'
 import YouTube, { Options } from 'react-youtube'
-import { focusManager } from '../navigation'
 import { PlayerControls } from './PlayerControls'
 import { YouTubePlayer } from 'youtube-player/dist/types'
 
 const seekAmount = 10
 let progressTimer: number
-let visibilityTimer: number
+// let visibilityTimer: number
 
 type PlayerProps = {
   id?: string
@@ -18,7 +17,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
   const [player, setPlayer] = useState<YouTubePlayer>()
   const [playerState, setPlayerState] = useState<number>(0)
   const [progress, setProgress] = useState<number>(0)
-  const [visibleControls, setVisibleControls] = useState<boolean>(true)
+  const [visibleControls /* , setVisibleControls */] = useState<boolean>(true)
   const options: Options = {
     width: '100%',
     height: '100%',
@@ -34,11 +33,15 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
     }
   }
 
-  const onReady = (event: { target: YouTubePlayer }): void => setPlayer(event?.target)
+  const onReady = (event: { target: YouTubePlayer }): void =>
+    setPlayer(event?.target)
 
-  const onStateChange = (event: { target: YouTubePlayer; data: number }): void =>
-    setPlayerState(event.data)
+  const onStateChange = (event: {
+    target: YouTubePlayer
+    data: number
+  }): void => setPlayerState(event.data)
 
+  /*
   const onMouseMove = (): void => {
     setVisibleControls(true)
     clearTimeout(visibilityTimer)
@@ -46,6 +49,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
       setVisibleControls(false)
     }, 3000)
   }
+  */
 
   const onPlayPause = (): void => {
     if (!player) {
@@ -101,8 +105,9 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
     return () => clearInterval(progressTimer)
   })
 
+  /*
   useEffect(() => {
-    const subscription = focusManager.subscribe({
+    const subscription = focusManager.observable.subscribe({
       next: () => onMouseMove()
     })
     window.addEventListener('mousemove', onMouseMove)
@@ -116,6 +121,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
       clearTimeout(visibilityTimer)
     }
   }, [player])
+  */
 
   return (
     <>

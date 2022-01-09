@@ -4,7 +4,13 @@ import YouTube from 'react-youtube'
 import { BackButton } from './BackButton'
 import { Focus } from './Focus'
 import { PlayerButton } from './PlayerButton'
-import { FastRewind, Stop, FastForward, Pause, PlayArrow } from '@material-ui/icons'
+import {
+  FastRewind,
+  Stop,
+  FastForward,
+  Pause,
+  PlayArrow
+} from '@material-ui/icons'
 import { ReactElement } from 'react'
 
 type PlayerControlsProps = {
@@ -81,27 +87,32 @@ export const PlayerControls = ({
   return (
     <div className={styles.overlay}>
       <div className={styles.overlayBackground} />
-      <Focus onClick={onBack} id="button-back" downId="button-play-pause">
+      <Focus onSelect={onBack} id="button-back" bottomId="button-play-pause">
         <BackButton onClick={onBack} />
       </Focus>
       <div className={styles.playerProgressContainer}>
         <ProgressBar variant="determinate" value={progress} />
       </div>
       <div className={styles.playerControls}>
-        <Focus onClick={onRewind} id="button-rewind" rightId="button-play-pause" upId="button-back">
-          <PlayerButton onClick={onRewind}>
+        <Focus
+          onSelect={onRewind}
+          id="button-rewind"
+          rightId="button-play-pause"
+          topId="button-back"
+        >
+          <PlayerButton onSelect={onRewind}>
             <FastRewind className={styles.icon} />
           </PlayerButton>
         </Focus>
         <Focus
-          onClick={onPlayPause}
+          onSelect={onPlayPause}
           id="button-play-pause"
           leftId="button-rewind"
           rightId="button-stop"
-          upId="button-back"
+          topId="button-back"
           autoFocus
         >
-          <PlayerButton onClick={onPlayPause}>
+          <PlayerButton onSelect={onPlayPause}>
             {playerState === YouTube.PlayerState.PLAYING ? (
               <Pause className={styles.icon} />
             ) : (
@@ -110,23 +121,23 @@ export const PlayerControls = ({
           </PlayerButton>
         </Focus>
         <Focus
-          onClick={onStop}
+          onSelect={onStop}
           id="button-stop"
           leftId="button-play-pause"
           rightId="button-fast-forward"
-          upId="button-back"
+          topId="button-back"
         >
-          <PlayerButton onClick={onStop}>
+          <PlayerButton onSelect={onStop}>
             <Stop className={styles.icon} />
           </PlayerButton>
         </Focus>
         <Focus
-          onClick={onFastForward}
+          onSelect={onFastForward}
           id="button-fast-forward"
           leftId="button-stop"
-          upId="button-back"
+          topId="button-back"
         >
-          <PlayerButton onClick={onFastForward}>
+          <PlayerButton onSelect={onFastForward}>
             <FastForward className={styles.icon} />
           </PlayerButton>
         </Focus>

@@ -1,60 +1,77 @@
-import { cloneElement, ReactElement, useEffect } from 'react'
-import { useSection, sectionManager } from '../navigation'
-import { Device, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT } from '../navigation/device'
+import {
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  createElement,
+  useEffect
+} from 'react'
+import { useFocusArea } from '../navigation'
 
 type SectionProps = {
   id: string
-  autoFocus?: boolean
-  upId?: string
-  downId?: string
+  active?: boolean
   leftId?: string
   rightId?: string
-  children: ReactElement
+  topId?: string
+  bottomId?: string
+  onSelect?: () => void
+  onBack?: () => void
+  children: ReactElement | ReactElement[]
 }
-
-const { subscribe } = Device()
 
 export const Section = ({
   id,
-  autoFocus = false,
-  upId,
-  downId,
+  active = false,
   leftId,
   rightId,
+  topId,
+  bottomId,
+  onSelect,
+  onBack,
   children
 }: SectionProps): ReactElement => {
-  const { isActive } = useSection(id)
-  const enhancedChildren = cloneElement(children, {
-    ...children.props,
-    isActive
-  })
+  const {
+    isActive,
+    addNode,
+    deleteNode,
+    getNode,
+    setCurrentNode,
+    releaseCurrentNode
+  } = useFocusArea(id)
 
-  const next = (id: string) => {
-    return () => sectionManager.next(id)
+  let enhancedChildren
+  if (isValidElement(children)) {
+    enhancedChildren = cloneElement(children, {
+      ...children.props,
+      isActive
+    })
   }
 
   useEffect(() => {
-    if (autoFocus) {
-      sectionManager.next(id)
+    if (getNode(id)) {
+      deleteNode(id)
     }
-  }, [autoFocus, id])
+
+    addNode(id, leftId, rightId, topId, bottomId, onSelect, onBack)
+  }, [
+    id,
+    leftId,
+    rightId,
+    topId,
+    bottomId,
+    addNode,
+    onSelect,
+    onBack,
+    getNode,
+    deleteNode
+  ])
 
   useEffect(() => {
-    if (sectionManager) {
-      if (upId) {
-        subscribe(KEY_UP, next(upId))
-      }
-      if (downId) {
-        subscribe(KEY_DOWN, next(downId))
-      }
-      if (leftId) {
-        subscribe(KEY_LEFT, next(leftId))
-      }
-      if (rightId) {
-        subscribe(KEY_RIGHT, next(rightId))
-      }
+    if (active) {
+      setCurrentNode(id)
     }
-  }, [downId, leftId, rightId, upId])
+    return () => releaseCurrentNode()
+  }, [active, id, setCurrentNode, releaseCurrentNode])
 
-  return enhancedChildren
+  return enhancedChildren ?? createElement('div', null, children)
 }

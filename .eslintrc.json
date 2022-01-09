@@ -9,7 +9,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "standard"
+    "standard",
+    "plugin:prettier/recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -26,7 +27,8 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "multiline-ternary": "off"
+    "multiline-ternary": "off",
+    "no-use-before-define": "off"
   },
   "settings": {
     "react": {

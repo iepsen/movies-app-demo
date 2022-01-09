@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Player } from '../components/Player'
+import { Section } from '../components/Section'
 
 const Video = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
@@ -14,7 +15,11 @@ const Video = (): ReactElement => {
     navigate(-1)
   }
 
-  return <Player id={id} onBack={onBack} onEnd={onEnd} />
+  return (
+    <Section id="player-view" onBack={onBack} active>
+      <Player id={id} onBack={onBack} onEnd={onEnd} />
+    </Section>
+  )
 }
 
 export { Video }

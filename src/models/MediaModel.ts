@@ -1,5 +1,8 @@
 import { IMediaModel } from './interfaces'
-import { IPopularMovieServiceResponse, IPopularShowServiceResponse } from '../services/interfaces'
+import {
+  IPopularMovieServiceResponse,
+  IPopularShowServiceResponse
+} from '../services/interfaces'
 
 export const MediaModel = (
   media: IPopularMovieServiceResponse | IPopularShowServiceResponse,

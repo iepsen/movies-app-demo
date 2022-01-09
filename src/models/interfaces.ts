@@ -35,5 +35,11 @@ export interface IVideoModel {
   id: string
   name: string
   size: 360 | 480 | 720 | 1080
-  type: 'Trailer' | 'Teaser' | 'Clip' | 'Featurette' | 'Behind the Scenes' | 'Bloopers'
+  type:
+    | 'Trailer'
+    | 'Teaser'
+    | 'Clip'
+    | 'Featurette'
+    | 'Behind the Scenes'
+    | 'Bloopers'
 }

@@ -8,6 +8,7 @@ import { Focus } from '../components/Focus'
 import { Cover } from '../components/Cover'
 import { Metadata } from '../components/Metadata'
 import './Movie.css'
+import { Section } from '../components/Section'
 
 const Movie = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
@@ -15,23 +16,30 @@ const Movie = (): ReactElement => {
   const [movie, setMovie] = useState<IMovieModel | undefined>()
   const [videos, setVideos] = useState<IVideoModel[]>([])
 
-  const onBack = (): void => navigate(-1)
+  const onBack = () => navigate(-1)
 
   useEffect(() => {
     getMovie(id ?? '').then(movie => setMovie(movie))
     getMovieVideos(id ?? '').then(videos => setVideos(videos))
   }, [id])
+
   return (
-    <>
+    <Section id="movie-view" onBack={onBack} active>
       <Background image={movie?.backgroundImage} />
-      <Focus id="back-button" onClick={onBack} downId="play-button" autoFocus>
+      <Focus
+        id="back-button"
+        onSelect={onBack}
+        bottomId={videos.length > 0 ? 'play-button' : undefined}
+        rightId={videos.length > 0 ? 'play-button' : undefined}
+        autoFocus
+      >
         <BackButton onClick={onBack} />
       </Focus>
       <div className="movie-view">
         <Cover image={movie?.posterImage} />
         <Metadata data={movie} videos={videos} />
       </div>
-    </>
+    </Section>
   )
 }
 

@@ -1,62 +1,61 @@
 import { useState, useEffect } from 'react'
-import { Subject } from 'rxjs'
+import { FocusNodeState } from './FocusNodeState'
+import { FocusAreaState } from './FocusAreaState'
 
-type UseFocus = {
-  hasFocus: boolean
-}
-
-type UseSection = {
-  isActive: boolean
-}
-
-const FocusIdDefinedError = (id: string) => `The focus element with "${id}" is already defined.`
-
-const SectionIdDefinedError = (id: string) => `The section element with "${id}" is already defined.`
-
-const focusSet = new Set<string>()
-const sectionSet = new Set<string>()
-
-const focusManager = new Subject<string>()
-const sectionManager = new Subject<string>()
-
-const useFocus = (id: string): UseFocus => {
+const useFocusNode = (id: string) => {
   const [hasFocus, setFocus] = useState(false)
+  const {
+    getNode,
+    currentNode,
+    setCurrentNode,
+    releaseCurrentNode,
+    addNode,
+    deleteNode
+  } = FocusNodeState.getInstance()
 
   useEffect(() => {
-    if (focusSet.has(id)) {
-      throw FocusIdDefinedError(id)
-    }
-    focusSet.add(id)
-    const subscription = focusManager.subscribe({
-      next: focus => setFocus(focus === id)
+    currentNode.subscribe(node => {
+      setFocus(node?.id === id)
+      return () => currentNode.unsubscribe()
     })
-    return () => {
-      focusSet.delete(id)
-      subscription.unsubscribe()
-    }
-  }, [id])
-
-  return { hasFocus }
+  }, [id, currentNode])
+  return {
+    hasFocus,
+    currentNode,
+    setCurrentNode,
+    releaseCurrentNode,
+    getNode,
+    addNode,
+    deleteNode
+  }
 }
 
-const useSection = (id: string): UseSection => {
+const useFocusArea = (id: string) => {
   const [isActive, setActive] = useState(false)
+  const {
+    getNode,
+    currentNode,
+    setCurrentNode,
+    releaseCurrentNode,
+    addNode,
+    deleteNode
+  } = FocusAreaState.getInstance()
 
   useEffect(() => {
-    if (sectionSet.has(id)) {
-      throw SectionIdDefinedError(id)
-    }
-    sectionSet.add(id)
-    const subscription = sectionManager.subscribe({
-      next: focus => setActive(focus === id)
+    currentNode.subscribe(node => {
+      setActive(node?.id === id)
+      return () => currentNode.unsubscribe()
     })
-    return () => {
-      sectionSet.delete(id)
-      subscription.unsubscribe()
-    }
-  }, [id])
+  }, [id, currentNode])
 
-  return { isActive }
+  return {
+    isActive,
+    currentNode,
+    setCurrentNode,
+    releaseCurrentNode,
+    getNode,
+    addNode,
+    deleteNode
+  }
 }
-
-export { useFocus, useSection, focusManager, sectionManager }
+export { useFocusNode, useFocusArea }
