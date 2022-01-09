@@ -22,15 +22,29 @@ export const Focus = ({
   onSelect,
   children
 }: FocusProps): ReactElement => {
-  const { hasFocus, addNode, getNode, setCurrentNode } = useFocusNode(id)
+  const { hasFocus, addNode, deleteNode, getNode, setCurrentNode } =
+    useFocusNode(id)
   const enhancedChildren = cloneElement(children, {
     ...children?.props,
     hasFocus
   })
 
   useEffect(() => {
-    if (!getNode(id)) addNode(id, leftId, rightId, topId, bottomId, onSelect)
-  }, [id, leftId, rightId, topId, bottomId, onSelect, addNode, getNode])
+    if (getNode(id)) {
+      deleteNode(id)
+    }
+    addNode(id, leftId, rightId, topId, bottomId, onSelect)
+  }, [
+    id,
+    leftId,
+    rightId,
+    topId,
+    bottomId,
+    onSelect,
+    addNode,
+    getNode,
+    deleteNode
+  ])
 
   useEffect(() => {
     if (autoFocus) {
