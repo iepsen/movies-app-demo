@@ -11,7 +11,6 @@ const LIST_ITEM_WIDTH = 18
 
 type ListRowProps = {
   id: string
-  parentId?: string
   isActive?: boolean
   onFocus: (details: ListItemViewModel) => void
   onActive: (id: string) => void
