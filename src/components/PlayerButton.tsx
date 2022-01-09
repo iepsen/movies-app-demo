@@ -4,7 +4,7 @@ import { ReactElement } from 'react'
 
 type PlayerButtonProps = {
   children: ReactElement
-  onClick: () => void
+  onSelect: () => void
   hasFocus?: boolean
 }
 
@@ -40,13 +40,13 @@ const useStyles = makeStyles(theme => ({
 
 export const PlayerButton = ({
   children,
-  onClick,
+  onSelect,
   hasFocus = false
 }: PlayerButtonProps): ReactElement => {
   const classes = useStyles()
   return (
     <IconButton
-      onClick={onClick}
+      onClick={onSelect}
       className={hasFocus ? classes.buttonFocused : classes.button}
     >
       {children}

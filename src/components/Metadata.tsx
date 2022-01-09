@@ -44,7 +44,7 @@ export const Metadata = ({
     videoId = video.id
   }
 
-  const onClick = () => navigate(`/video/${videoId}`)
+  const onSelect = () => navigate(`/video/${videoId}`)
 
   return (
     <div className={styles.container}>
@@ -58,12 +58,12 @@ export const Metadata = ({
           id="play-button"
           leftId="back-button"
           topId="back-button"
-          onClick={onClick}
+          onSelect={onSelect}
           autoFocus
         >
           <ActionButton
             className={styles.actionButton}
-            onClick={onClick}
+            onClick={onSelect}
             text="Play Trailer"
           />
         </Focus>

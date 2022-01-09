@@ -1,6 +1,6 @@
 import { fromEvent, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN } from './keys/computer'
+import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_OK } from './keys/computer'
 import { NavigationNode } from './NavigationNode'
 import { NavigationStorage } from './NavigationStorage'
 
@@ -27,7 +27,6 @@ export abstract class FocusState {
 
   public consumeEvent(event: KeyboardEvent) {
     if (!this.currentNode.getValue()) {
-      console.error('There is no current node.')
       return
     }
 
@@ -44,6 +43,9 @@ export abstract class FocusState {
         break
       case KEY_DOWN:
         nodeId = this.currentNode.getValue()?.bottom
+        break
+      case KEY_OK:
+        this.currentNode.getValue()?.onSelect?.()
         break
       default:
         nodeId = undefined
@@ -72,9 +74,10 @@ export abstract class FocusState {
     left?: string,
     right?: string,
     top?: string,
-    bottom?: string
+    bottom?: string,
+    onSelect?: () => void
   ) {
-    this.navigationStorage.addNode(id, left, right, top, bottom)
+    this.navigationStorage.addNode(id, left, right, top, bottom, onSelect)
   }
 
   public getNode(nodeId: string) {

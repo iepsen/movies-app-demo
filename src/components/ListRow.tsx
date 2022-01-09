@@ -53,12 +53,15 @@ export const ListRow = ({
     [id]
   )
 
-  const onLeft = (nextId: number): string | undefined => {
-    if (nextId < 0) {
-      return
-    }
-    return buildId(nextId)
-  }
+  const onLeft = useCallback(
+    (nextId: number): string | undefined => {
+      if (nextId < 0) {
+        return
+      }
+      return buildId(nextId)
+    },
+    [buildId]
+  )
 
   const onRight = (nextId: number): string | undefined => {
     if (nextId > data.length - 1) {
@@ -67,17 +70,15 @@ export const ListRow = ({
     return buildId(nextId)
   }
 
-  const onClick = (link: string) => {
-    navigate(link)
-  }
-
-  const innerFocus = useCallback(
-    (index: number, details: ListItemViewModel): void => {
-      onFocus(details)
-      setCurrent(index)
-    },
-    [onFocus]
+  const onSelect = useCallback(
+    (link: string) => () => navigate(link),
+    [navigate]
   )
+
+  const innerFocus = (index: number, details: ListItemViewModel): void => {
+    onFocus(details)
+    setCurrent(index)
+  }
 
   useEffect(() => {
     if (!row.current) {
@@ -113,7 +114,7 @@ export const ListRow = ({
                 id={buildId(index)}
                 leftId={onLeft(index - 1)}
                 rightId={onRight(index + 1)}
-                onClick={() => onClick(viewModel.link)}
+                onSelect={onSelect(viewModel.link)}
                 key={media.title}
               >
                 <ListItem index={index} onFocus={innerFocus} data={viewModel} />

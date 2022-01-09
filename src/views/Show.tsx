@@ -27,7 +27,13 @@ const Show = (): ReactElement => {
   return (
     <>
       <Background image={show?.backgroundImage} />
-      <Focus id="back-button" onClick={onBack} bottomId="play-button" autoFocus>
+      <Focus
+        id="back-button"
+        onSelect={onBack}
+        bottomId={videos.length > 0 ? 'play-button' : undefined}
+        rightId={videos.length > 0 ? 'play-button' : undefined}
+        autoFocus
+      >
         <BackButton onClick={onBack} />
       </Focus>
       <div className="show-view">

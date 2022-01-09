@@ -15,20 +15,22 @@ const Movie = (): ReactElement => {
   const [movie, setMovie] = useState<IMovieModel | undefined>()
   const [videos, setVideos] = useState<IVideoModel[]>([])
 
-  const onBack = (): void => navigate(-1)
+  const onBack = () => navigate(-1)
 
   useEffect(() => {
     getMovie(id ?? '').then(movie => setMovie(movie))
     getMovieVideos(id ?? '').then(videos => setVideos(videos))
   }, [id])
+
   return (
     <>
       <Background image={movie?.backgroundImage} />
       <Focus
         id="back-button"
-        onClick={onBack}
-        bottomId="play-button"
-        rightId="play-button"
+        onSelect={onBack}
+        bottomId={videos.length > 0 ? 'play-button' : undefined}
+        rightId={videos.length > 0 ? 'play-button' : undefined}
+        autoFocus
       >
         <BackButton onClick={onBack} />
       </Focus>

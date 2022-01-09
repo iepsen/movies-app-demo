@@ -16,13 +16,14 @@ export class NavigationStorage {
     left?: string,
     right?: string,
     top?: string,
-    bottom?: string
+    bottom?: string,
+    onSelect?: () => void
   ) {
     if (this.nodes?.has(id)) {
       console.error(`Node ${id} already exists.`)
       return
     }
-    const node = new NavigationNode(id, left, right, top, bottom)
+    const node = new NavigationNode(id, left, right, top, bottom, onSelect)
     this.nodes?.set(id, node)
   }
 
