@@ -34,16 +34,16 @@ export abstract class FocusState {
     let nodeId
     switch (event.key) {
       case KEY_LEFT:
-        nodeId = this.currentNode.getValue()?.left
+        nodeId = this.currentNode.getValue()?.leftId
         break
       case KEY_RIGHT:
-        nodeId = this.currentNode.getValue()?.right
+        nodeId = this.currentNode.getValue()?.rightId
         break
       case KEY_UP:
-        nodeId = this.currentNode.getValue()?.top
+        nodeId = this.currentNode.getValue()?.topId
         break
       case KEY_DOWN:
-        nodeId = this.currentNode.getValue()?.bottom
+        nodeId = this.currentNode.getValue()?.bottomId
         break
       case KEY_OK:
         this.currentNode.getValue()?.onSelect?.()
@@ -93,8 +93,8 @@ export abstract class FocusState {
     return this.navigationStorage.getNodes()
   }
 
-  public deleteNode(node: NavigationNode) {
-    this.getNodes()?.delete(node.id)
+  public deleteNode(nodeId: string) {
+    this.getNodes()?.delete(nodeId)
   }
 
   public clearNodes() {

@@ -13,17 +13,24 @@ export class NavigationStorage {
 
   public addNode(
     id: string,
-    left?: string,
-    right?: string,
-    top?: string,
-    bottom?: string,
+    leftId?: string,
+    rightId?: string,
+    topId?: string,
+    bottomId?: string,
     onSelect?: () => void
   ) {
     if (this.nodes?.has(id)) {
       console.error(`Node ${id} already exists.`)
       return
     }
-    const node = new NavigationNode(id, left, right, top, bottom, onSelect)
+    const node = new NavigationNode(
+      id,
+      leftId,
+      rightId,
+      topId,
+      bottomId,
+      onSelect
+    )
     this.nodes?.set(id, node)
   }
 
@@ -35,8 +42,8 @@ export class NavigationStorage {
     return this.nodes
   }
 
-  public deleteNode(node: NavigationNode) {
-    this.nodes?.delete(node.id)
+  public deleteNode(nodeId: string) {
+    this.nodes?.delete(nodeId)
   }
 
   public clearNodes() {
