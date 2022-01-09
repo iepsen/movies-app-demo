@@ -1,6 +1,13 @@
 import { fromEvent, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_OK } from './keys/computer'
+import {
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_UP,
+  KEY_DOWN,
+  KEY_OK,
+  KEY_BACK
+} from './keys/computer'
 import { NavigationNode } from './NavigationNode'
 import { NavigationStorage } from './NavigationStorage'
 
@@ -48,6 +55,9 @@ export abstract class FocusState {
       case KEY_OK:
         this.currentNode.getValue()?.onSelect?.()
         break
+      case KEY_BACK:
+        this.currentNode.getValue()?.onBack?.()
+        break
       default:
         nodeId = undefined
         break
@@ -80,9 +90,18 @@ export abstract class FocusState {
     right?: string,
     top?: string,
     bottom?: string,
-    onSelect?: () => void
+    onSelect?: () => void,
+    onBack?: () => void
   ) {
-    this.navigationStorage.addNode(id, left, right, top, bottom, onSelect)
+    this.navigationStorage.addNode(
+      id,
+      left,
+      right,
+      top,
+      bottom,
+      onSelect,
+      onBack
+    )
   }
 
   public getNode(nodeId: string) {

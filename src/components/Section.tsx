@@ -1,4 +1,10 @@
-import { cloneElement, ReactElement, useEffect } from 'react'
+import {
+  cloneElement,
+  isValidElement,
+  ReactElement,
+  createElement,
+  useEffect
+} from 'react'
 import { useFocusArea } from '../navigation'
 
 type SectionProps = {
@@ -8,7 +14,9 @@ type SectionProps = {
   rightId?: string
   topId?: string
   bottomId?: string
-  children: ReactElement
+  onSelect?: () => void
+  onBack?: () => void
+  children: ReactElement | ReactElement[]
 }
 
 export const Section = ({
@@ -18,18 +26,45 @@ export const Section = ({
   rightId,
   topId,
   bottomId,
+  onSelect,
+  onBack,
   children
 }: SectionProps): ReactElement => {
-  const { isActive, addNode, setCurrentNode, releaseCurrentNode } =
-    useFocusArea(id)
-  const enhancedChildren = cloneElement(children, {
-    ...children.props,
-    isActive
-  })
+  const {
+    isActive,
+    addNode,
+    deleteNode,
+    getNode,
+    setCurrentNode,
+    releaseCurrentNode
+  } = useFocusArea(id)
+
+  let enhancedChildren
+  if (isValidElement(children)) {
+    enhancedChildren = cloneElement(children, {
+      ...children.props,
+      isActive
+    })
+  }
 
   useEffect(() => {
-    addNode(id, leftId, rightId, topId, bottomId)
-  }, [id, leftId, rightId, topId, bottomId, addNode])
+    if (getNode(id)) {
+      deleteNode(id)
+    }
+
+    addNode(id, leftId, rightId, topId, bottomId, onSelect, onBack)
+  }, [
+    id,
+    leftId,
+    rightId,
+    topId,
+    bottomId,
+    addNode,
+    onSelect,
+    onBack,
+    getNode,
+    deleteNode
+  ])
 
   useEffect(() => {
     if (active) {
@@ -38,5 +73,5 @@ export const Section = ({
     return () => releaseCurrentNode()
   }, [active, id, setCurrentNode, releaseCurrentNode])
 
-  return enhancedChildren
+  return enhancedChildren ?? createElement('div', null, children)
 }

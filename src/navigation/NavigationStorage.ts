@@ -17,7 +17,8 @@ export class NavigationStorage {
     rightId?: string,
     topId?: string,
     bottomId?: string,
-    onSelect?: () => void
+    onSelect?: () => void,
+    onBack?: () => void
   ) {
     if (this.nodes?.has(id)) {
       console.error(`Node ${id} already exists.`)
@@ -29,7 +30,8 @@ export class NavigationStorage {
       rightId,
       topId,
       bottomId,
-      onSelect
+      onSelect,
+      onBack
     )
     this.nodes?.set(id, node)
   }

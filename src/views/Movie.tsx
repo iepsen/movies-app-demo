@@ -8,6 +8,7 @@ import { Focus } from '../components/Focus'
 import { Cover } from '../components/Cover'
 import { Metadata } from '../components/Metadata'
 import './Movie.css'
+import { Section } from '../components/Section'
 
 const Movie = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
@@ -23,7 +24,7 @@ const Movie = (): ReactElement => {
   }, [id])
 
   return (
-    <>
+    <Section id="movie-view" onBack={onBack} active>
       <Background image={movie?.backgroundImage} />
       <Focus
         id="back-button"
@@ -38,7 +39,7 @@ const Movie = (): ReactElement => {
         <Cover image={movie?.posterImage} />
         <Metadata data={movie} videos={videos} />
       </div>
-    </>
+    </Section>
   )
 }
 

@@ -8,6 +8,7 @@ import { Cover } from '../components/Cover'
 import { Metadata } from '../components/Metadata'
 import { IShowModel, IVideoModel } from '../models/interfaces'
 import './Show.css'
+import { Section } from '../components/Section'
 
 const Show = (): ReactElement => {
   const { id } = useParams<{ id: string }>()
@@ -25,7 +26,7 @@ const Show = (): ReactElement => {
   }, [id])
 
   return (
-    <>
+    <Section id="show-view" onBack={onBack} active>
       <Background image={show?.backgroundImage} />
       <Focus
         id="back-button"
@@ -40,7 +41,7 @@ const Show = (): ReactElement => {
         <Cover image={show?.posterImage} />
         <Metadata data={show} videos={videos} />
       </div>
-    </>
+    </Section>
   )
 }
 

@@ -5,6 +5,7 @@ export class NavigationNode {
   public topId?: string = undefined
   public bottomId?: string = undefined
   public onSelect?: () => void = undefined
+  public onBack?: () => void = undefined
 
   constructor(
     id: string,
@@ -13,11 +14,7 @@ export class NavigationNode {
     topId?: string,
     bottomId?: string,
     onSelect?: () => void,
-    left?: string,
-    right?: string,
-    top?: string,
-    bottom?: string,
-    onSelect?: () => void
+    onBack?: () => void
   ) {
     this.id = id
     this.leftId = leftId
@@ -25,5 +22,6 @@ export class NavigationNode {
     this.topId = topId
     this.bottomId = bottomId
     this.onSelect = onSelect
+    this.onBack = onBack
   }
 }
