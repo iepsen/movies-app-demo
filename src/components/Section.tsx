@@ -20,7 +20,8 @@ export const Section = ({
   bottomId,
   children
 }: SectionProps): ReactElement => {
-  const { isActive, addNode, setCurrentNode } = useFocusArea(id)
+  const { isActive, addNode, setCurrentNode, releaseCurrentNode } =
+    useFocusArea(id)
   const enhancedChildren = cloneElement(children, {
     ...children.props,
     isActive
@@ -34,7 +35,8 @@ export const Section = ({
     if (active) {
       setCurrentNode(id)
     }
-  }, [active, id, setCurrentNode])
+    return () => releaseCurrentNode()
+  }, [active, id, setCurrentNode, releaseCurrentNode])
 
   return enhancedChildren
 }

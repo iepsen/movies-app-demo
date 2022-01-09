@@ -17,6 +17,7 @@ export abstract class FocusState {
     this.clearNodes = this.clearNodes.bind(this)
     this.consumeEvent = this.consumeEvent.bind(this)
     this.setCurrentNode = this.setCurrentNode.bind(this)
+    this.releaseCurrentNode = this.releaseCurrentNode.bind(this)
 
     this.navigationStorage = NavigationStorage.getInstance()
 
@@ -67,6 +68,10 @@ export abstract class FocusState {
       return
     }
     this.currentNode.next(this.navigationStorage.getNodes()?.get(nodeId))
+  }
+
+  public releaseCurrentNode() {
+    this.currentNode.next(undefined)
   }
 
   public addNode(
