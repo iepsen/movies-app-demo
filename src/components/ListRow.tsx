@@ -27,7 +27,8 @@ const useStyles = makeStyles(() => ({
   container: {
     scrollBehavior: 'smooth',
     overflow: 'auto',
-    scrollbarWidth: 'none'
+    scrollbarWidth: 'none',
+    marginBottom: '2%'
   },
   wrapper: {
     transition: '200ms ease-in-out'

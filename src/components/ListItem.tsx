@@ -16,8 +16,8 @@ const useStyles = makeStyles(() => ({
     transition: 'all .3s ease-in-out',
     border: '1rem solid transparent',
     display: 'inline-block',
-    width: '18rem',
-    height: '26rem'
+    width: '18em',
+    height: '26em'
   },
   activeLink: {
     borderColor: '#90cea1'
