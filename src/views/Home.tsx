@@ -45,7 +45,7 @@ const Home = (): ReactElement => {
         scrollAmount = '-46%'
         break
       case 'discover-shows':
-        scrollAmount = '-71%'
+        scrollAmount = '-67%'
         break
       default:
         scrollAmount = '0%'
