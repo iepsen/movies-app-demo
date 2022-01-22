@@ -12,8 +12,7 @@ const useStyles = makeStyles(() => ({
     height: '70%'
   },
   container: {
-    height: '52rem',
-    paddingTop: '1%'
+    transition: '300ms ease-in-out'
   }
 }))
 
@@ -21,8 +20,10 @@ export const ListWrapper = forwardRef<HTMLDivElement, ListWrapperInterface>(
   (props: ListWrapperInterface, ref): ReactElement => {
     const styles = useStyles()
     return (
-      <div ref={ref} className={styles.wrapper}>
-        <div className={styles.container}>{props.children}</div>
+      <div className={styles.wrapper}>
+        <div ref={ref} className={styles.container}>
+          {props.children}
+        </div>
       </div>
     )
   }

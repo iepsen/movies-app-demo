@@ -32,27 +32,28 @@ const Home = (): ReactElement => {
   )
 
   const onActive = useCallback((id: string): void => {
-    let scrollTop = 0
+    let scrollAmount = '0%'
 
     switch (id) {
       case 'popular-movies':
-        scrollTop = 0
+        scrollAmount = '0%'
         break
       case 'popular-shows':
-        scrollTop = 390
+        scrollAmount = '-21%'
         break
       case 'discover-movies':
-        scrollTop = 870
+        scrollAmount = '-46%'
         break
       case 'discover-shows':
-        scrollTop = 1232
+        scrollAmount = '-71%'
         break
       default:
-        scrollTop = 0
+        scrollAmount = '0%'
         break
     }
+
     if (wrapper.current) {
-      wrapper.current.scrollTop = scrollTop
+      wrapper.current.style.transform = `translateY(${scrollAmount})`
     }
   }, [])
 
