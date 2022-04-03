@@ -1,4 +1,5 @@
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
+
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { Home, Movie, Video, Show } from './views'
 
@@ -15,4 +16,9 @@ const App = () => {
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const container = document.getElementById('root')
+
+if (container) {
+  const root = createRoot(container)
+  root.render(<App />)
+}

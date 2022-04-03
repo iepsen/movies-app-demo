@@ -5,7 +5,7 @@ import { YouTubePlayer } from 'youtube-player/dist/types'
 
 const seekAmount = 10
 let progressTimer: number
-// let visibilityTimer: number
+let visibilityTimer: number
 
 type PlayerProps = {
   id?: string
@@ -17,7 +17,7 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
   const [player, setPlayer] = useState<YouTubePlayer>()
   const [playerState, setPlayerState] = useState<number>(0)
   const [progress, setProgress] = useState<number>(0)
-  const [visibleControls /* , setVisibleControls */] = useState<boolean>(true)
+  const [visibleControls, setVisibleControls] = useState<boolean>(true)
   const options: Options = {
     width: '100%',
     height: '100%',
@@ -41,7 +41,6 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
     data: number
   }): void => setPlayerState(event.data)
 
-  /*
   const onMouseMove = (): void => {
     setVisibleControls(true)
     clearTimeout(visibilityTimer)
@@ -49,13 +48,12 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
       setVisibleControls(false)
     }, 3000)
   }
-  */
 
-  const onPlayPause = (): void => {
+  const onPlayPause = async (): Promise<void> => {
     if (!player) {
       return
     }
-    if (player.getPlayerState() === YouTube.PlayerState.PLAYING) {
+    if ((await player.getPlayerState()) === YouTube.PlayerState.PLAYING) {
       player.pauseVideo()
     } else {
       player.playVideo()
@@ -70,49 +68,45 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
     onEnd()
   }
 
-  const onRewind = (): void => {
+  const onRewind = async (): Promise<void> => {
     if (!player) {
       return
     }
     const time = player.getCurrentTime()
-    const amount = time - seekAmount
+    const amount = (await time) - seekAmount
     if (amount > 0) {
       player.seekTo(amount, true)
     }
   }
 
-  const onFastForward = (): void => {
+  const onFastForward = async (): Promise<void> => {
     if (!player) {
       return
     }
     const time = player.getCurrentTime()
     const duration = player.getDuration()
-    const amount = time + seekAmount
-    if (amount < duration) {
+    const amount = (await time) + seekAmount
+    if (amount < (await duration)) {
       player.seekTo(amount, true)
     }
   }
 
   useEffect(() => {
-    progressTimer = window.setInterval(() => {
+    progressTimer = window.setInterval(async () => {
       if (!player) {
         return
       }
       const duration = player.getDuration()
       const currentTime = player.getCurrentTime()
-      setProgress((currentTime * 100) / duration || 0)
+      setProgress(((await currentTime) * 100) / (await duration) || 0)
     }, 200)
     return () => clearInterval(progressTimer)
   })
 
-  /*
   useEffect(() => {
-    const subscription = focusManager.observable.subscribe({
-      next: () => onMouseMove()
-    })
+    onMouseMove()
     window.addEventListener('mousemove', onMouseMove)
     return () => {
-      subscription.unsubscribe()
       window.removeEventListener('mousemove', onMouseMove)
       if (player) {
         player.stopVideo()
@@ -121,7 +115,6 @@ export const Player = ({ id, onBack, onEnd }: PlayerProps): ReactElement => {
       clearTimeout(visibilityTimer)
     }
   }, [player])
-  */
 
   return (
     <>
