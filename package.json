@@ -1,6 +1,6 @@
 {
   "name": "movies-app-demo",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Movies App Demo",
   "scripts": {
     "dev": "vite",
